@@ -10,7 +10,7 @@ Week-by-week plan for the whole project.
 ## Winter semester
 
 - **Week 1**
-  - N/A group meeting
+  - N/A, group meeting
 - **Week 2**
 - **Week 3**
 - **Week 4**

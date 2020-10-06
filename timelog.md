@@ -9,12 +9,24 @@
 
 ### 30 Sep 2020
 
-- _0.5 hour_ Created GitHub repository and added the given master template with some minor adjustments
+- _0.5 hour_ Created GitHub repository and added the given master template with some minor adjustments.
 
 ### 1 Oct 2020
 
-- _1.5 hour_ Researched different reference managers. Downloaded Zotero and watched a tutorial on how to use it
+- _1.5 hour_ Researched different reference managers. Downloaded Zotero and watched a tutorial on how to use it.
 
-## 2 Oct 2020
+### 2 Oct 2020
 
-- _0.5 hour_ Initial meeting with supervisor (Jeremy Singer)
+- _0.5 hour_ Initial meeting with supervisor (Jeremy Singer).
+- _0.5 hour_ Logged meeting minutes from initial meeting with Jeremy.
+
+### 4 Oct 2020
+
+- _1.5 hour_ Did some research into potential data sources. Mainly focused on https://samoa.dcs.gla.ac.uk/events/ and EventBrite.
+
+## Week 2
+
+### 5 Oct 2020
+
+- _0.5 hour_ Emailed the developers of the Samoa seminar system to ask how to access their API. Currently, the API returns a page not found error.
+- _1.5 hour_ Researched different technologies to use for the web application. Leaning towards using Django for the backend and React for the frontend. This is mostly because I have experience in using both of these technologies.
