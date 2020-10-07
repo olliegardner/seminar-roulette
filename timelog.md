@@ -5,7 +5,7 @@
 - 2410049g
 - Jeremy Singer
 
-## Week 1
+## Week 2
 
 ### 30 Sep 2020
 
@@ -24,9 +24,14 @@
 
 - _1.5 hour_ Did some research into potential data sources. Mainly focused on https://samoa.dcs.gla.ac.uk/events/ and EventBrite.
 
-## Week 2
+## Week 3
 
 ### 5 Oct 2020
 
 - _0.5 hour_ Emailed the developers of the Samoa seminar system to ask how to access their API. Currently, the API returns a page not found error.
 - _1.5 hour_ Researched different technologies to use for the web application. Leaning towards using Django for the backend and React for the frontend. This is mostly because I have experience in using both of these technologies.
+
+### 7 Oct 2020
+
+- _0.5 hour_ Emailed SoCS support to request access to a Linux VM on the OpenStack cluster.
+- _0.5 hour_ Wrote up status report for week 2 in preparation for 2nd meeting with Jeremy.

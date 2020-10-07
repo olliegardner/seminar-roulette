@@ -10,9 +10,17 @@ Week-by-week plan for the whole project.
 ## Winter semester
 
 - **Week 1**
-  - N/A, group meeting
+  - N/A - projects not released.
 - **Week 2**
+  - Setup GitHub repoistory with given template.
+  - Research different event data sources.
+  - Research potential technologies and decide on technology stack.
 - **Week 3**
+  - Draw up some basic wireframes.
+  - Create uses cases.
+  - Setup chosen technology stack.
+  - Research CSS frameworks for the frontend.
+  - Make a basic API call to Samoa.
 - **Week 4**
 - **Week 5**
 - **Week 6**
