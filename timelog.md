@@ -35,3 +35,8 @@
 
 - _0.5 hour_ Emailed SoCS support to request access to a Linux VM on the OpenStack cluster.
 - _0.5 hour_ Wrote up status report for week 2 in preparation for 2nd meeting with Jeremy.
+
+### 8 Oct 2020
+
+- _0.5 hour_ Wrote up user stories and added them to the wiki.
+- _1.5 hour_ Created some basic wireframes for the project - still need to be refined further.
