@@ -40,3 +40,6 @@
 
 - _0.5 hour_ Wrote up user stories and added them to the wiki.
 - _1.5 hour_ Created some basic wireframes for the project - still need to be refined further.
+
+### 9 Oct 2020
+- _1 hour_ 2nd meeting with Jeremy and wrote up the minutes.
