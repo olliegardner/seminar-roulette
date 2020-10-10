@@ -5,6 +5,10 @@
 - 2410049g
 - Jeremy Singer
 
+## Week 1
+
+N/A - projects not released.
+
 ## Week 2
 
 ### 30 Sep 2020
