@@ -1,5 +1,16 @@
-name: Compile LaTeX dissertation
-on: [push, pull_request]
+name: Compile LaTeX document
+on:
+  workflow_dispatch:
+  push:
+    branches: 
+      - master
+    paths:
+      - /dissertation/**
+  pull_request:
+    branches: 
+      - master
+    paths:
+      - /dissertation/**
 jobs:
   build_latex:
     runs-on: ubuntu-latest
