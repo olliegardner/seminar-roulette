@@ -47,3 +47,6 @@ N/A - projects not released.
 
 ### 9 Oct 2020
 - _1 hour_ 2nd meeting with Jeremy and wrote up the minutes.
+
+### 10 Oct 2020
+- _1 hour_ Uploaded dissertation template and setup GitHub action for compiling dissertation on push and pull requests.
