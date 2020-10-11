@@ -9,5 +9,5 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@master
         with:
-          root_file: /dissertation/l4proj.tex
+          root_file: l4proj.tex
           working_directory: dissertation
