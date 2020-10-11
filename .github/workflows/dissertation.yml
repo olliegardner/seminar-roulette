@@ -1,16 +1,5 @@
 name: Compile LaTeX document
-on:
-  workflow_dispatch:
-  push:
-    branches: 
-      - master
-    paths:
-      - /dissertation/**
-  pull_request:
-    branches: 
-      - master
-    paths:
-      - /dissertation/**
+on: [pull_request]
 jobs:
   build_latex:
     runs-on: ubuntu-latest
@@ -20,5 +9,5 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@master
         with:
-          root_file: dissertation/l4proj.tex
+          root_file: /dissertation/l4proj.tex
           working_directory: dissertation
