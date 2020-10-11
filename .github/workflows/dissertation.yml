@@ -1,4 +1,4 @@
-name: Compile LateX
+name: Compile LateX dissertation
 on: [push, pull_request]
 jobs:
   build_latex:
