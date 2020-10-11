@@ -50,3 +50,7 @@ N/A - projects not released.
 
 ### 10 Oct 2020
 - _1 hour_ Uploaded dissertation template and setup GitHub action for compiling dissertation on push and pull requests.
+
+### 11 Oct 2020
+_2 hour_ Setup chosen technologies - Django and React. Started building basic RESTful API to check that client and server can interact with eachother.
+_0.5 hour_ Created Trello board for ticket/issue management.
