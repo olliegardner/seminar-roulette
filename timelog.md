@@ -60,3 +60,6 @@ N/A - projects not released.
 ### 13 Oct 2020
 - _1 hour_ Wrote up functional and non-functional requirements.
 - _1.5 hour_ Developed user survey for staff members to build upon my requirements.
+
+### 14 Oct 2020
+- _1.5 hour_ Drew up version 1 of database schema and added it to the wiki.
