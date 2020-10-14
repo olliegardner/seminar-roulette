@@ -19,13 +19,13 @@ Week-by-week plan for the whole project.
   - Draw up some basic wireframes.
   - Create uses cases.
   - Setup chosen technology stack.
-  - Make a basic API call to Samoa.
 - **Week 4**
   - Setup VM.
   - Look for alternative event streams.
   - Write up functional requirements.
   - Schematic diagram/architecture of the system.
   - User survey of staff.
+  - Make a basic API call to Samoa.
 - **Week 5**
   - Research CSS frameworks for the frontend.
 - **Week 6**
