@@ -63,3 +63,10 @@ N/A - projects not released.
 
 ### 14 Oct 2020
 - _1.5 hour_ Drew up version 1 of database schema and added it to the wiki.
+
+### 15 Oct 2020
+- _0.5 hour_ Contacted John Watt about setting up Shibboleth on my VM.
+- _1.5 hour_ Researched more into potential data sources and created a wiki page outlining the various sources that I found.
+- _0.5 hour_ Sent my weekly status report to Jeremy.
+- _1 hour_ Re-visited my user stories and updated them to fit my requirements.
+- _0.5 hour_ Drew up version 1 of system architecture diagram.

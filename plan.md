@@ -25,9 +25,9 @@ Week-by-week plan for the whole project.
   - Write up functional requirements.
   - Schematic diagram/architecture of the system.
   - User survey of staff.
-  - Make a basic API call to Samoa.
 - **Week 5**
   - Research CSS frameworks for the frontend.
+  - Make a basic API call to Samoa.
 - **Week 6**
 - **Week 7**
 - **Week 8**

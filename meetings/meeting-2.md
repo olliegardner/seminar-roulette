@@ -9,7 +9,7 @@ Jeremy highlighted some other potential data streams in the meeting. I should lo
 - EventBrite - mostly used for training sessions and events by the University but not really for seminars
 - Emails - some seminars are only advertised through emails
 - Other academic institutions e.g. Strathclyde University
-- Roryal Statistical Society
+- Royal Statistical Society
 - British Computer Society 
 - meetup.com (https://www.meetup.com/find/gb--glasgow)
 
