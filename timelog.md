@@ -46,27 +46,38 @@ N/A - projects not released.
 - _1.5 hour_ Created some basic wireframes for the project - still need to be refined further.
 
 ### 9 Oct 2020
+
 - _1 hour_ 2nd meeting with Jeremy and wrote up the minutes.
 
 ### 10 Oct 2020
+
 - _1 hour_ Uploaded dissertation template and setup GitHub action for compiling dissertation on push and pull requests.
 
 ### 11 Oct 2020
+
 - _2 hour_ Setup chosen technologies - Django and React. Started building basic RESTful API to check that client and server can interact with eachother.
 - _0.5 hour_ Created Trello board for ticket/issue management.
 
 ## Week 4
 
 ### 13 Oct 2020
+
 - _1 hour_ Wrote up functional and non-functional requirements.
 - _1.5 hour_ Developed user survey for staff members to build upon my requirements.
 
 ### 14 Oct 2020
+
 - _1.5 hour_ Drew up version 1 of database schema and added it to the wiki.
 
 ### 15 Oct 2020
+
 - _0.5 hour_ Contacted John Watt about setting up Shibboleth on my VM.
 - _1.5 hour_ Researched more into potential data sources and created a wiki page outlining the various sources that I found.
 - _0.5 hour_ Sent my weekly status report to Jeremy.
 - _1 hour_ Re-visited my user stories and updated them to fit my requirements.
 - _0.5 hour_ Drew up version 1 of system architecture diagram.
+
+### 16 Oct 2020
+
+- _1.5 hour_ Revisited wireframes and created new ones to better reflect my list of functional requirements.
+- _1 hour_ Weekly meeting with Jeremy and wrote up the meeting minutes from it.

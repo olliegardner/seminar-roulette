@@ -26,8 +26,11 @@ Week-by-week plan for the whole project.
   - Schematic diagram/architecture of the system.
   - User survey of staff.
 - **Week 5**
-  - Research CSS frameworks for the frontend.
-  - Make a basic API call to Samoa.
+  - Decide on which CSS framework to use for the frontend.
+  - Setup PostgreSQL database.
+  - Setup feed of events from Samoa.
+  - Configure Shibboleth to work on the VM.
+  - Implement I'm Feeling Lucky button to randomly choose seminar from Samoa.
 - **Week 6**
 - **Week 7**
 - **Week 8**
