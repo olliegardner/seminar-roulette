@@ -81,3 +81,7 @@ N/A - projects not released.
 
 - _1.5 hour_ Revisited wireframes and created new ones to better reflect my list of functional requirements.
 - _1 hour_ Weekly meeting with Jeremy and wrote up the meeting minutes from it.
+
+### 18 Oct 2020
+
+- _2 hour_ Setup Apache web server and installed Shibboleth onto the howard.dcs VM.

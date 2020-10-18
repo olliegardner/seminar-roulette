@@ -1,10 +1,12 @@
-from seminars.serializers import UserSerializer
+from seminars.serializers import UniversityUserSerializer
 
 
-def my_jwt_response_handler(token, user=None, request=None):
+def jwt_handler(token, user=None, request=None):
     return {
-        'token': token,
-        'user': UserSerializer(user, context={
-            'request': request
-        }).data
+        'token':
+            token,
+        'user':
+            UniversityUserSerializer(user, context={
+                'request': request
+            }).data
     }
