@@ -15,4 +15,4 @@ class CurrentUser(APIView):
             serializer = UserSerializer(request.user)
             return Response(serializer.data)
         except:
-            return Response(None)
+            return Response({'guid': 'None'})
