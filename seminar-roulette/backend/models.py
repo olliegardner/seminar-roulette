@@ -5,7 +5,7 @@ from .managers import UniversityUserManager
 
 # user model, taking attributes from the university Shibboleth login system
 class UniversityUser(AbstractBaseUser, PermissionsMixin):
-    guid = models.CharField(max_length=12, unique=True)
+    guid = models.CharField(max_length=12, unique=True, primary_key=True)
     name = models.CharField(max_length=255, null=True, blank=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
