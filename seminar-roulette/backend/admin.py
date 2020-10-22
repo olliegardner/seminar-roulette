@@ -14,7 +14,7 @@ class SeminarGroupAdmin(admin.ModelAdmin):
 
 
 class LocationAdmin(admin.ModelAdmin):
-    list_display = ['name', 'latitude', 'longitude', 'online']
+    list_display = ['location', 'latitude', 'longitude', 'online']
     readonly_fields = ('directions', )
 
 

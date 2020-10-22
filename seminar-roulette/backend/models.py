@@ -21,7 +21,7 @@ class UniversityUser(AbstractBaseUser, PermissionsMixin):
 
 # location of the seminar
 class Location(models.Model):
-    name = models.CharField(max_length=255, null=False, blank=False)
+    location = models.CharField(max_length=255, null=False, blank=False)
     directions = models.TextField(null=True, blank=True)
     latitude = models.DecimalField(
         max_digits=9, decimal_places=6, null=True, blank=True
@@ -32,10 +32,10 @@ class Location(models.Model):
     online = models.BooleanField(default=False)
 
     class Meta:
-        unique_together = ['name', 'latitude', 'longitude']
+        unique_together = ['location', 'latitude', 'longitude']
 
     def __str__(self):
-        return self.name
+        return self.location
 
 
 # seminar hosting group
@@ -75,6 +75,7 @@ class Seminar(models.Model):
     end_time = models.DateTimeField(null=False, blank=False)
     speaker = models.ForeignKey(Speaker, on_delete=models.CASCADE)
     seminar_group = models.ForeignKey(SeminarGroup, on_delete=models.CASCADE)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
 
     class Meta:
         unique_together = ['title', 'start_time', 'end_time', 'speaker']

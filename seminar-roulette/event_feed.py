@@ -16,10 +16,10 @@ class EventFeeds():
     def samoa_feed(self):
         print('Retrieving event feed from Samoa. Please wait...')
 
-        # SeminarGroup.objects.all().delete()
-        # Location.objects.all().delete()
-        # Speaker.objects.all().delete()
-        # Seminar.objects.all().delete()
+        SeminarGroup.objects.all().delete()
+        Location.objects.all().delete()
+        Speaker.objects.all().delete()
+        Seminar.objects.all().delete()
 
         response = requests.get(
             'https://samoa.dcs.gla.ac.uk/events/rest/Event/searchtext?search='
@@ -38,7 +38,7 @@ class EventFeeds():
                 online = True
 
             location, location_created = Location.objects.get_or_create(
-                name=location['location'],
+                location=location['location'],
                 directions=location['directions'],
                 latitude=location['latitude'],
                 longitude=location['longitude'],
@@ -55,8 +55,6 @@ class EventFeeds():
             seminar_group.url = group['url']
             seminar_group.save()
 
-            print(event['speakerUrl'])
-
             speaker, speaker_created = Speaker.objects.get_or_create(
                 speaker=event['speaker'],
                 affiliation=event['speakerAffiliation'],
@@ -70,7 +68,8 @@ class EventFeeds():
                 start_time=event['startTime'],
                 end_time=event['endTime'],
                 speaker=speaker,
-                seminar_group=seminar_group
+                seminar_group=seminar_group,
+                location=location,
             )
 
         print('Samoa event feed retrieved!')
