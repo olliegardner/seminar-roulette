@@ -1,8 +1,15 @@
 import React from "react";
-import Landing from "./views/Landing";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import Router from "./Router";
+
+const muiTheme = createMuiTheme({});
 
 const App = () => {
-  return <Landing />;
+  return (
+    <MuiThemeProvider theme={muiTheme}>
+      <Router />
+    </MuiThemeProvider>
+  );
 };
 
 export default App;
