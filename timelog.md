@@ -96,3 +96,8 @@ N/A - projects not released.
 ### 21 Oct 2020
 
 - _4 hour_ Continued with the setup of the VM which was causing me a lot of problems. Just need to get PostgreSQL setup on the VM now.
+
+### 22 Oct 2020
+
+- _4 hour_ Setup feed from Samoa events and implemented a random seminar button which displays a random seminar from Samoa on the frontend.
+- _1 hour_ Researched different CSS frameworks for React. I am going to use Material-UI from Google.
