@@ -87,6 +87,12 @@ N/A - projects not released.
 - _2 hour_ Setup Apache web server and installed Shibboleth onto the howard.dcs VM.
 - _1.5 hour_ Setup custom university user model and tried to get this to work with JWT authentication.
 
+## Week 5
+
 ### 20 Oct 2020
 
 - _2 hour_ Completely restructured project so that now Django and React aren't separate applications. This was done as Shibboleth can't interact with JWT as I expected.
+
+### 21 Oct 2020
+
+- _4 hour_ Continued with the setup of the VM which was causing me a lot of problems. Just need to get PostgreSQL setup on the VM now.
