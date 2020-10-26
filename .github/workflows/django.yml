@@ -38,9 +38,11 @@ jobs:
       postgres:
         image: postgres:10.8
         env:
-          POSTGRES_USER: seminarroulette_user
-          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          POSTGRES_DB: seminarroulettetest
+          # POSTGRES_USER: seminarroulette_user
+          # POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: seminarroulette
         ports:
           - 5432:5432
         # needed because the postgres container does not provide a healthcheck
