@@ -8,6 +8,7 @@ from backend.models import *
 import requests
 import json
 import sys
+import re
 
 
 class EventFeeds():
@@ -82,7 +83,14 @@ class EventFeeds():
             )
             # in case any of these fields change
             seminar.title = event['title']
-            seminar.description = event['description']
+
+            # remove html tags from description
+            pattern = re.compile(
+                '<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});'
+            )
+            clean_description = re.sub(pattern, '', event['description'])
+
+            seminar.description = clean_description
             seminar.registration_url = event['registrationUrl']
             seminar.start_time = event['startTime']
             seminar.end_time = event['endTime']
