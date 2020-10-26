@@ -62,10 +62,10 @@ jobs:
           python -m pip install --upgrade pip
           cd seminar-roulette
           pip install -r requirements.txt
-      - name: Create .env file
-        run: |
-          cd seminar-roulette
-          echo $'SECRET_KEY=${{ secrets.SECRET_KEY }}\nDB_PASSWORD=${{ secrets.DB_PASSWORD }}\nPRODUCTION=false' > .env
+      # - name: Create .env file
+      #   run: |
+      #     cd seminar-roulette
+      #     echo $'SECRET_KEY=${{ secrets.SECRET_KEY }}\nDB_PASSWORD=${{ secrets.DB_PASSWORD }}\nPRODUCTION=false' > .env
       # - name: Dotenv action
       #   uses: falti/dotenv-action@v0.2.5
       #   id: dotenv
