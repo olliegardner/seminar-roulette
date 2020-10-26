@@ -68,7 +68,7 @@ jobs:
         uses: falti/dotenv-action@v0.2.5
         id: dotenv
         with:
-          path: "./seminar-roulette/.env"
+          path: "seminar-roulette/.env"
       - name: Run migrations
         run: |
           cd seminar-roulette
