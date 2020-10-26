@@ -37,10 +37,10 @@ jobs:
     services:
       postgres:
         image: postgres:10.8
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: github_actions
+        # env:
+        #   POSTGRES_USER: postgres
+        #   POSTGRES_PASSWORD: postgres
+        #   POSTGRES_DB: github_actions
         ports:
           - 5432:5432
         # needed because the postgres container does not provide a healthcheck
@@ -60,10 +60,15 @@ jobs:
           python -m pip install --upgrade pip
           cd seminar-roulette
           pip install -r requirements.txt
-      - name: Create .env file
-        run: |
-          cd seminar-roulette
-          echo $'SECRET_KEY=secret-key\nDB_PASSWORD=password\nPRODUCTION=false' > .env
+      # - name: Create .env file
+      #   run: |
+      #     cd seminar-roulette
+      #     echo $'SECRET_KEY=secret-key\nDB_PASSWORD=password\nPRODUCTION=false' > .env
+      - name: Dotenv action
+        uses: falti/dotenv-action@v0.2.5
+        id: dotenv
+        with:
+          path: "./seminar-roulette/.env"
       - name: Run migrations
         run: |
           cd seminar-roulette
