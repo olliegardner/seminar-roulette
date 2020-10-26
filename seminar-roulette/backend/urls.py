@@ -4,6 +4,10 @@ from .views import *
 
 urlpatterns = [
     path('current-user/', CurrentUser.as_view()),
+    path(
+        'seminars/random/',
+        RandomSeminar.as_view(),
+    )
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns, allowed=['json'])
