@@ -32,6 +32,10 @@ Week-by-week plan for the whole project.
   - Configure Shibboleth to work on the VM.
   - Implement I'm Feeling Lucky button to randomly choose seminar from Samoa.
 - **Week 6**
+  - Continue hacking the VM.
+  - Improve user interface.
+  - Keep track of user's seminar history and likes/dislikes.
+  - Unit tests for Samoa feed.
 - **Week 7**
 - **Week 8**
 - **Week 9**

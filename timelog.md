@@ -101,3 +101,8 @@ N/A - projects not released.
 
 - _4 hour_ Setup feed from Samoa events and implemented a random seminar button which displays a random seminar from Samoa on the frontend.
 - _1 hour_ Researched different CSS frameworks for React. I am going to use Material-UI from Google.
+
+### 23 Oct 2020
+
+- _1 hour_ Attempted to setup SLL self-signed certificate.
+- _1 hour_ Weekly meeting with Jeremy and wrote up meeting minutes.
