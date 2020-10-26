@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -25,7 +26,7 @@ class RandomSeminar(APIView):
     Chooses a random upcoming seminar from the databse.
     """
     def get(self, request, format=None):
-        now = datetime.datetime.now()
+        now = timezone.now()
         seminars = Seminar.objects.filter(start_time__gte=now)
         random_seminar = seminars.order_by('?').first()
 

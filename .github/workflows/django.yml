@@ -1,0 +1,47 @@
+name: Django CI
+
+on:
+  pull_request:
+    branches: [master, development]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:10.8
+        env:
+          POSTGRES_USER: seminarroulette_user
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          POSTGRES_DB: seminarroulette
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+      - name: Install prerequisites
+        run: |
+          sudo apt-get install python-dev libpq-dev
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          cd seminar-roulette
+          pip install -r requirements.txt
+      - name: Create .env file
+        run: |
+          cd seminar-roulette
+          echo $'SECRET_KEY=${{ secrets.SECRET_KEY }}\nDB_PASSWORD=${{ secrets.DB_PASSWORD }}\nPRODUCTION=false' > .env
+      - name: Run migrations
+        run: |
+          cd seminar-roulette
+          python manage.py migrate
+      - name: Run Tests
+        run: |
+          cd seminar-roulette
+          python manage.py test
