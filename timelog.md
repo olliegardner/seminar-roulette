@@ -112,3 +112,4 @@ N/A - projects not released.
 ### 26 Oct 2020
 
 - _2 hour_ Created GitHub CI pipeline for Django unit tests. Wrote some basic unit tests for the Samoa feed.
+- _2 hour_ Started working on the frontend of Seminar Roulette. Added a roulette wheel animation.
