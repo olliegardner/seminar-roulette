@@ -36,6 +36,15 @@ class SeminarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Seminar
         fields = (
-            'title', 'description', 'registration_url', 'start_time',
-            'end_time', 'speaker', 'seminar_group', 'location'
+            'id', 'title', 'description', 'registration_url', 'start_time',
+            'end_time', 'speaker', 'seminar_group', 'location', 'samoa_id'
         )
+
+
+class SeminarHistorySerializer(serializers.ModelSerializer):
+    seminar = SeminarSerializer()
+    user = UserSerializer()
+
+    class Meta:
+        model = SeminarHistory
+        fields = ('seminar', 'user', 'attended', 'rating')
