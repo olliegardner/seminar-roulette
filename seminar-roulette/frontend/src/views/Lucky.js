@@ -1,11 +1,8 @@
 import React, { Fragment, useEffect, useState } from "react";
 import axios from "axios";
-import moment from "moment";
-import { Box, Card, Grid, makeStyles, Typography } from "@material-ui/core";
+import { Grid, makeStyles } from "@material-ui/core";
 import { useAnimatePresence } from "use-animate-presence";
-import ScheduleOutlinedIcon from "@material-ui/icons/ScheduleOutlined";
-import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
-import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
+import SeminarCard from "../components/SeminarCard";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,17 +10,6 @@ const useStyles = makeStyles((theme) => ({
   },
   grid: {
     minHeight: "100vh",
-  },
-  seminarCard: {
-    backgroundColor: "#f67e7d",
-  },
-  seminarBox: {
-    maxHeight: 500,
-    overflow: "auto",
-  },
-  wrapIcon: {
-    verticalAlign: "middle",
-    display: "inline-flex",
   },
 }));
 
@@ -69,41 +55,7 @@ const Lucky = () => {
                 className={classes.grid}
               >
                 <Grid item xs={12} sm={10} md={6}>
-                  <Card className={classes.seminarCard}>
-                    <Box
-                      p={2}
-                      textAlign="center"
-                      className={classes.seminarBox}
-                    >
-                      <Typography variant="h4">{seminar.title}</Typography>
-                      <br />
-
-                      <Typography>
-                        <span className={classes.wrapIcon}>
-                          <ScheduleOutlinedIcon />{" "}
-                          {moment(seminar.start_time).format("Do MMMM YYYY")},{" "}
-                          {moment(seminar.start_time).format("H:mm")} -{" "}
-                          {moment(seminar.end_time).format("H:mm")}
-                        </span>
-                      </Typography>
-
-                      <Typography>
-                        <span className={classes.wrapIcon}>
-                          <PersonOutlineOutlinedIcon />{" "}
-                          {seminar.speaker.speaker}
-                        </span>
-                      </Typography>
-
-                      <Typography>
-                        <span className={classes.wrapIcon}>
-                          <LocationOnOutlinedIcon /> {seminar.location.location}
-                        </span>
-                      </Typography>
-
-                      <br />
-                      <Typography>{seminar.description}</Typography>
-                    </Box>
-                  </Card>
+                  <SeminarCard seminar={seminar} />
                 </Grid>
               </Grid>
             </div>
