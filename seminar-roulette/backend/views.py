@@ -95,7 +95,8 @@ class DidAttendSeminar(APIView):
 
         seminar_history = SeminarHistory.objects.get(seminar=seminar, user=user)
         seminar_history.attended = not discarded
-        seminar_history.rating = request.data['rating']
+        if seminar_history.attended:
+            seminar_history.rating = request.data['rating']
         seminar_history.discarded = discarded
         seminar_history.save()
 
