@@ -7,6 +7,10 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+  grid: {
+    minHeight: "100vh",
+    maxWidth: "100%",
+  },
 }));
 
 const Landing = () => {
@@ -23,7 +27,7 @@ const Landing = () => {
         direction="column"
         alignItems="center"
         justify="center"
-        style={{ minHeight: "100vh", maxWidth: "100%" }}
+        className={classes.grid}
       >
         <Grid item xs={12} align="center">
           <Typography variant="h2">Seminar Roulette</Typography>
