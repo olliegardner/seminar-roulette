@@ -3,6 +3,9 @@ import axios from "axios";
 import moment from "moment";
 import { Box, Card, Grid, makeStyles, Typography } from "@material-ui/core";
 import { useAnimatePresence } from "use-animate-presence";
+import ScheduleOutlinedIcon from "@material-ui/icons/ScheduleOutlined";
+import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
+import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,6 +20,10 @@ const useStyles = makeStyles((theme) => ({
   seminarBox: {
     maxHeight: 500,
     overflow: "auto",
+  },
+  wrapIcon: {
+    verticalAlign: "middle",
+    display: "inline-flex",
   },
 }));
 
@@ -70,15 +77,29 @@ const Lucky = () => {
                     >
                       <Typography variant="h4">{seminar.title}</Typography>
                       <br />
+
                       <Typography>
-                        <b>
+                        <span className={classes.wrapIcon}>
+                          <ScheduleOutlinedIcon />{" "}
                           {moment(seminar.start_time).format("Do MMMM YYYY")},{" "}
                           {moment(seminar.start_time).format("H:mm")} -{" "}
                           {moment(seminar.end_time).format("H:mm")}
-                        </b>
+                        </span>
                       </Typography>
-                      <Typography>{seminar.speaker.speaker}</Typography>
-                      <Typography>{seminar.location.location}</Typography>
+
+                      <Typography>
+                        <span className={classes.wrapIcon}>
+                          <PersonOutlineOutlinedIcon />{" "}
+                          {seminar.speaker.speaker}
+                        </span>
+                      </Typography>
+
+                      <Typography>
+                        <span className={classes.wrapIcon}>
+                          <LocationOnOutlinedIcon /> {seminar.location.location}
+                        </span>
+                      </Typography>
+
                       <br />
                       <Typography>{seminar.description}</Typography>
                     </Box>
