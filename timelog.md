@@ -106,3 +106,9 @@ N/A - projects not released.
 
 - _1 hour_ Attempted to setup SLL self-signed certificate.
 - _1 hour_ Weekly meeting with Jeremy and wrote up meeting minutes.
+
+## Week 6
+
+### 26 Oct 2020
+
+- _2 hour_ Created GitHub CI pipeline for Django unit tests. Wrote some basic unit tests for the Samoa feed.

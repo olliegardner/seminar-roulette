@@ -71,11 +71,14 @@ class Seminar(models.Model):
     title = models.CharField(max_length=255, null=False, blank=False)
     description = models.TextField(null=True, blank=True)
     registration_url = models.URLField(max_length=1000, null=True, blank=True)
-    start_time = models.DateTimeField(null=False, blank=False)
-    end_time = models.DateTimeField(null=False, blank=False)
-    speaker = models.ForeignKey(Speaker, on_delete=models.CASCADE)
-    seminar_group = models.ForeignKey(SeminarGroup, on_delete=models.CASCADE)
-    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    start_time = models.DateTimeField(null=True, blank=True)
+    end_time = models.DateTimeField(null=True, blank=True)
+    speaker = models.ForeignKey(Speaker, on_delete=models.CASCADE, null=True)
+    seminar_group = models.ForeignKey(
+        SeminarGroup, on_delete=models.CASCADE, null=True
+    )
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True)
+    samoa_id = models.IntegerField(null=True, blank=True, unique=True)
 
     class Meta:
         unique_together = ['title', 'start_time', 'end_time', 'speaker']

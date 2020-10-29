@@ -45,7 +45,10 @@ DATABASES = {
             'PASSWORD': env('DB_PASSWORD'),
             'HOST': 'localhost',
             'PORT': '',
-        }
+            'TEST': {
+                'NAME': 'seminarroulettetest',
+            },
+        },
 }
 
 # Password validation
