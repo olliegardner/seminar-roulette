@@ -1,16 +1,6 @@
 import React, { Fragment, useState, useEffect, useContext } from "react";
 import axios from "axios";
-import {
-  Box,
-  Button,
-  Card,
-  makeStyles,
-  MenuItem,
-  Typography,
-  InputLabel,
-  Select,
-  FormControl,
-} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import UserContext from "../context/UserContext";
 import HistoryCard from "../components/HistoryCard";
 
