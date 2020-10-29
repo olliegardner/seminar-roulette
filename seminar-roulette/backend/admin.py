@@ -29,7 +29,7 @@ class SeminarAdmin(admin.ModelAdmin):
 
 
 class SeminarHistoryAdmin(admin.ModelAdmin):
-    list_display = ['seminar', 'user', 'attended', 'rating']
+    list_display = ['seminar', 'user', 'attended', 'rating', 'discarded']
 
 
 admin.site.register(UniversityUser, UniversityUserAdmin)

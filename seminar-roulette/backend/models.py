@@ -102,6 +102,7 @@ class SeminarHistory(models.Model):
             MaxValueValidator(10),
         ]
     )
+    discarded = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ['seminar', 'user']

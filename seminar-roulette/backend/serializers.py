@@ -47,4 +47,4 @@ class SeminarHistorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SeminarHistory
-        fields = ('seminar', 'user', 'attended', 'rating')
+        fields = ('seminar', 'user', 'attended', 'rating', 'discarded')

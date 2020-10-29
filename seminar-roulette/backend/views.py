@@ -55,7 +55,9 @@ class UserSeminarHistory(APIView):
         guid = self.request.query_params.get('guid')
         user = self.get_user(guid)
 
-        seminar_history = SeminarHistory.objects.filter(user=user)
+        seminar_history = SeminarHistory.objects.filter(
+            user=user, attended=False, discarded=False
+        )
         serializer = SeminarHistorySerializer(seminar_history, many=True)
         return Response(serializer.data)
 
@@ -66,4 +68,35 @@ class UserSeminarHistory(APIView):
         seminar_history = SeminarHistory.objects.create(
             seminar=seminar, user=user
         )
+        return Response('success')
+
+
+class DidAttendSeminar(APIView):
+    """
+    Set a seminar to attended.
+    """
+    def get_user(self, guid):
+        try:
+            return UniversityUser.objects.get(guid=guid)
+        except UniversityUser.DoesNotExist:
+            raise Http404
+
+    def get_seminar(self, id):
+        try:
+            return Seminar.objects.get(id=id)
+        except Seminar.DoesNotExist:
+            raise Http404
+
+    def put(self, request, format=None):
+        guid = self.request.query_params.get('guid')
+        user = self.get_user(guid)
+        seminar = self.get_seminar(request.data['seminar'])
+        discarded = request.data['discarded']
+
+        seminar_history = SeminarHistory.objects.get(seminar=seminar, user=user)
+        seminar_history.attended = not discarded
+        seminar_history.rating = request.data['rating']
+        seminar_history.discarded = discarded
+        seminar_history.save()
+
         return Response('success')
