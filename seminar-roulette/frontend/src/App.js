@@ -9,13 +9,6 @@ import {
 import UserContext from "./context/UserContext";
 import Router from "./Router";
 
-// const colours = ["#ef5777", "#575fcf", "#4bcffa", "#34e7e4", "#0be881"];
-const colours1 = ["#264653"];
-const colours2 = ["#003049"];
-const colours3 = ["#073B4C"];
-const colours4 = ["#0b032d"];
-const randomColour = colours4[Math.floor(Math.random() * colours4.length)];
-
 const muiTheme = createMuiTheme({
   palette: {
     text: {
@@ -23,11 +16,16 @@ const muiTheme = createMuiTheme({
       secondary: colors.common.white,
     },
     background: {
-      default: randomColour,
-      paper: randomColour,
+      default: "#0b032d",
+      paper: "#0b032d",
     },
   },
   direction: "ltr",
+  props: {
+    MuiButton: {
+      disableElevation: true,
+    },
+  },
 });
 
 const App = () => {
