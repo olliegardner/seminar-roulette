@@ -118,3 +118,7 @@ N/A - projects not released.
 
 - _2 hour_ Continued on the frontend of the project. Added an animation so that the chosen seminar flys on to the page.
 - _3 hour_ Implemented user seminar history which is added to whenever a seminar is recommended to a user. Users have the ability to say whether they have attended the seminar or not and what they would rate it if they did attend.
+
+### 30 Oct 2020
+
+- _1 hour_ Weekly meeting with Jeremy and wrote up the meeting minutes.
