@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.db.models import Q
 from .managers import UniversityUserManager
 
 
@@ -84,5 +86,27 @@ class Seminar(models.Model):
         unique_together = ['title', 'start_time', 'end_time', 'speaker']
 
     def __str__(self):
-        return self.title + ' ' + str(self.start_time
-                                     ) + '-' + str(self.end_time)
+        return self.title
+
+
+# seminars have been recommended to a user
+class SeminarHistory(models.Model):
+    seminar = models.ForeignKey(Seminar, on_delete=models.CASCADE)
+    user = models.ForeignKey(UniversityUser, on_delete=models.CASCADE)
+    attended = models.BooleanField(default=False)
+    rating = models.IntegerField(
+        null=True,
+        blank=True,
+        validators=[
+            MinValueValidator(1),
+            MaxValueValidator(10),
+        ]
+    )
+    discarded = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ['seminar', 'user']
+        verbose_name_plural = 'seminar histories'
+
+    def __str__(self):
+        return str(self.seminar) + ' - ' + str(self.user)

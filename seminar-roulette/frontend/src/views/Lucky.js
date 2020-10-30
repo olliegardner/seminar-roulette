@@ -1,8 +1,10 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useContext } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 import { Grid, makeStyles } from "@material-ui/core";
 import { useAnimatePresence } from "use-animate-presence";
 import SeminarCard from "../components/SeminarCard";
+import UserContext from "../context/UserContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +22,8 @@ const variants = {
 
 const Lucky = () => {
   const classes = useStyles();
+  const user = useContext(UserContext);
+  const csrftoken = Cookies.get("csrftoken");
 
   const [seminar, setSeminar] = useState({});
   const [loaded, setLoaded] = useState(false);
@@ -36,6 +40,21 @@ const Lucky = () => {
         setSeminar(res.data);
         setLoaded(true);
         animatedDiv.togglePresence();
+
+        axios
+          .post(
+            `api/seminars/history.json`,
+            {
+              guid: user.guid,
+              seminar: res.data.id,
+            },
+            {
+              headers: {
+                "X-CSRFToken": csrftoken,
+              },
+            }
+          )
+          .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
   }, []);

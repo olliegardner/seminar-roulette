@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render
 from django.utils import timezone
 from rest_framework.response import Response
@@ -32,3 +33,71 @@ class RandomSeminar(APIView):
 
         serializer = SeminarSerializer(random_seminar)
         return Response(serializer.data)
+
+
+class UserSeminarHistory(APIView):
+    """
+    Create seminar history for a user.
+    """
+    def get_user(self, guid):
+        try:
+            return UniversityUser.objects.get(guid=guid)
+        except UniversityUser.DoesNotExist:
+            raise Http404
+
+    def get_seminar(self, id):
+        try:
+            return Seminar.objects.get(id=id)
+        except Seminar.DoesNotExist:
+            raise Http404
+
+    def get(self, request, format=None):
+        guid = self.request.query_params.get('guid')
+        user = self.get_user(guid)
+
+        seminar_history = SeminarHistory.objects.filter(
+            user=user, attended=False, discarded=False
+        )
+        serializer = SeminarHistorySerializer(seminar_history, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        user = self.get_user(request.data['guid'])
+        seminar = self.get_seminar(request.data['seminar'])
+
+        seminar_history = SeminarHistory.objects.create(
+            seminar=seminar, user=user
+        )
+        return Response('success')
+
+
+class DidAttendSeminar(APIView):
+    """
+    Set a seminar to attended.
+    """
+    def get_user(self, guid):
+        try:
+            return UniversityUser.objects.get(guid=guid)
+        except UniversityUser.DoesNotExist:
+            raise Http404
+
+    def get_seminar(self, id):
+        try:
+            return Seminar.objects.get(id=id)
+        except Seminar.DoesNotExist:
+            raise Http404
+
+    def put(self, request, format=None):
+        guid = self.request.query_params.get('guid')
+        user = self.get_user(guid)
+        seminar = self.get_seminar(request.data['seminar'])
+        discarded = request.data['discarded']
+
+        seminar_history = SeminarHistory.objects.get(seminar=seminar, user=user)
+        seminar_history.attended = not discarded
+        if seminar_history.attended:
+            seminar_history.rating = request.data['rating']
+        seminar_history.discarded = discarded
+        seminar_history.save()
+
+        return Response('success')
