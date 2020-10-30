@@ -37,7 +37,12 @@ Week-by-week plan for the whole project.
   - Keep track of user's seminar history and likes/dislikes.
   - Unit tests for Samoa feed.
 - **Week 7**
+  - Implement recommender system e.g. collaborative filtering.
+  - Filter seminars by timescale dropdown option.
+  - Continue improving the frontend.
+  - Navigation flow of the system.
 - **Week 8**
+  - I'm feeling hungry button.
 - **Week 9**
 - **Week 10**
 - **Week 11 [PROJECT WEEK]**
