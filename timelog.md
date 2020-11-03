@@ -125,6 +125,10 @@ N/A - projects not released.
 
 ## Week 7
 
-### 3 Nov 2020
+### 2 Nov 2020
 
 - _1.5 hour_ Re-designed the frontend of the system, making theme colour indigo.
+
+### 3 Nov 2020
+
+- _1.5 hour_ Started working on the navigation structure of the system. Created a top navigation bar.
