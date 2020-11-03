@@ -8,7 +8,7 @@ import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 
 const useStyles = makeStyles((theme) => ({
   seminarCard: {
-    backgroundColor: "#f67e7d",
+    backgroundColor: theme.palette.primary.main,
   },
   seminarBox: {
     maxHeight: 500,
@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
   wrapIcon: {
     verticalAlign: "middle",
     display: "inline-flex",
+  },
+  whiteText: {
+    color: theme.palette.common.white,
   },
 }));
 
@@ -27,10 +30,12 @@ const SeminarCard = (props) => {
   return (
     <Card className={classes.seminarCard}>
       <Box p={2} textAlign="center" className={classes.seminarBox}>
-        <Typography variant="h4">{seminar.title}</Typography>
+        <Typography variant="h4" className={classes.whiteText}>
+          {seminar.title}
+        </Typography>
         <br />
 
-        <Typography>
+        <Typography className={classes.whiteText}>
           <span className={classes.wrapIcon}>
             <ScheduleOutlinedIcon />{" "}
             {moment(seminar.start_time).format("Do MMMM YYYY")},{" "}
@@ -39,20 +44,22 @@ const SeminarCard = (props) => {
           </span>
         </Typography>
 
-        <Typography>
+        <Typography className={classes.whiteText}>
           <span className={classes.wrapIcon}>
             <PersonOutlineOutlinedIcon /> {seminar.speaker.speaker}
           </span>
         </Typography>
 
-        <Typography>
+        <Typography className={classes.whiteText}>
           <span className={classes.wrapIcon}>
             <LocationOnOutlinedIcon /> {seminar.location.location}
           </span>
         </Typography>
 
         <br />
-        <Typography>{seminar.description}</Typography>
+        <Typography className={classes.whiteText}>
+          {seminar.description}
+        </Typography>
       </Box>
     </Card>
   );

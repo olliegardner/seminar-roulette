@@ -122,3 +122,9 @@ N/A - projects not released.
 ### 30 Oct 2020
 
 - _1 hour_ Weekly meeting with Jeremy and wrote up the meeting minutes.
+
+## Week 7
+
+### 3 Nov 2020
+
+- _1.5 hour_ Re-designed the frontend of the system, making theme colour indigo.

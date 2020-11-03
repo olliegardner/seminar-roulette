@@ -75,8 +75,10 @@ class EventFeeds():
             speaker, speaker_created = Speaker.objects.get_or_create(
                 speaker=event['speaker'],
                 affiliation=event['speakerAffiliation'],
-                url=event['speakerUrl']
             )
+            if speaker_created:
+                speaker.url = event['speakerUrl']
+                speaker.save()
 
             seminar, seminar_created = Seminar.objects.get_or_create(
                 samoa_id=event['id']

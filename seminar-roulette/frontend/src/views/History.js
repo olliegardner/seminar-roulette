@@ -1,6 +1,6 @@
-import React, { Fragment, useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, Grid } from "@material-ui/core";
 import UserContext from "../context/UserContext";
 import HistoryCard from "../components/HistoryCard";
 
@@ -15,7 +15,7 @@ const History = () => {
   const user = useContext(UserContext);
 
   const [history, setHistory] = useState([]);
-  const [historyUpdated, setHistoryUpdated] = useState({});
+  const [historyUpdated, setHistoryUpdated] = useState(0);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -31,15 +31,17 @@ const History = () => {
   return (
     <div className={classes.root}>
       {loaded && (
-        <Fragment>
+        <Grid container spacing={3}>
           {history.map((history) => (
-            <HistoryCard
-              seminar={history.seminar}
-              historyUpdated={historyUpdated}
-              setHistoryUpdated={setHistoryUpdated}
-            />
+            <Grid item key={history.seminar.id} xs={12} sm={6} md={4} lg={3}>
+              <HistoryCard
+                seminar={history.seminar}
+                historyUpdated={historyUpdated}
+                setHistoryUpdated={setHistoryUpdated}
+              />
+            </Grid>
           ))}
-        </Fragment>
+        </Grid>
       )}
     </div>
   );
