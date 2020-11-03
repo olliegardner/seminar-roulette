@@ -11,16 +11,32 @@ import Router from "./Router";
 
 const muiTheme = createMuiTheme({
   palette: {
+    primary: {
+      main: colors.indigo[600],
+    },
+    secondary: {
+      main: "#5850EC",
+    },
     text: {
-      primary: colors.common.white,
-      secondary: colors.common.white,
+      primary: colors.blueGrey[900],
+      secondary: colors.blueGrey[600],
     },
     background: {
-      default: "#0b032d",
-      paper: "#0b032d",
+      default: colors.common.white,
+      dark: "#f4f6f8",
+      paper: colors.common.white,
     },
   },
   direction: "ltr",
+  overrides: {
+    MuiSelect: {
+      select: {
+        "&:focus": {
+          backgroundColor: colors.common.white,
+        },
+      },
+    },
+  },
   props: {
     MuiPaper: {
       elevation: 0,

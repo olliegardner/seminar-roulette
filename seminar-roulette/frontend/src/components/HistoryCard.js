@@ -5,20 +5,25 @@ import Cookies from "js-cookie";
 import {
   Box,
   Button,
-  Card,
   makeStyles,
   MenuItem,
   Typography,
   InputLabel,
   Select,
   FormControl,
+  Paper,
 } from "@material-ui/core";
 import UserContext from "../context/UserContext";
 
 const useStyles = makeStyles((theme) => ({
   seminarCard: {
-    backgroundColor: "#f67e7d",
-    marginBottom: theme.spacing(3),
+    display: "flex",
+    flexDirection: "column",
+    height: "100%",
+    justifyContent: "space-between",
+  },
+  whiteText: {
+    color: theme.palette.common.white,
   },
 }));
 
@@ -49,10 +54,9 @@ const HistoryCard = (props) => {
   };
 
   return (
-    <Card className={classes.seminarCard}>
+    <Paper variant="outlined" className={classes.seminarCard}>
       <Box p={2} textAlign="center">
         <Typography variant="h6">{seminar.title}</Typography>
-        <Typography>ID: {seminar.id}</Typography>
 
         <Typography>
           Did you attend this seminar? If so, what would you rate it?
@@ -96,7 +100,7 @@ const HistoryCard = (props) => {
           No
         </Button>
       </Box>
-    </Card>
+    </Paper>
   );
 };
 
