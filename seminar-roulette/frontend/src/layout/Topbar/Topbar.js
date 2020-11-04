@@ -30,7 +30,7 @@ const Topbar = (props) => {
   return (
     <AppBar {...rest} className={clsx(classes.root, className)}>
       <Toolbar>
-        <Hidden mdDown>
+        <Hidden smDown>
           <RouterLink to="/" className={classes.titleLink}>
             <Typography variant="h5">
               <b>Seminar Roulette</b>

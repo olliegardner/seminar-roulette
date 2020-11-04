@@ -1,18 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import {
-  Badge,
-  Box,
-  Divider,
-  IconButton,
-  ListItem,
-  ListItemText,
-  MenuItem,
-  Popover,
-  Tooltip,
-  Typography,
-} from "@material-ui/core";
-import { grey } from "@material-ui/core/colors";
+import { Badge, IconButton, Tooltip } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import HistoryOutlinedIcon from "@material-ui/icons/HistoryOutlined";
 import UserContext from "../../context/UserContext";
 
@@ -21,22 +10,26 @@ const HistoryMenu = () => {
 
   const [historyCount, setHistoryCount] = useState(0);
 
+  const getHistoryCount = () => {
+    axios
+      .get(`api/seminars/history.json?guid=${user.guid}`)
+      .then((res) => {
+        setHistoryCount(res.data.length);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => getHistoryCount());
+
   useEffect(() => {
-    // runs api call every 30 seconds
-    const interval = setInterval(() => {
-      axios
-        .get(`api/seminars/history.json?guid=${user.guid}`)
-        .then((res) => {
-          setHistoryCount(res.data.length);
-        })
-        .catch((err) => console.log(err));
-    }, 30000);
+    // runs api call every 15 seconds
+    const interval = setInterval(() => getHistoryCount(), 15000);
     return () => clearInterval(interval);
   }, []);
 
   return (
     <Tooltip title="History">
-      <IconButton color="inherit">
+      <IconButton color="inherit" component={Link} to="/history">
         <Badge badgeContent={historyCount} color="secondary">
           <HistoryOutlinedIcon />
         </Badge>

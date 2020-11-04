@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     height: "100%",
     paddingTop: 56,
+    maxWidth: "100vw",
     [theme.breakpoints.up("sm")]: {
       paddingTop: 64,
     },
@@ -21,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
     flex: "1 1 auto",
     backgroundColor: theme.palette.background.dark,
   },
+  wrapper: {
+    padding: theme.spacing(3),
+  },
 }));
 
 const Layout = (props) => {
@@ -30,7 +34,11 @@ const Layout = (props) => {
   return (
     <div className={classes.root}>
       <Topbar />
-      <main className={classes.content}>{children}</main>
+      <main className={classes.content}>
+        {/* <div className={classes.root}> */}
+        <div className={classes.wrapper}>{children}</div>
+        {/* </div> */}
+      </main>
     </div>
   );
 };
