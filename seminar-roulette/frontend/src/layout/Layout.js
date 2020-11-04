@@ -35,9 +35,7 @@ const Layout = (props) => {
     <div className={classes.root}>
       <Topbar />
       <main className={classes.content}>
-        {/* <div className={classes.root}> */}
         <div className={classes.wrapper}>{children}</div>
-        {/* </div> */}
       </main>
     </div>
   );

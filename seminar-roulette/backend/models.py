@@ -94,12 +94,14 @@ class SeminarHistory(models.Model):
     seminar = models.ForeignKey(Seminar, on_delete=models.CASCADE)
     user = models.ForeignKey(UniversityUser, on_delete=models.CASCADE)
     attended = models.BooleanField(default=False)
-    rating = models.IntegerField(
+    rating = models.DecimalField(
         null=True,
         blank=True,
+        decimal_places=1,
+        max_digits=2,
         validators=[
             MinValueValidator(1),
-            MaxValueValidator(10),
+            MaxValueValidator(5),
         ]
     )
     discarded = models.BooleanField(default=False)
