@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react";
-import { Button, Grid, makeStyles, Typography } from "@material-ui/core";
-import UserContext from "../context/UserContext";
+import React, { useState } from "react";
+import { Button, Grid, makeStyles } from "@material-ui/core";
 import SeminarWheel from "../components/SeminarWheel";
 
 const useStyles = makeStyles((theme) => ({
@@ -8,14 +7,15 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   grid: {
-    minHeight: "100vh",
-    maxWidth: "100%",
+    minHeight: "90vh",
+  },
+  randomSeminarButton: {
+    marginTop: theme.spacing(2),
   },
 }));
 
 const Landing = () => {
   const classes = useStyles();
-  const user = useContext(UserContext);
 
   const [spin, setSpin] = useState(false);
 
@@ -25,17 +25,18 @@ const Landing = () => {
         container
         spacing={0}
         direction="column"
-        alignItems="center"
+        align="center"
         justify="center"
         className={classes.grid}
       >
-        <Grid item xs={12} align="center">
-          <Typography variant="h2">Seminar Roulette</Typography>
-          <Typography>Current user: {user.guid}</Typography>
-          <br />
+        <Grid item xs={12}>
           <SeminarWheel spin={spin} />
-          <br />
-          <Button variant="contained" onClick={() => setSpin(true)}>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => setSpin(true)}
+            className={classes.randomSeminarButton}
+          >
             Random Seminar
           </Button>
         </Grid>

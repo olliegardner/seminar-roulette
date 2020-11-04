@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   grid: {
-    minHeight: "100vh",
+    minHeight: "90vh",
   },
 }));
 
