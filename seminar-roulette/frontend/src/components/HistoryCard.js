@@ -6,13 +6,11 @@ import {
   Box,
   Button,
   makeStyles,
-  MenuItem,
   Typography,
-  InputLabel,
-  Select,
   FormControl,
   Paper,
 } from "@material-ui/core";
+import Rating from "@material-ui/lab/Rating";
 import UserContext from "../context/UserContext";
 
 const useStyles = makeStyles((theme) => ({
@@ -22,8 +20,21 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     justifyContent: "space-between",
   },
-  whiteText: {
-    color: theme.palette.common.white,
+  attendText: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+  },
+  noYesRow: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: theme.spacing(2),
+  },
+  noButton: {
+    marginRight: theme.spacing(2),
+  },
+  yesButton: {
+    marginLeft: theme.spacing(2),
   },
 }));
 
@@ -34,7 +45,7 @@ const HistoryCard = (props) => {
   const user = useContext(UserContext);
   const csrftoken = Cookies.get("csrftoken");
 
-  const [rating, setRating] = useState("");
+  const [rating, setRating] = useState(0);
 
   const setSeminarAttended = (seminarId, discarded) => {
     axios
@@ -58,47 +69,38 @@ const HistoryCard = (props) => {
       <Box p={2} textAlign="center">
         <Typography variant="h6">{seminar.title}</Typography>
 
-        <Typography>
+        <Typography className={classes.attendText}>
           Did you attend this seminar? If so, what would you rate it?
         </Typography>
-        <br />
 
         <FormControl variant="outlined">
-          <InputLabel id="rating-label">Rating</InputLabel>
-          <Select
-            label="Rating"
-            labelId="rating-label"
+          <Rating
+            name={`rating-${seminar.id}`}
+            defaultValue={0}
+            precision={0.5}
             value={rating}
             onChange={(e) => setRating(e.target.value)}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={1}>1</MenuItem>
-            <MenuItem value={2}>2</MenuItem>
-            <MenuItem value={3}>3</MenuItem>
-            <MenuItem value={4}>4</MenuItem>
-            <MenuItem value={5}>5</MenuItem>
-            <MenuItem value={6}>6</MenuItem>
-            <MenuItem value={7}>7</MenuItem>
-            <MenuItem value={8}>8</MenuItem>
-            <MenuItem value={9}>9</MenuItem>
-            <MenuItem value={10}>10</MenuItem>
-          </Select>
+          />
         </FormControl>
 
-        <Button
-          variant="contained"
-          onClick={() => setSeminarAttended(seminar.id, false)}
-        >
-          Yes
-        </Button>
-        <Button
-          variant="contained"
-          onClick={() => setSeminarAttended(seminar.id, true)}
-        >
-          No
-        </Button>
+        <div className={classes.noYesRow}>
+          <Button
+            variant="contained"
+            color="secondary"
+            className={classes.noButton}
+            onClick={() => setSeminarAttended(seminar.id, true)}
+          >
+            No
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            className={classes.yesButton}
+            onClick={() => setSeminarAttended(seminar.id, false)}
+          >
+            Yes
+          </Button>
+        </div>
       </Box>
     </Paper>
   );

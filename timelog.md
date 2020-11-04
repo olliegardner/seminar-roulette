@@ -132,3 +132,7 @@ N/A - projects not released.
 ### 3 Nov 2020
 
 - _1.5 hour_ Started working on the navigation structure of the system. Created a top navigation bar.
+
+### 4 Nov 2020
+
+- _1.5 hour_ Finished off navigation flow and made the topbar responsive on mobile. Change rating to stars from 1-5.
