@@ -19,13 +19,15 @@ const data = [
 ];
 
 const SeminarWheel = (props) => {
-  const { spin } = props;
+  const { spin, time } = props;
   const history = useHistory();
+
+  const randomNumber = Math.floor(Math.random * data.length);
 
   return (
     <Wheel
       mustStartSpinning={spin}
-      prizeNumber={2}
+      prizeNumber={randomNumber}
       data={data}
       backgroundColors={["#ffb997", "#f67e7d", "#843b62", "#621940"]}
       textColors={["#eeeeee"]}
@@ -38,7 +40,7 @@ const SeminarWheel = (props) => {
       radiusLineWidth={2}
       textDistance={60}
       onStopSpinning={() => {
-        history.push("/lucky");
+        history.push(`/lucky/?time=${time}`);
       }}
     />
   );
@@ -48,4 +50,5 @@ export default SeminarWheel;
 
 SeminarWheel.propTypes = {
   spin: PropTypes.bool,
+  time: PropTypes.string,
 };

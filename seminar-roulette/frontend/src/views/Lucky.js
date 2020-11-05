@@ -23,10 +23,14 @@ const variants = {
 const Lucky = () => {
   const classes = useStyles();
   const user = useContext(UserContext);
+
   const csrftoken = Cookies.get("csrftoken");
 
   const [seminar, setSeminar] = useState({});
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(true);
+
+  const params = new URLSearchParams(window.location.search);
+  const time = params.get("time");
 
   const animatedDiv = useAnimatePresence({
     variants,
@@ -35,7 +39,7 @@ const Lucky = () => {
 
   useEffect(() => {
     axios
-      .get(`api/seminars/random.json`)
+      .get(`api/seminars/random.json?time=${time}`)
       .then((res) => {
         setSeminar(res.data);
         setLoaded(true);
