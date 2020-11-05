@@ -41,7 +41,7 @@ const Lucky = () => {
 
   useEffect(() => {
     axios
-      .get(`api/seminars/random.json?time=${time}`)
+      .get(`api/seminars/random.json?time=${time}&guid=${user.guid}`)
       .then((res) => {
         setSeminar(res.data);
         setLoaded(true);

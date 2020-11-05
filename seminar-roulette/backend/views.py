@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import render
 from django.utils import timezone
@@ -9,6 +10,20 @@ from .serializers import *
 
 import datetime
 import calendar
+
+
+class Helpers():
+    def get_user(self, guid):
+        try:
+            return UniversityUser.objects.get(guid=guid)
+        except UniversityUser.DoesNotExist:
+            raise Http404
+
+    def get_seminar(self, id):
+        try:
+            return Seminar.objects.get(id=id)
+        except Seminar.DoesNotExist:
+            raise Http404
 
 
 class CurrentUser(APIView):
@@ -28,14 +43,19 @@ class RandomSeminar(APIView):
     Chooses a random upcoming seminar from the databse.
     """
     def get(self, request, format=None):
+        helpers = Helpers()
+
         time = self.request.query_params.get('time')
+        guid = self.request.query_params.get('guid')
+
+        user = helpers.get_user(guid)
         now = timezone.now()
 
         if time == "hour":
             then = now + timezone.timedelta(hours=1)
 
             seminars = Seminar.objects.filter(
-                start_time__gte=now, end_time__lte=then
+                start_time__gte=now, start_time__lte=then
             )
         elif time == "today":
             seminars = Seminar.objects.filter(
@@ -63,7 +83,23 @@ class RandomSeminar(APIView):
                 start_time__date__range=(now.date(), end_of_month)
             )
 
-        random_seminar = seminars.order_by('?').first()
+        seminar_history = SeminarHistory.objects.filter(user=user)
+
+        # get seminars which user has attended OR discarded
+        seminar_history_attended_discarded = seminar_history.filter(
+            Q(attended=True) | Q(discarded=True)
+        ).values_list('seminar')
+
+        seminars_attended_discarded = Seminar.objects.filter(
+            id__in=seminar_history_attended_discarded
+        )
+
+        # get seminars in a time frame which a user hasn't been to or been recommended
+        available_seminars = seminars.exclude(
+            id__in=seminars_attended_discarded
+        )
+
+        random_seminar = available_seminars.order_by('?').first()
 
         if random_seminar:
             serializer = SeminarSerializer(random_seminar)
@@ -76,21 +112,11 @@ class UserSeminarHistory(APIView):
     """
     Create seminar history for a user.
     """
-    def get_user(self, guid):
-        try:
-            return UniversityUser.objects.get(guid=guid)
-        except UniversityUser.DoesNotExist:
-            raise Http404
-
-    def get_seminar(self, id):
-        try:
-            return Seminar.objects.get(id=id)
-        except Seminar.DoesNotExist:
-            raise Http404
-
     def get(self, request, format=None):
+        helpers = Helpers()
+
         guid = self.request.query_params.get('guid')
-        user = self.get_user(guid)
+        user = helpers.get_user(guid)
 
         seminar_history = SeminarHistory.objects.filter(
             user=user, attended=False, discarded=False
@@ -99,8 +125,9 @@ class UserSeminarHistory(APIView):
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        user = self.get_user(request.data['guid'])
-        seminar = self.get_seminar(request.data['seminar'])
+        helpers = Helpers()
+        user = helpers.get_user(request.data['guid'])
+        seminar = helpers.get_seminar(request.data['seminar'])
 
         seminar_history = SeminarHistory.objects.create(
             seminar=seminar, user=user
@@ -112,22 +139,12 @@ class DidAttendSeminar(APIView):
     """
     Set a seminar to attended.
     """
-    def get_user(self, guid):
-        try:
-            return UniversityUser.objects.get(guid=guid)
-        except UniversityUser.DoesNotExist:
-            raise Http404
-
-    def get_seminar(self, id):
-        try:
-            return Seminar.objects.get(id=id)
-        except Seminar.DoesNotExist:
-            raise Http404
-
     def put(self, request, format=None):
+        helpers = Helpers()
+
         guid = self.request.query_params.get('guid')
-        user = self.get_user(guid)
-        seminar = self.get_seminar(request.data['seminar'])
+        user = helpers.get_user(guid)
+        seminar = helpers.get_seminar(request.data['seminar'])
         discarded = request.data['discarded']
 
         seminar_history = SeminarHistory.objects.get(seminar=seminar, user=user)
