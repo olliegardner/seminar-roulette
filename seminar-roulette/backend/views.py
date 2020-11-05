@@ -7,6 +7,9 @@ from rest_framework.views import APIView
 from .models import *
 from .serializers import *
 
+import datetime
+import calendar
+
 
 class CurrentUser(APIView):
     """
@@ -26,13 +29,47 @@ class RandomSeminar(APIView):
     """
     def get(self, request, format=None):
         time = self.request.query_params.get('time')
-
         now = timezone.now()
-        seminars = Seminar.objects.filter(start_time__gte=now)
+
+        if time == "hour":
+            then = now + timezone.timedelta(hours=1)
+
+            seminars = Seminar.objects.filter(
+                start_time__gte=now, end_time__lte=then
+            )
+        elif time == "today":
+            seminars = Seminar.objects.filter(
+                start_time__gte=now, start_time__date=now.date()
+            )
+        elif time == "tomorrow":
+            tomorrow = now + timezone.timedelta(days=1)
+
+            seminars = Seminar.objects.filter(start_time__date=tomorrow)
+        elif time == "week":
+            end_of_week = now + timezone.timedelta(days=6 - now.weekday())
+
+            seminars = Seminar.objects.filter(
+                start_time__gte=now,
+                start_time__date__range=(now.date(), end_of_week)
+            )
+        elif time == "month":
+            end_of_month = datetime.date(
+                now.year, now.month,
+                calendar.monthrange(now.year, now.month)[-1]
+            )
+
+            seminars = Seminar.objects.filter(
+                start_time__gte=now,
+                start_time__date__range=(now.date(), end_of_month)
+            )
+
         random_seminar = seminars.order_by('?').first()
 
-        serializer = SeminarSerializer(random_seminar)
-        return Response(serializer.data)
+        if random_seminar:
+            serializer = SeminarSerializer(random_seminar)
+            return Response(serializer.data)
+        else:
+            return Response('No seminar found')
 
 
 class UserSeminarHistory(APIView):

@@ -1,8 +1,10 @@
 import React, { Fragment, useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { Grid, makeStyles } from "@material-ui/core";
+import { Button, Grid, makeStyles, Typography } from "@material-ui/core";
 import { useAnimatePresence } from "use-animate-presence";
+import { Link } from "react-router-dom";
+
 import SeminarCard from "../components/SeminarCard";
 import UserContext from "../context/UserContext";
 
@@ -45,20 +47,22 @@ const Lucky = () => {
         setLoaded(true);
         animatedDiv.togglePresence();
 
-        axios
-          .post(
-            `api/seminars/history.json`,
-            {
-              guid: user.guid,
-              seminar: res.data.id,
-            },
-            {
-              headers: {
-                "X-CSRFToken": csrftoken,
+        if (res.data != "No seminar found") {
+          axios
+            .post(
+              `api/seminars/history.json`,
+              {
+                guid: user.guid,
+                seminar: res.data.id,
               },
-            }
-          )
-          .catch((err) => console.log(err));
+              {
+                headers: {
+                  "X-CSRFToken": csrftoken,
+                },
+              }
+            )
+            .catch((err) => console.log(err));
+        }
       })
       .catch((err) => console.log(err));
   }, []);
@@ -77,9 +81,24 @@ const Lucky = () => {
                 justify="center"
                 className={classes.grid}
               >
-                <Grid item xs={12} sm={10} md={6}>
-                  <SeminarCard seminar={seminar} />
-                </Grid>
+                {seminar == "No seminar found" ? (
+                  <Fragment>
+                    <Typography variant="h5">No seminar found!</Typography>
+                    <br />
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      component={Link}
+                      to="/"
+                    >
+                      Spin Again
+                    </Button>
+                  </Fragment>
+                ) : (
+                  <Grid item xs={12} sm={10} md={6}>
+                    <SeminarCard seminar={seminar} />
+                  </Grid>
+                )}
               </Grid>
             </div>
           )}
