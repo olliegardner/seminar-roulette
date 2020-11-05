@@ -80,25 +80,29 @@ class EventFeeds():
                 speaker.url = event['speakerUrl']
                 speaker.save()
 
-            seminar, seminar_created = Seminar.objects.get_or_create(
-                samoa_id=event['id']
-            )
-            # remove html tags from description
-            pattern = re.compile(
-                '<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});'
-            )
-            clean_description = re.sub(pattern, '', event['description'])
+            try:
+                seminar, seminar_created = Seminar.objects.get_or_create(
+                    samoa_id=event['id']
+                )
 
-            # in case any of these fields change
-            seminar.title = event['title']
-            seminar.description = clean_description
-            seminar.registration_url = event['registrationUrl']
-            seminar.start_time = event['startTime']
-            seminar.end_time = event['endTime']
-            seminar.speaker = speaker
-            seminar.seminar_group = seminar_group
-            seminar.location = location
-            seminar.save()
+                # remove html tags from description
+                pattern = re.compile(
+                    '<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});'
+                )
+                clean_description = re.sub(pattern, '', event['description'])
+
+                # in case any of these fields change
+                seminar.title = event['title']
+                seminar.description = clean_description
+                seminar.registration_url = event['registrationUrl']
+                seminar.start_time = event['startTime']
+                seminar.end_time = event['endTime']
+                seminar.speaker = speaker
+                seminar.seminar_group = seminar_group
+                seminar.location = location
+                seminar.save()
+            except Exception:
+                continue
 
         print('Samoa event feed retrieved!')
 
