@@ -136,3 +136,4 @@ N/A - projects not released.
 ### 4 Nov 2020
 
 - _1.5 hour_ Finished off navigation flow and made the topbar responsive on mobile. Change rating to stars from 1-5.
+- _3 hour_ Added the ability to filter by time. Improved upon the frontend some more too.
