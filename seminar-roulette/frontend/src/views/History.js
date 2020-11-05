@@ -39,17 +39,28 @@ const History = () => {
             </Typography>
           </Box>
 
-          <Grid container spacing={3}>
-            {history.map((history) => (
-              <Grid item key={history.seminar.id} xs={12} sm={6} md={4} lg={3}>
-                <HistoryCard
-                  seminar={history.seminar}
-                  historyUpdated={historyUpdated}
-                  setHistoryUpdated={setHistoryUpdated}
-                />
-              </Grid>
-            ))}
-          </Grid>
+          {history.length > 0 ? (
+            <Grid container spacing={3}>
+              {history.map((history) => (
+                <Grid
+                  item
+                  key={history.seminar.id}
+                  xs={12}
+                  sm={6}
+                  md={4}
+                  lg={3}
+                >
+                  <HistoryCard
+                    seminar={history.seminar}
+                    historyUpdated={historyUpdated}
+                    setHistoryUpdated={setHistoryUpdated}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          ) : (
+            <Typography>No seminar history found.</Typography>
+          )}
         </Fragment>
       )}
     </div>
