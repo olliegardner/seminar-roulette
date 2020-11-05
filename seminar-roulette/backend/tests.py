@@ -68,17 +68,26 @@ class SamoaTests(TestCase):
 # test cases for seminar model
 class SeminarTests(TestCase):
     def setUp(self):
-        self.now = timezone.now() + timezone.timedelta(days=1)
+        self.user = UniversityUser.objects.create_user(
+            guid='1234567A', password='password'
+        )
+
+        self.tomorrow = timezone.now() + timezone.timedelta(days=1)
 
         self.seminar = Seminar.objects.create(
             title='Example Seminar',
             description='This is an example seminar about something.',
-            start_time=self.now,
-            end_time=self.now + timezone.timedelta(hours=2),
+            start_time=self.tomorrow,
+            end_time=self.tomorrow + timezone.timedelta(hours=2),
         )
 
+        self.client = APIClient()
+        self.client.force_authenticate(user=self.user)
+
     def test_random_seminar(self):
-        response = self.client.get('/api/seminars/random.json')
+        response = self.client.get(
+            '/api/seminars/random.json?time=tomorrow&guid=' + self.user.guid
+        )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['title'], self.seminar.title)
