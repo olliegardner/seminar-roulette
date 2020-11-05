@@ -14,6 +14,10 @@ from scipy.sparse.linalg import svds
 
 
 class Recommender:
+    """
+    Recommender system code implemented using a tutorial - https://beckernick.github.io/matrix-factorization-recommender/
+    Credit goes to Nick Becker
+    """
     def __init__(self, user):
         #self.create_fake_ratings()
 
