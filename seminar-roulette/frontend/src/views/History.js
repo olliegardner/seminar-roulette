@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, Fragment } from "react";
 import axios from "axios";
-import { makeStyles, Grid } from "@material-ui/core";
+import { Box, Chip, makeStyles, Grid, Typography } from "@material-ui/core";
 import UserContext from "../context/UserContext";
 import HistoryCard from "../components/HistoryCard";
 
@@ -31,17 +31,26 @@ const History = () => {
   return (
     <div className={classes.root}>
       {loaded && (
-        <Grid container spacing={3}>
-          {history.map((history) => (
-            <Grid item key={history.seminar.id} xs={12} sm={6} md={4} lg={3}>
-              <HistoryCard
-                seminar={history.seminar}
-                historyUpdated={historyUpdated}
-                setHistoryUpdated={setHistoryUpdated}
-              />
-            </Grid>
-          ))}
-        </Grid>
+        <Fragment>
+          <Box mb={1}>
+            <Typography variant="h5">
+              Your Seminar History{" "}
+              <Chip label={history.length} size="small" color="secondary" />
+            </Typography>
+          </Box>
+
+          <Grid container spacing={3}>
+            {history.map((history) => (
+              <Grid item key={history.seminar.id} xs={12} sm={6} md={4} lg={3}>
+                <HistoryCard
+                  seminar={history.seminar}
+                  historyUpdated={historyUpdated}
+                  setHistoryUpdated={setHistoryUpdated}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </Fragment>
       )}
     </div>
   );
