@@ -1,12 +1,7 @@
-var path = require("path");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
-  watch: false,
-  output: {
-    filename: "main.js",
-    path: path.resolve(__dirname, "static"),
-    publicPath: "static/",
-  },
+  watch: true,
   module: {
     rules: [
       {
@@ -14,11 +9,16 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
-          options: {
-            compact: false,
-          },
         },
       },
     ],
   },
+  node: {
+    fs: "empty",
+  },
+  plugins: [
+    new Dotenv({
+      path: "../.env",
+    }),
+  ],
 };

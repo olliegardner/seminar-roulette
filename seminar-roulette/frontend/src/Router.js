@@ -3,8 +3,8 @@ import { Switch, Route, BrowserRouter } from "react-router-dom";
 import RouteWithLayout from "./components/RouteWithLayout";
 import Layout from "./layout/Layout";
 import Landing from "./views/Landing";
-import Lucky from "./views/Lucky";
 import History from "./views/History";
+import Lucky from "./views/Lucky";
 
 const Router = () => {
   return (

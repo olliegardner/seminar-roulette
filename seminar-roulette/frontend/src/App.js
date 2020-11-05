@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {
-  MuiThemeProvider,
-  createMuiTheme,
-  CssBaseline,
-  colors,
-} from "@material-ui/core";
+import { MuiThemeProvider, createMuiTheme, colors } from "@material-ui/core";
+import dotenv from "dotenv";
+
 import UserContext from "./context/UserContext";
 import Router from "./Router";
+
+dotenv.config();
+
+axios.defaults.baseURL =
+  process.env.PRODUCTION == "true"
+    ? "https://howard.dcs.gla.ac.uk/"
+    : "http://127.0.0.1:8000/";
 
 const muiTheme = createMuiTheme({
   palette: {
@@ -49,24 +53,27 @@ const muiTheme = createMuiTheme({
 
 const App = () => {
   const [user, setUser] = useState(null);
-  const [loaded, setLoaded] = useState(false);
+  const [userLoaded, setUserLoaded] = useState(false);
 
   useEffect(() => {
-    axios;
     axios
       .get(`api/current-user.json`)
       .then((res) => {
         setUser(res.data);
-        setLoaded(true);
       })
       .catch((err) => console.log(err));
   }, []);
 
+  useEffect(() => {
+    if (user) {
+      setUserLoaded(true);
+    }
+  }, [user]);
+
   return (
     <MuiThemeProvider theme={muiTheme}>
       <UserContext.Provider value={user}>
-        <CssBaseline />
-        {loaded && <Router />}
+        {userLoaded && <Router />}
       </UserContext.Provider>
     </MuiThemeProvider>
   );

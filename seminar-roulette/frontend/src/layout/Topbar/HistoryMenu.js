@@ -19,7 +19,9 @@ const HistoryMenu = () => {
       .catch((err) => console.log(err));
   };
 
-  useEffect(() => getHistoryCount());
+  useEffect(() => {
+    getHistoryCount();
+  }, []);
 
   useEffect(() => {
     // runs api call every 15 seconds
