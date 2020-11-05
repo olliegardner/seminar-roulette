@@ -102,6 +102,7 @@ class EventFeeds():
                 seminar.location = location
                 seminar.save()
             except Exception:
+                seminar.delete()
                 continue
 
         print('Samoa event feed retrieved!')
