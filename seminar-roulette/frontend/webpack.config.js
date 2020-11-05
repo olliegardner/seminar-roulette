@@ -1,12 +1,7 @@
-var path = require("path");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
-  watch: false,
-  output: {
-    filename: "main.js",
-    path: path.resolve(__dirname, "static"),
-    publicPath: "static/",
-  },
+  watch: true,
   module: {
     rules: [
       {
@@ -18,4 +13,12 @@ module.exports = {
       },
     ],
   },
+  node: {
+    fs: "empty",
+  },
+  plugins: [
+    new Dotenv({
+      path: "../.env",
+    }),
+  ],
 };

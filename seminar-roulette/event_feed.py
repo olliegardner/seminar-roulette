@@ -75,29 +75,35 @@ class EventFeeds():
             speaker, speaker_created = Speaker.objects.get_or_create(
                 speaker=event['speaker'],
                 affiliation=event['speakerAffiliation'],
-                url=event['speakerUrl']
             )
+            if speaker_created:
+                speaker.url = event['speakerUrl']
+                speaker.save()
 
-            seminar, seminar_created = Seminar.objects.get_or_create(
-                samoa_id=event['id']
-            )
-            # in case any of these fields change
-            seminar.title = event['title']
+            try:
+                seminar, seminar_created = Seminar.objects.get_or_create(
+                    samoa_id=event['id']
+                )
 
-            # remove html tags from description
-            pattern = re.compile(
-                '<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});'
-            )
-            clean_description = re.sub(pattern, '', event['description'])
+                # remove html tags from description
+                pattern = re.compile(
+                    '<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});'
+                )
+                clean_description = re.sub(pattern, '', event['description'])
 
-            seminar.description = clean_description
-            seminar.registration_url = event['registrationUrl']
-            seminar.start_time = event['startTime']
-            seminar.end_time = event['endTime']
-            seminar.speaker = speaker
-            seminar.seminar_group = seminar_group
-            seminar.location = location
-            seminar.save()
+                # in case any of these fields change
+                seminar.title = event['title']
+                seminar.description = clean_description
+                seminar.registration_url = event['registrationUrl']
+                seminar.start_time = event['startTime']
+                seminar.end_time = event['endTime']
+                seminar.speaker = speaker
+                seminar.seminar_group = seminar_group
+                seminar.location = location
+                seminar.save()
+            except Exception:
+                seminar.delete()
+                continue
 
         print('Samoa event feed retrieved!')
 

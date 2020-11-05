@@ -112,3 +112,28 @@ N/A - projects not released.
 ### 26 Oct 2020
 
 - _2 hour_ Created GitHub CI pipeline for Django unit tests. Wrote some basic unit tests for the Samoa feed.
+- _2 hour_ Started working on the frontend of Seminar Roulette. Added a roulette wheel animation.
+
+### 29 Oct 2020
+
+- _2 hour_ Continued on the frontend of the project. Added an animation so that the chosen seminar flys on to the page.
+- _3 hour_ Implemented user seminar history which is added to whenever a seminar is recommended to a user. Users have the ability to say whether they have attended the seminar or not and what they would rate it if they did attend.
+
+### 30 Oct 2020
+
+- _1 hour_ Weekly meeting with Jeremy and wrote up the meeting minutes.
+
+## Week 7
+
+### 2 Nov 2020
+
+- _1.5 hour_ Re-designed the frontend of the system, making theme colour indigo.
+
+### 3 Nov 2020
+
+- _1.5 hour_ Started working on the navigation structure of the system. Created a top navigation bar.
+
+### 4 Nov 2020
+
+- _1.5 hour_ Finished off navigation flow and made the topbar responsive on mobile. Change rating to stars from 1-5.
+- _3 hour_ Added the ability to filter by time. Improved upon the frontend some more too.
