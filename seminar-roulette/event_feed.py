@@ -108,5 +108,5 @@ class EventFeeds():
         print('Samoa event feed retrieved!')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     EventFeeds()

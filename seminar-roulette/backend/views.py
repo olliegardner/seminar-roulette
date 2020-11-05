@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 
 from .models import *
 from .serializers import *
+from recommender import recommendation_engine
 
 import datetime
 import calendar
@@ -155,3 +156,29 @@ class DidAttendSeminar(APIView):
         seminar_history.save()
 
         return Response('success')
+
+
+class UserRecommendations(APIView):
+    """
+    Get seminar recommendations for a user.
+    """
+    def get(self, request, format=None):
+        helpers = Helpers()
+
+        guid = self.request.query_params.get('guid')
+        user = helpers.get_user(guid)
+
+        # try:
+        #     user = UniversityUser.objects.get(guid=guid)
+        # except:
+        #     user = UniversityUser.objects.create(guid=guid, name=guid)
+
+        recommendations = recommendation_engine(user)
+
+        print(recommendations)
+
+        # print(recommendations)
+        # print(len(recommendations))
+
+        serializer = SeminarSerializer(recommendations, many=True)
+        return Response(serializer.data)
