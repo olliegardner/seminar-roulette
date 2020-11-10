@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 
 import SeminarCard from "../components/SeminarCard";
 import UserContext from "../context/UserContext";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,7 +70,7 @@ const Lucky = () => {
 
   return (
     <div className={classes.root}>
-      {loaded && (
+      {loaded ? (
         <Fragment>
           {animatedDiv.isRendered && (
             <div ref={animatedDiv.ref}>
@@ -103,6 +104,8 @@ const Lucky = () => {
             </div>
           )}
         </Fragment>
+      ) : (
+        <LoadingSpinner />
       )}
     </div>
   );
