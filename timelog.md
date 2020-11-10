@@ -146,3 +146,9 @@ N/A - projects not released.
 ### 6 Nov 2020
 
 - _1 hour_ Weekly meeting with Jeremy and wrote up meeting minutes.
+
+## Week 8
+
+### 10 Nov 2020
+
+- _4 hour_ Continued working on the implementation of the recommender system. This now uses live data instead of a fake ratings matrix.
