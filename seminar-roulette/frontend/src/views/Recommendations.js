@@ -4,6 +4,7 @@ import { Box, Chip, makeStyles, Grid, Typography } from "@material-ui/core";
 import UserContext from "../context/UserContext";
 import HistoryCard from "../components/HistoryCard";
 import SeminarCard from "../components/SeminarCard";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,7 +31,7 @@ const Recommendations = () => {
 
   return (
     <div className={classes.root}>
-      {loaded && (
+      {loaded ? (
         <Fragment>
           <Box mb={1}>
             <Typography variant="h5">
@@ -55,6 +56,8 @@ const Recommendations = () => {
             <Typography>No seminar recommendations found.</Typography>
           )}
         </Fragment>
+      ) : (
+        <LoadingSpinner />
       )}
     </div>
   );

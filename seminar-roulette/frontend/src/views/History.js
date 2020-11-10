@@ -3,6 +3,7 @@ import axios from "axios";
 import { Box, Chip, makeStyles, Grid, Typography } from "@material-ui/core";
 import UserContext from "../context/UserContext";
 import HistoryCard from "../components/HistoryCard";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,7 +31,7 @@ const History = () => {
 
   return (
     <div className={classes.root}>
-      {loaded && (
+      {loaded ? (
         <Fragment>
           <Box mb={1}>
             <Typography variant="h5">
@@ -62,6 +63,8 @@ const History = () => {
             <Typography>No seminar history found.</Typography>
           )}
         </Fragment>
+      ) : (
+        <LoadingSpinner />
       )}
     </div>
   );
