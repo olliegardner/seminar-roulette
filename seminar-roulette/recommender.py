@@ -6,10 +6,12 @@ django.setup()
 
 from backend.models import *
 import csv
-import random
 import os
+import random
 import pandas as pd
 import numpy as np
+
+from django.utils import timezone
 from scipy.sparse.linalg import svds
 
 
@@ -20,17 +22,13 @@ class Recommender:
     """
     def __init__(self, user):
         #self.create_fake_ratings()
+        #fake_matrix = pd.read_csv('fake_ratings.csv', index_col=0)
 
-        ratings = pd.read_csv(os.getcwd() + '/fake_ratings.csv', index_col=0)
-
-        self.clean_fake_data(ratings)
-
-        users, seminars, ratings_mean, ratings_demeaned = self.clean_fake_data(
-            ratings
-        )
+        matrix = pd.read_csv('ratings.csv', index_col=0)
+        guids, seminars, ratings_mean, ratings_demeaned = self.get_data(matrix)
 
         self.recommendations = self.recommend(
-            users, seminars, ratings_mean, ratings_demeaned, user.guid
+            guids, seminars, ratings_mean, ratings_demeaned, user.guid
         )
 
     def create_fake_ratings(self):
@@ -59,30 +57,30 @@ class Recommender:
                     random_number = random.randint(1, 100)
 
                     if random_number <= 75:
-                        # set rating to none
-                        ratings.append(None)
+                        ratings.append(None)  # set rating to none
                     else:
-                        # set rating 1-5
                         rating_options = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]
-                        ratings.append(random.choice(rating_options))
+                        ratings.append(
+                            random.choice(rating_options)
+                        )  # set rating 1-5
 
                 writer.writerow(ratings)
 
         print('Fake ratings csv created!')
 
-    def clean_fake_data(self, ratings):
+    def get_data(self, ratings):
         ratings.fillna(0, inplace=True)  # fill empty values
 
-        users = ratings.index.tolist()
+        guids = ratings.index.tolist()
         seminars = ratings.columns.tolist()
         ratings = ratings.values
 
         ratings_mean = np.mean(ratings, axis=1)
         ratings_demeaned = ratings - ratings_mean.reshape(-1, 1)
 
-        return users, seminars, ratings_mean, ratings_demeaned
+        return guids, seminars, ratings_mean, ratings_demeaned
 
-    def recommend(self, users, seminars, ratings_mean, ratings_demeaned, guid):
+    def recommend(self, guids, seminars, ratings_mean, ratings_demeaned, guid):
         U, sigma, Vt = svds(ratings_demeaned, k=5)
         sigma = np.diag(sigma)
 
@@ -90,7 +88,7 @@ class Recommender:
                                    Vt) + ratings_mean.reshape(-1, 1)
 
         predictions_df = pd.DataFrame(
-            ratings_predicted, index=users, columns=seminars
+            ratings_predicted, index=guids, columns=seminars
         )
 
         df_sorted = predictions_df.loc[[
@@ -101,37 +99,31 @@ class Recommender:
 
 
 def recommendation_engine(user):
-    available_seminars = []
+    recommendation_seminars = []
+    recommendations = Recommender(user).recommendations
 
-    for reccomendation in Recommender(user).recommendations:
-        recommendation_seminars = Seminar.objects.filter(
-            title=reccomendation
-        ).order_by('start_time')
-
-        for seminar in recommendation_seminars:
-            if seminar not in available_seminars:
-                available_seminars.append(seminar)
-
-    seminar_history = SeminarHistory.objects.filter(user=user)
+    for recommendation in recommendations:
+        # get upcoming seminar if it is recurring
+        upcoming_seminar = Seminar.objects.filter(
+            title=recommendation
+        ).order_by('start_time').first()
+        recommendation_seminars.append(upcoming_seminar)
 
     # get seminars which user has attended OR discarded
-    seminar_history_attended_discarded = seminar_history.filter(
+    seminar_history = user.seminarhistory_set.filter(
         Q(attended=True) | Q(discarded=True)
-    ).values_list('seminar')
-
-    seminars_attended_discarded = Seminar.objects.filter(
-        id__in=seminar_history_attended_discarded
     )
+    seminars_attended_discarded = Seminar.objects.filter(id__in=seminar_history)
 
     seminars = []
     count, seminar_count = 0, 0
 
-    while count < 5 and seminar_count < len(available_seminars):
-        if available_seminars[
+    while count < 5 and seminar_count < len(recommendation_seminars):
+        if recommendation_seminars[
             seminar_count
-        ] not in seminars_attended_discarded and available_seminars[
+        ] not in seminars_attended_discarded and recommendation_seminars[
             seminar_count].is_future():
-            seminars.append(available_seminars[seminar_count])
+            seminars.append(recommendation_seminars[seminar_count])
             count += 1
         seminar_count += 1
 
