@@ -500,3 +500,6 @@ sketch
 
 static
 report.*
+
+fake_ratings.csv
+ratings.csv

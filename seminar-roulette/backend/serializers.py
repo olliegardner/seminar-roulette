@@ -21,7 +21,7 @@ class LocationSerializer(serializers.ModelSerializer):
 
 
 class SeminarGroupSerializer(serializers.ModelSerializer):
-    location = LocationSerializer()
+    location = LocationSerializer(many=True)
 
     class Meta:
         model = SeminarGroup

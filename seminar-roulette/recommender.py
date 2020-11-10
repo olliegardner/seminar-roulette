@@ -38,7 +38,9 @@ class Recommender:
 
         with open('fake_ratings.csv', 'w', newline='') as ratings_file:
             seminars = [seminar.title for seminar in Seminar.objects.all()]
-            seminars = list(dict.fromkeys(seminars))  # removes duplicates
+            seminars = list(
+                dict.fromkeys(seminars)
+            )  # removes duplicate seminar titles
             seminars.insert(0, 'users')
 
             writer = csv.writer(ratings_file)
@@ -50,8 +52,6 @@ class Recommender:
                 user, user_created = UniversityUser.objects.get_or_create(
                     guid=guid, name=guid
                 )
-
-                print(user)
 
                 ratings = [user.guid]
 
@@ -101,22 +101,16 @@ class Recommender:
 
 
 def recommendation_engine(user):
-    #user = request.user
-    recommendations = Recommender(user).recommendations
+    available_seminars = []
 
-    #print(recommendations)
+    for reccomendation in Recommender(user).recommendations:
+        recommendation_seminars = Seminar.objects.filter(
+            title=reccomendation
+        ).order_by('start_time')
 
-    #return recommendations
-
-    seminar_objects = []
-
-    for reccomendation in recommendations:
-        for seminar in Seminar.objects.filter(title__icontains=reccomendation):
-            seminar_objects.append(seminar)
-
-    seminar_list = []
-    i = 0
-    seminar_count = 0
+        for seminar in recommendation_seminars:
+            if seminar not in available_seminars:
+                available_seminars.append(seminar)
 
     seminar_history = SeminarHistory.objects.filter(user=user)
 
@@ -129,16 +123,16 @@ def recommendation_engine(user):
         id__in=seminar_history_attended_discarded
     )
 
-    #print(user.seminarhistory_set.all())
+    seminars = []
+    count, seminar_count = 0, 0
 
-    while i < 5 and seminar_count < len(seminar_objects):
-        if seminar_objects[seminar_count] not in seminars_attended_discarded:
-            seminar_list.append(seminar_objects[seminar_count])
-            i += 1
+    while count < 5 and seminar_count < len(available_seminars):
+        if available_seminars[
+            seminar_count
+        ] not in seminars_attended_discarded and available_seminars[
+            seminar_count].is_future():
+            seminars.append(available_seminars[seminar_count])
+            count += 1
         seminar_count += 1
 
-    return seminar_list
-
-
-# if __name__ == '__main__':
-#     Recommender()
+    return seminars

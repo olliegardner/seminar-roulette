@@ -168,17 +168,7 @@ class UserRecommendations(APIView):
         guid = self.request.query_params.get('guid')
         user = helpers.get_user(guid)
 
-        # try:
-        #     user = UniversityUser.objects.get(guid=guid)
-        # except:
-        #     user = UniversityUser.objects.create(guid=guid, name=guid)
-
         recommendations = recommendation_engine(user)
-
-        print(recommendations)
-
-        # print(recommendations)
-        # print(len(recommendations))
 
         serializer = SeminarSerializer(recommendations, many=True)
         return Response(serializer.data)
