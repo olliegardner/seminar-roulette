@@ -19,7 +19,7 @@ class Recommender:
     Credit goes to Nick Becker
     """
     def __init__(self, user):
-        self.create_fake_ratings()
+        #self.create_fake_ratings()
 
         ratings = pd.read_csv(os.getcwd() + '/fake_ratings.csv', index_col=0)
 
