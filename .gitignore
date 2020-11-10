@@ -501,4 +501,4 @@ sketch
 static
 report.*
 
-seminar-roulette/fake_ratings.csv
+seminar-roulette/*.csv
