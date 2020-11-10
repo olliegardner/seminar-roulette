@@ -6,6 +6,7 @@ import Landing from "./views/Landing";
 import History from "./views/History";
 import Lucky from "./views/Lucky";
 import Recommendations from "./views/Recommendations";
+import FourZeroFour from "./views/FourZeroFour";
 
 const Router = () => {
   return (
@@ -37,6 +38,7 @@ const Router = () => {
           exact
           path="/recommendations"
         />
+        <Route component={FourZeroFour} />
       </Switch>
     </BrowserRouter>
   );
