@@ -16,10 +16,10 @@ axios.defaults.baseURL =
 const muiTheme = createMuiTheme({
   palette: {
     primary: {
-      main: colors.indigo[600],
+      main: colors.teal[600],
     },
     secondary: {
-      main: "#5850EC",
+      main: colors.teal[400],
     },
     text: {
       primary: colors.blueGrey[900],

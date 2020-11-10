@@ -7,6 +7,7 @@ import { AppBar, Toolbar, Hidden, Typography } from "@material-ui/core";
 
 import ProfileMenu from "./ProfileMenu";
 import HistoryMenu from "./HistoryMenu";
+import RecommendationsMenu from "./RecommendationsMenu";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,6 +41,7 @@ const Topbar = (props) => {
 
         <div className={classes.flexGrow} />
 
+        <RecommendationsMenu />
         <HistoryMenu />
         <ProfileMenu />
       </Toolbar>

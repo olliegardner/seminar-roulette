@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 
 from .models import *
 from .serializers import *
+from recommender import recommendation_engine
 
 import datetime
 import calendar
@@ -83,15 +84,12 @@ class RandomSeminar(APIView):
                 start_time__date__range=(now.date(), end_of_month)
             )
 
-        seminar_history = SeminarHistory.objects.filter(user=user)
-
         # get seminars which user has attended OR discarded
-        seminar_history_attended_discarded = seminar_history.filter(
+        seminar_history = user.seminarhistory_set.filter(
             Q(attended=True) | Q(discarded=True)
-        ).values_list('seminar')
-
+        )
         seminars_attended_discarded = Seminar.objects.filter(
-            id__in=seminar_history_attended_discarded
+            id__in=seminar_history
         )
 
         # get seminars in a time frame which a user hasn't been to or been recommended
@@ -155,3 +153,19 @@ class DidAttendSeminar(APIView):
         seminar_history.save()
 
         return Response('success')
+
+
+class UserRecommendations(APIView):
+    """
+    Get seminar recommendations for a user.
+    """
+    def get(self, request, format=None):
+        helpers = Helpers()
+
+        guid = self.request.query_params.get('guid')
+        user = helpers.get_user(guid)
+
+        recommendations = recommendation_engine(user)
+
+        serializer = SeminarSerializer(recommendations, many=True)
+        return Response(serializer.data)

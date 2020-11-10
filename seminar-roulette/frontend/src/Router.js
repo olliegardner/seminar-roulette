@@ -5,6 +5,7 @@ import Layout from "./layout/Layout";
 import Landing from "./views/Landing";
 import History from "./views/History";
 import Lucky from "./views/Lucky";
+import Recommendations from "./views/Recommendations";
 
 const Router = () => {
   return (
@@ -29,6 +30,12 @@ const Router = () => {
           layout={Layout}
           exact
           path="/history"
+        />
+        <RouteWithLayout
+          component={Recommendations}
+          layout={Layout}
+          exact
+          path="/recommendations"
         />
       </Switch>
     </BrowserRouter>
