@@ -46,10 +46,10 @@ class SeminarGroup(models.Model):
     short_name = models.CharField(max_length=50, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     url = models.URLField(max_length=1000, null=True, blank=True)
-    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    location = models.ManyToManyField(Location, blank=True)
 
     class Meta:
-        unique_together = ['name', 'location']
+        unique_together = ['name', 'short_name']
 
     def __str__(self):
         return self.name
