@@ -13,5 +13,6 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v2
         with:
+          path: dissertation 
           root_file:
-              dissertation/l4proj.tex
+              l4proj.tex
