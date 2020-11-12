@@ -1,8 +1,8 @@
 name: Compile dissertation
 
 on:
-  pull_request:
-    branches: [master, development]
+  push:
+    branches: [dissertation]
 
 jobs:
   build_latex:
