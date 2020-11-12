@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Badge, IconButton, Tooltip } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import HistoryOutlinedIcon from "@material-ui/icons/HistoryOutlined";
+import RateReviewOutlinedIcon from "@material-ui/icons/RateReviewOutlined";
+
 import UserContext from "../../context/UserContext";
 
 const HistoryMenu = () => {
@@ -33,7 +34,7 @@ const HistoryMenu = () => {
     <Tooltip title="History">
       <IconButton color="inherit" component={Link} to="/history">
         <Badge badgeContent={historyCount} color="secondary">
-          <HistoryOutlinedIcon />
+          <RateReviewOutlinedIcon />
         </Badge>
       </IconButton>
     </Tooltip>

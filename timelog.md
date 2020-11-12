@@ -137,3 +137,18 @@ N/A - projects not released.
 
 - _1.5 hour_ Finished off navigation flow and made the topbar responsive on mobile. Change rating to stars from 1-5.
 - _3 hour_ Added the ability to filter by time. Improved upon the frontend some more too.
+
+### 5 Nov 2020
+
+- _1 hour_ Conducted research into different types of recommender systems.
+- _3 hour_ Implemented a recommender system using fake ratings data.
+
+### 6 Nov 2020
+
+- _1 hour_ Weekly meeting with Jeremy and wrote up meeting minutes.
+
+## Week 8
+
+### 10 Nov 2020
+
+- _4 hour_ Continued working on the implementation of the recommender system. This now uses live data instead of a fake ratings matrix.

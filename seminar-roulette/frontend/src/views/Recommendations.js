@@ -3,6 +3,7 @@ import axios from "axios";
 import { Box, Chip, makeStyles, Grid, Typography } from "@material-ui/core";
 import UserContext from "../context/UserContext";
 import HistoryCard from "../components/HistoryCard";
+import SeminarCard from "../components/SeminarCard";
 import LoadingSpinner from "../components/LoadingSpinner";
 
 const useStyles = makeStyles((theme) => ({
@@ -11,23 +12,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const History = () => {
+const Recommendations = () => {
   const classes = useStyles();
   const user = useContext(UserContext);
 
-  const [history, setHistory] = useState([]);
-  const [historyUpdated, setHistoryUpdated] = useState(0);
+  const [recommendations, setRecommendations] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     axios
-      .get(`api/seminars/history.json?guid=${user.guid}`)
+      .get(`api/user/recommendations.json?guid=${user.guid}`)
       .then((res) => {
-        setHistory(res.data);
+        setRecommendations(res.data);
         setLoaded(true);
       })
       .catch((err) => console.log(err));
-  }, [historyUpdated]);
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -35,32 +35,25 @@ const History = () => {
         <Fragment>
           <Box mb={1}>
             <Typography variant="h5">
-              Your Seminar History{" "}
-              <Chip label={history.length} size="small" color="secondary" />
+              Your Recommendations{" "}
+              <Chip
+                label={recommendations.length}
+                size="small"
+                color="secondary"
+              />
             </Typography>
           </Box>
 
-          {history.length > 0 ? (
+          {recommendations.length > 0 ? (
             <Grid container spacing={3}>
-              {history.map((history) => (
-                <Grid
-                  item
-                  key={history.seminar.id}
-                  xs={12}
-                  sm={6}
-                  md={4}
-                  lg={3}
-                >
-                  <HistoryCard
-                    seminar={history.seminar}
-                    historyUpdated={historyUpdated}
-                    setHistoryUpdated={setHistoryUpdated}
-                  />
+              {recommendations.map((recommendation) => (
+                <Grid item key={recommendation.id} xs={12} sm={6} md={4} lg={3}>
+                  <SeminarCard seminar={recommendation} />
                 </Grid>
               ))}
             </Grid>
           ) : (
-            <Typography>No seminar history found.</Typography>
+            <Typography>No seminar recommendations found.</Typography>
           )}
         </Fragment>
       ) : (
@@ -70,6 +63,6 @@ const History = () => {
   );
 };
 
-export default History;
+export default Recommendations;
 
-History.propTypes = {};
+Recommendations.propTypes = {};
