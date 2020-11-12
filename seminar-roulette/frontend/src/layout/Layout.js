@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core";
+import SpeedDial from "@material-ui/lab/SpeedDial";
+import SpeedDialAction from "@material-ui/lab/SpeedDialAction";
+
 import Topbar from "./Topbar/Topbar";
+
+import CasinoOutlinedIcon from "@material-ui/icons/CasinoOutlined";
+import FastfoodOutlinedIcon from "@material-ui/icons/FastfoodOutlined";
+import AutorenewOutlinedIcon from "@material-ui/icons/AutorenewOutlined";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,11 +32,31 @@ const useStyles = makeStyles((theme) => ({
   wrapper: {
     padding: theme.spacing(3),
   },
+  speedDial: {
+    position: "fixed",
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
+  },
 }));
+
+const actions = [
+  { icon: <CasinoOutlinedIcon />, name: "Random" },
+  { icon: <FastfoodOutlinedIcon />, name: "Food" },
+];
 
 const Layout = (props) => {
   const { children } = props;
   const classes = useStyles();
+
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
   return (
     <div className={classes.root}>
@@ -37,6 +64,25 @@ const Layout = (props) => {
       <main className={classes.content}>
         <div className={classes.wrapper}>{children}</div>
       </main>
+      <SpeedDial
+        ariaLabel="Seminar Roulette speed dial"
+        className={classes.speedDial}
+        icon={<AutorenewOutlinedIcon />}
+        onClose={handleClose}
+        onOpen={handleOpen}
+        open={open}
+        direction="up"
+      >
+        {actions.map((action) => (
+          <SpeedDialAction
+            key={action.name}
+            icon={action.icon}
+            tooltipTitle={action.name}
+            tooltipOpen
+            onClick={handleClose}
+          />
+        ))}
+      </SpeedDial>
     </div>
   );
 };
