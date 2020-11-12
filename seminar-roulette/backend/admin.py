@@ -25,7 +25,10 @@ class SpeakerAdmin(admin.ModelAdmin):
 
 class SeminarAdmin(admin.ModelAdmin):
     list_display = ['title', 'start_time', 'end_time', 'speaker']
-    readonly_fields = ('description', 'registration_url')
+    readonly_fields = (
+        'description',
+        'registration_url',
+    )
 
 
 class SeminarHistoryAdmin(admin.ModelAdmin):
