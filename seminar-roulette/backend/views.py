@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from .models import *
 from .serializers import *
 from recommender import recommendation_engine
+from nltk.corpus import wordnet as wn
 
 import datetime
 import calendar
@@ -41,7 +42,7 @@ class CurrentUser(APIView):
 
 class RandomSeminar(APIView):
     """
-    Chooses a random upcoming seminar from the databse.
+    Chooses a random upcoming seminar.
     """
     def get(self, request, format=None):
         helpers = Helpers()
@@ -169,3 +170,25 @@ class UserRecommendations(APIView):
 
         serializer = SeminarSerializer(recommendations, many=True)
         return Response(serializer.data)
+
+
+class HungrySeminar(APIView):
+    """
+    Chooses a random upcoming seminar which serves food.
+    """
+    def get(self, request, format=None):
+
+        food = wn.synset('food.n.02')
+        foods = list(
+            set(
+                [
+                    w for s in food.closure(lambda s: s.hyponyms())
+                    for w in s.lemma_names()
+                ]
+            )
+        )
+
+        print(foods)
+        print(len(foods))
+
+        return Response('HUNGRY')
