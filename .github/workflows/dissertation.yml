@@ -11,8 +11,7 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v1
       - name: Compile LaTeX document
-        uses: xu-cheng/latex-action@v2
+        uses: dante-ev/latex-action@master
         with:
-          path: dissertation 
-          root_file:
-              l4proj.tex
+          root_file: l4proj.tex
+          working_directory: dissertation
