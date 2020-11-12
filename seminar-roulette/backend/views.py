@@ -8,7 +8,6 @@ from rest_framework.views import APIView
 from .models import *
 from .serializers import *
 from recommender import recommendation_engine
-from nltk.corpus import wordnet as wn
 
 import datetime
 import calendar
@@ -49,6 +48,7 @@ class RandomSeminar(APIView):
 
         time = self.request.query_params.get('time')
         guid = self.request.query_params.get('guid')
+        food = self.request.query_params.get('food')
 
         user = helpers.get_user(guid)
         now = timezone.now()
@@ -98,7 +98,25 @@ class RandomSeminar(APIView):
             id__in=seminars_attended_discarded
         )
 
-        random_seminar = available_seminars.order_by('?').first()
+        if food == 'true':
+            food_seminars = []
+            food_words = [
+                'refreshment', 'breakfast', 'lunch', 'dinner', 'snack'
+            ]
+
+            # get seminars which serve food
+            for food_word in food_words:
+                seminars = available_seminars.filter(
+                    description__icontains=food_word
+                )
+                for seminar in seminars:
+                    if seminar not in food_seminars:
+                        food_seminars.append(seminar.id)
+
+            random_seminar = Seminar.objects.filter(id__in=food_seminars
+                                                   ).order_by('?').first()
+        else:
+            random_seminar = available_seminars.order_by('?').first()
 
         if random_seminar:
             serializer = SeminarSerializer(random_seminar)
@@ -170,25 +188,3 @@ class UserRecommendations(APIView):
 
         serializer = SeminarSerializer(recommendations, many=True)
         return Response(serializer.data)
-
-
-class HungrySeminar(APIView):
-    """
-    Chooses a random upcoming seminar which serves food.
-    """
-    def get(self, request, format=None):
-
-        food = wn.synset('food.n.02')
-        foods = list(
-            set(
-                [
-                    w for s in food.closure(lambda s: s.hyponyms())
-                    for w in s.lemma_names()
-                ]
-            )
-        )
-
-        print(foods)
-        print(len(foods))
-
-        return Response('HUNGRY')
