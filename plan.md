@@ -47,6 +47,10 @@ Week-by-week plan for the whole project.
   - Unit tests for recommender system.
   - Look into making suggestions based on user's likes/interests.
 - **Week 9**
+  - Use EventBrite as another data stream.
+  - Get current system deployed to the VM.
+  - Prepare for initial evaluation.
+  - Look into connecting to the user's calendar.
 - **Week 10**
 - **Week 11 [PROJECT WEEK]**
 - **Week 12 [PROJECT WEEK]** Status report submitted.

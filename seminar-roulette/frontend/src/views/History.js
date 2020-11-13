@@ -35,7 +35,7 @@ const History = () => {
         <Fragment>
           <Box mb={1}>
             <Typography variant="h5">
-              Your Seminar History{" "}
+              Seminar History{" "}
               <Chip label={history.length} size="small" color="secondary" />
             </Typography>
           </Box>
@@ -43,14 +43,7 @@ const History = () => {
           {history.length > 0 ? (
             <Grid container spacing={3}>
               {history.map((history) => (
-                <Grid
-                  item
-                  key={history.seminar.id}
-                  xs={12}
-                  sm={6}
-                  md={4}
-                  lg={3}
-                >
+                <Grid item key={history.seminar.id} xs={12} sm={6} md={4}>
                   <HistoryCard
                     seminar={history.seminar}
                     historyUpdated={historyUpdated}

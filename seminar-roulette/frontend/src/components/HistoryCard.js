@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
+import moment from "moment";
 import Cookies from "js-cookie";
 import {
   Box,
@@ -9,12 +10,13 @@ import {
   Typography,
   FormControl,
   Paper,
+  Link,
 } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
 import UserContext from "../context/UserContext";
 
 const useStyles = makeStyles((theme) => ({
-  seminarCard: {
+  historyCard: {
     display: "flex",
     flexDirection: "column",
     height: "100%",
@@ -65,9 +67,17 @@ const HistoryCard = (props) => {
   };
 
   return (
-    <Paper variant="outlined" className={classes.seminarCard}>
+    <Paper variant="outlined" className={classes.historyCard}>
       <Box p={2} textAlign="center">
-        <Typography variant="h6">{seminar.title}</Typography>
+        <Typography variant="h6" gutterBottom>
+          <Link color="inherit" href={`/seminar/${seminar.id}`}>
+            {seminar.title}
+          </Link>
+        </Typography>
+
+        <Typography variant="subtitle2" gutterBottom>
+          {moment(seminar.start_time).format("Do MMMM YYYY")}
+        </Typography>
 
         <Typography className={classes.attendText}>
           Did you attend this seminar? If so, what would you rate it?
@@ -106,10 +116,10 @@ const HistoryCard = (props) => {
   );
 };
 
-export default HistoryCard;
-
 HistoryCard.propTypes = {
   seminar: PropTypes.object,
   historyUpdated: PropTypes.number,
   setHistoryUpdated: PropTypes.func,
 };
+
+export default HistoryCard;

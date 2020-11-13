@@ -10,6 +10,8 @@ class Command(BaseCommand):
     help = 'Update ratings matrix for recommender engine'
 
     def handle(self, *args, **kwargs):
+        print('Updating ratings matrix. Please wait...')
+
         matrix = pd.read_csv('ratings.csv', index_col=0)
 
         for seminar in Seminar.objects.all():
@@ -33,3 +35,5 @@ class Command(BaseCommand):
                         matrix.at[guid, seminar] = seminar_history.rating
 
         matrix.to_csv('ratings.csv')  # update matrix
+
+        print('Ratings matrix csv updated.')

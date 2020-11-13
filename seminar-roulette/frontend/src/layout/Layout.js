@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core";
+import { Fab, makeStyles } from "@material-ui/core";
+import CasinoOutlinedIcon from "@material-ui/icons/CasinoOutlined";
+
 import Topbar from "./Topbar/Topbar";
+import RandomSeminarDialog from "../components/RandomSeminarDialog";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,18 +28,48 @@ const useStyles = makeStyles((theme) => ({
   wrapper: {
     padding: theme.spacing(3),
   },
+  fab: {
+    position: "fixed",
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
+  },
+  fabIcon: {
+    marginRight: theme.spacing(1),
+  },
 }));
 
 const Layout = (props) => {
   const { children } = props;
   const classes = useStyles();
 
+  const [fabOpen, setFabOpen] = useState(false);
+
+  const handleFabOpen = () => {
+    setFabOpen(true);
+  };
+
+  const handleFabClose = () => {
+    setFabOpen(false);
+  };
+
   return (
     <div className={classes.root}>
       <Topbar />
+
       <main className={classes.content}>
         <div className={classes.wrapper}>{children}</div>
       </main>
+
+      <Fab
+        color="primary"
+        variant="extended"
+        className={classes.fab}
+        onClick={handleFabOpen}
+      >
+        <CasinoOutlinedIcon className={classes.fabIcon} />
+        Random Seminar
+      </Fab>
+      <RandomSeminarDialog open={fabOpen} onClose={handleFabClose} />
     </div>
   );
 };

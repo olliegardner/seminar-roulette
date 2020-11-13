@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext, Fragment } from "react";
 import axios from "axios";
 import { Box, Chip, makeStyles, Grid, Typography } from "@material-ui/core";
+
 import UserContext from "../context/UserContext";
-import HistoryCard from "../components/HistoryCard";
 import SeminarCard from "../components/SeminarCard";
 import LoadingSpinner from "../components/LoadingSpinner";
 
@@ -47,7 +47,7 @@ const Recommendations = () => {
           {recommendations.length > 0 ? (
             <Grid container spacing={3}>
               {recommendations.map((recommendation) => (
-                <Grid item key={recommendation.id} xs={12} sm={6} md={4} lg={3}>
+                <Grid item key={recommendation.id} xs={12} sm={6} md={4}>
                   <SeminarCard seminar={recommendation} />
                 </Grid>
               ))}

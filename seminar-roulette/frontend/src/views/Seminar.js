@@ -1,27 +1,16 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import moment from "moment";
-import { Link as RouterLink } from "react-router-dom";
-import {
-  Box,
-  Button,
-  Link,
-  makeStyles,
-  Paper,
-  Typography,
-} from "@material-ui/core";
+import { Redirect, useParams } from "react-router-dom";
+import { Box, Typography, makeStyles, Paper } from "@material-ui/core";
 import ScheduleOutlinedIcon from "@material-ui/icons/ScheduleOutlined";
 import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import CalendarTodayOutlinedIcon from "@material-ui/icons/CalendarTodayOutlined";
 
+import LoadingSpinner from "../components/LoadingSpinner";
+
 const useStyles = makeStyles((theme) => ({
-  seminarCard: {
-    display: "flex",
-    flexDirection: "column",
-    height: "100%",
-    justifyContent: "space-between",
-  },
   wrapIcon: {
     verticalAlign: "middle",
     display: "inline-flex",
@@ -33,18 +22,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SeminarCard = (props) => {
-  const { seminar } = props;
+const Seminar = () => {
+  const { seminarId } = useParams();
   const classes = useStyles();
 
-  return (
-    <Paper variant="outlined" className={classes.seminarCard}>
+  const [seminar, setSeminar] = useState({});
+  const [loaded, setLoaded] = useState(false);
+  const [notFound, setNotFound] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get(`/api/seminar.json?id=${seminarId}`)
+      .then((res) => {
+        setSeminar(res.data);
+        setLoaded(true);
+      })
+      .catch((err) => {
+        if (err.response.status == 404) setNotFound(true);
+      });
+  }, []);
+
+  return notFound ? (
+    <Redirect to="/404" />
+  ) : loaded ? (
+    <Paper variant="outlined">
       <Box p={2}>
-        <Typography variant="h6" gutterBottom>
-          <Link color="inherit" href={`/seminar/${seminar.id}`}>
-            {seminar.title}
-          </Link>
-        </Typography>
+        <Typography variant="h4">{seminar.title}</Typography>
+        <br />
 
         <Typography>
           <span className={classes.wrapIcon}>
@@ -53,7 +57,7 @@ const SeminarCard = (props) => {
           </span>
         </Typography>
 
-        <Typography className={classes.whiteText}>
+        <Typography>
           <span className={classes.wrapIcon}>
             <ScheduleOutlinedIcon className={classes.icon} />
             {moment(seminar.start_time).format("H:mm")} -{" "}
@@ -61,14 +65,14 @@ const SeminarCard = (props) => {
           </span>
         </Typography>
 
-        <Typography className={classes.whiteText}>
+        <Typography>
           <span className={classes.wrapIcon}>
             <PersonOutlineOutlinedIcon className={classes.icon} />
             {seminar.speaker.speaker}
           </span>
         </Typography>
 
-        <Typography className={classes.whiteText}>
+        <Typography>
           <span className={classes.wrapIcon}>
             <LocationOnOutlinedIcon className={classes.icon} />
             {seminar.location.location}
@@ -76,21 +80,14 @@ const SeminarCard = (props) => {
         </Typography>
 
         <br />
-        <Button
-          variant="outlined"
-          color="secondary"
-          component={RouterLink}
-          to={`/seminar/${seminar.id}`}
-        >
-          View Seminar
-        </Button>
+        <Typography>{seminar.description}</Typography>
       </Box>
     </Paper>
+  ) : (
+    <LoadingSpinner />
   );
 };
 
-SeminarCard.propTypes = {
-  seminar: PropTypes.object,
-};
+Seminar.propTypes = {};
 
-export default SeminarCard;
+export default Seminar;
