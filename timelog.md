@@ -162,3 +162,4 @@ N/A - projects not released.
 
 - _2 hour_ Continued improving the frontend of the system.
 - _1 hour_ Weekly meeting with Jeremy and wrote up the meeting minutes.
+- _1 hour_ More frontend improvements.
