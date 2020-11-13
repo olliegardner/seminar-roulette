@@ -152,3 +152,13 @@ N/A - projects not released.
 ### 10 Nov 2020
 
 - _4 hour_ Continued working on the implementation of the recommender system. This now uses live data instead of a fake ratings matrix.
+
+### 12 Nov 2020
+
+- _2 hour_ Conducted research into natural language processing and specifically the nltk Python package.
+- _2 hour_ Implemented I'm Feeling Hungry feature.
+
+### 13 Nov 2020
+
+- _2 hour_ Continued improving the frontend of the system.
+- _1 hour_ Weekly meeting with Jeremy and wrote up the meeting minutes.
