@@ -152,15 +152,15 @@ class UserSeminarHistory(APIView):
         serializer = SeminarHistorySerializer(seminar_history, many=True)
         return Response(serializer.data)
 
-    def post(self, request, format=None):
-        helpers = Helpers()
-        user = helpers.get_user(request.data['guid'])
-        seminar = helpers.get_seminar(request.data['seminar'])
+    # def post(self, request, format=None):
+    #     helpers = Helpers()
+    #     user = helpers.get_user(request.data['guid'])
+    #     seminar = helpers.get_seminar(request.data['seminar'])
 
-        seminar_history = SeminarHistory.objects.create(
-            seminar=seminar, user=user
-        )
-        return Response('success')
+    #     seminar_history = SeminarHistory.objects.create(
+    #         seminar=seminar, user=user
+    #     )
+    #     return Response('success')
 
 
 class DidAttendSeminar(APIView):

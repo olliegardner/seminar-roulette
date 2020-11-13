@@ -4,7 +4,6 @@ import RouteWithLayout from "./components/RouteWithLayout";
 import Layout from "./layout/Layout";
 import Dashboard from "./views/Dashboard";
 import History from "./views/History";
-import Lucky from "./views/Lucky";
 import Recommendations from "./views/Recommendations";
 import Seminar from "./views/Seminar";
 import FourZeroFour from "./views/FourZeroFour";
@@ -22,12 +21,6 @@ const Router = () => {
           }
         />
         <RouteWithLayout component={Dashboard} layout={Layout} exact path="/" />
-        <RouteWithLayout
-          component={Lucky}
-          layout={Layout}
-          exact
-          path="/lucky"
-        />
         <RouteWithLayout
           component={History}
           layout={Layout}
