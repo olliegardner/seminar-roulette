@@ -6,6 +6,7 @@ import Dashboard from "./views/Dashboard";
 import History from "./views/History";
 import Lucky from "./views/Lucky";
 import Recommendations from "./views/Recommendations";
+import Seminar from "./views/Seminar";
 import FourZeroFour from "./views/FourZeroFour";
 
 const Router = () => {
@@ -37,6 +38,12 @@ const Router = () => {
           layout={Layout}
           exact
           path="/recommendations"
+        />
+        <RouteWithLayout
+          component={Seminar}
+          layout={Layout}
+          exact
+          path="/seminar/:seminarId"
         />
         <Route component={FourZeroFour} />
       </Switch>

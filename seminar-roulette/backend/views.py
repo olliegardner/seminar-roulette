@@ -20,9 +20,9 @@ class Helpers():
         except UniversityUser.DoesNotExist:
             raise Http404
 
-    def get_seminar(self, id):
+    def get_seminar(self, seminar_id):
         try:
-            return Seminar.objects.get(id=id)
+            return Seminar.objects.get(id=seminar_id)
         except Seminar.DoesNotExist:
             raise Http404
 
@@ -187,4 +187,18 @@ class UserRecommendations(APIView):
         recommendations = recommendation_engine(user)
 
         serializer = SeminarSerializer(recommendations, many=True)
+        return Response(serializer.data)
+
+
+class SeminarFromID(APIView):
+    """
+    Get seminar from seminar ID.
+    """
+    def get(self, request, format=None):
+        helpers = Helpers()
+
+        seminar_id = self.request.query_params.get('id')
+        seminar = helpers.get_seminar(seminar_id)
+
+        serializer = SeminarSerializer(seminar)
         return Response(serializer.data)
