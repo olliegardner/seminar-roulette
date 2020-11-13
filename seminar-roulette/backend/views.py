@@ -20,9 +20,9 @@ class Helpers():
         except UniversityUser.DoesNotExist:
             raise Http404
 
-    def get_seminar(self, id):
+    def get_seminar(self, seminar_id):
         try:
-            return Seminar.objects.get(id=id)
+            return Seminar.objects.get(id=seminar_id)
         except Seminar.DoesNotExist:
             raise Http404
 
@@ -135,21 +135,32 @@ class UserSeminarHistory(APIView):
         guid = self.request.query_params.get('guid')
         user = helpers.get_user(guid)
 
+        now = timezone.now()
+
+        past_seminars = Seminar.objects.filter(
+            start_time__lte=now, end_time__lte=now
+        )
+
+        for seminar in past_seminars:
+            seminar_history, seminar_history_created = SeminarHistory.objects.get_or_create(
+                user=user, seminar=seminar
+            )
+
         seminar_history = SeminarHistory.objects.filter(
             user=user, attended=False, discarded=False
         )
         serializer = SeminarHistorySerializer(seminar_history, many=True)
         return Response(serializer.data)
 
-    def post(self, request, format=None):
-        helpers = Helpers()
-        user = helpers.get_user(request.data['guid'])
-        seminar = helpers.get_seminar(request.data['seminar'])
+    # def post(self, request, format=None):
+    #     helpers = Helpers()
+    #     user = helpers.get_user(request.data['guid'])
+    #     seminar = helpers.get_seminar(request.data['seminar'])
 
-        seminar_history = SeminarHistory.objects.create(
-            seminar=seminar, user=user
-        )
-        return Response('success')
+    #     seminar_history = SeminarHistory.objects.create(
+    #         seminar=seminar, user=user
+    #     )
+    #     return Response('success')
 
 
 class DidAttendSeminar(APIView):
@@ -187,4 +198,18 @@ class UserRecommendations(APIView):
         recommendations = recommendation_engine(user)
 
         serializer = SeminarSerializer(recommendations, many=True)
+        return Response(serializer.data)
+
+
+class SeminarFromID(APIView):
+    """
+    Get seminar from seminar ID.
+    """
+    def get(self, request, format=None):
+        helpers = Helpers()
+
+        seminar_id = self.request.query_params.get('id')
+        seminar = helpers.get_seminar(seminar_id)
+
+        serializer = SeminarSerializer(seminar)
         return Response(serializer.data)

@@ -30,7 +30,6 @@
     "js-cookie": "^2.2.1",
     "moment": "^2.29.1",
     "react-custom-roulette": "^1.1.4",
-    "react-router-dom": "^5.2.0",
-    "use-animate-presence": "^0.5.1"
+    "react-router-dom": "^5.2.0"
   }
 }
