@@ -65,8 +65,8 @@ const SeminarCard = (props) => {
   );
 };
 
-export default SeminarCard;
-
 SeminarCard.propTypes = {
   seminar: PropTypes.object,
 };
+
+export default SeminarCard;
