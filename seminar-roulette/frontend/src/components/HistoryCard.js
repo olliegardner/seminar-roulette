@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
+import moment from "moment";
 import Cookies from "js-cookie";
 import {
   Box,
@@ -67,7 +68,13 @@ const HistoryCard = (props) => {
   return (
     <Paper variant="outlined" className={classes.seminarCard}>
       <Box p={2} textAlign="center">
-        <Typography variant="h6">{seminar.title}</Typography>
+        <Typography variant="h6" gutterBottom>
+          {seminar.title}
+        </Typography>
+
+        <Typography variant="subtitle2" gutterBottom>
+          {moment(seminar.start_time).format("Do MMMM YYYY")}
+        </Typography>
 
         <Typography className={classes.attendText}>
           Did you attend this seminar? If so, what would you rate it?

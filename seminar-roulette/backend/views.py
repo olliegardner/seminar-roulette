@@ -135,6 +135,17 @@ class UserSeminarHistory(APIView):
         guid = self.request.query_params.get('guid')
         user = helpers.get_user(guid)
 
+        now = timezone.now()
+
+        past_seminars = Seminar.objects.filter(
+            start_time__lte=now, end_time__lte=now
+        )
+
+        for seminar in past_seminars:
+            seminar_history, seminar_history_created = SeminarHistory.objects.get_or_create(
+                user=user, seminar=seminar
+            )
+
         seminar_history = SeminarHistory.objects.filter(
             user=user, attended=False, discarded=False
         )
