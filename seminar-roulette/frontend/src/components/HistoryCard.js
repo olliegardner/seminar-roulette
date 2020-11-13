@@ -10,12 +10,13 @@ import {
   Typography,
   FormControl,
   Paper,
+  Link,
 } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
 import UserContext from "../context/UserContext";
 
 const useStyles = makeStyles((theme) => ({
-  seminarCard: {
+  historyCard: {
     display: "flex",
     flexDirection: "column",
     height: "100%",
@@ -66,10 +67,12 @@ const HistoryCard = (props) => {
   };
 
   return (
-    <Paper variant="outlined" className={classes.seminarCard}>
+    <Paper variant="outlined" className={classes.historyCard}>
       <Box p={2} textAlign="center">
         <Typography variant="h6" gutterBottom>
-          {seminar.title}
+          <Link color="inherit" href={`/seminar/${seminar.id}`}>
+            {seminar.title}
+          </Link>
         </Typography>
 
         <Typography variant="subtitle2" gutterBottom>
@@ -113,10 +116,10 @@ const HistoryCard = (props) => {
   );
 };
 
-export default HistoryCard;
-
 HistoryCard.propTypes = {
   seminar: PropTypes.object,
   historyUpdated: PropTypes.number,
   setHistoryUpdated: PropTypes.func,
 };
+
+export default HistoryCard;

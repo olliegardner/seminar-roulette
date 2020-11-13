@@ -1,25 +1,35 @@
 import React from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
-import { Box, Card, makeStyles, Typography } from "@material-ui/core";
+import { Link as RouterLink } from "react-router-dom";
+import {
+  Box,
+  Button,
+  Link,
+  makeStyles,
+  Paper,
+  Typography,
+} from "@material-ui/core";
 import ScheduleOutlinedIcon from "@material-ui/icons/ScheduleOutlined";
 import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
+import CalendarTodayOutlinedIcon from "@material-ui/icons/CalendarTodayOutlined";
 
 const useStyles = makeStyles((theme) => ({
   seminarCard: {
-    backgroundColor: theme.palette.primary.main,
-  },
-  seminarBox: {
-    maxHeight: 500,
-    overflow: "auto",
+    display: "flex",
+    flexDirection: "column",
+    height: "100%",
+    justifyContent: "space-between",
   },
   wrapIcon: {
     verticalAlign: "middle",
     display: "inline-flex",
+    marginBottom: theme.spacing(0.5),
   },
-  whiteText: {
-    color: theme.palette.common.white,
+  icon: {
+    marginRight: theme.spacing(1),
+    color: theme.palette.primary.main,
   },
 }));
 
@@ -28,17 +38,24 @@ const SeminarCard = (props) => {
   const classes = useStyles();
 
   return (
-    <Card className={classes.seminarCard}>
-      <Box p={2} textAlign="center" className={classes.seminarBox}>
-        <Typography variant="h4" className={classes.whiteText}>
-          {seminar.title}
+    <Paper variant="outlined" className={classes.seminarCard}>
+      <Box p={2}>
+        <Typography variant="h6" gutterBottom>
+          <Link color="inherit" href={`/seminar/${seminar.id}`}>
+            {seminar.title}
+          </Link>
         </Typography>
-        <br />
+
+        <Typography>
+          <span className={classes.wrapIcon}>
+            <CalendarTodayOutlinedIcon className={classes.icon} />
+            {moment(seminar.start_time).format("Do MMMM YYYY")}
+          </span>
+        </Typography>
 
         <Typography className={classes.whiteText}>
           <span className={classes.wrapIcon}>
-            <ScheduleOutlinedIcon />{" "}
-            {moment(seminar.start_time).format("Do MMMM YYYY")},{" "}
+            <ScheduleOutlinedIcon className={classes.icon} />
             {moment(seminar.start_time).format("H:mm")} -{" "}
             {moment(seminar.end_time).format("H:mm")}
           </span>
@@ -46,22 +63,29 @@ const SeminarCard = (props) => {
 
         <Typography className={classes.whiteText}>
           <span className={classes.wrapIcon}>
-            <PersonOutlineOutlinedIcon /> {seminar.speaker.speaker}
+            <PersonOutlineOutlinedIcon className={classes.icon} />
+            {seminar.speaker.speaker}
           </span>
         </Typography>
 
         <Typography className={classes.whiteText}>
           <span className={classes.wrapIcon}>
-            <LocationOnOutlinedIcon /> {seminar.location.location}
+            <LocationOnOutlinedIcon className={classes.icon} />
+            {seminar.location.location}
           </span>
         </Typography>
 
         <br />
-        <Typography className={classes.whiteText}>
-          {seminar.description}
-        </Typography>
+        <Button
+          variant="outlined"
+          color="secondary"
+          component={RouterLink}
+          to={`/seminar/${seminar.id}`}
+        >
+          View Seminar
+        </Button>
       </Box>
-    </Card>
+    </Paper>
   );
 };
 

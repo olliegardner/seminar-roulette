@@ -52,14 +52,14 @@ const Seminar = () => {
 
         <Typography>
           <span className={classes.wrapIcon}>
-            <CalendarTodayOutlinedIcon className={classes.icon} />{" "}
+            <CalendarTodayOutlinedIcon className={classes.icon} />
             {moment(seminar.start_time).format("Do MMMM YYYY")}
           </span>
         </Typography>
 
         <Typography>
           <span className={classes.wrapIcon}>
-            <ScheduleOutlinedIcon className={classes.icon} />{" "}
+            <ScheduleOutlinedIcon className={classes.icon} />
             {moment(seminar.start_time).format("H:mm")} -{" "}
             {moment(seminar.end_time).format("H:mm")}
           </span>
@@ -67,14 +67,14 @@ const Seminar = () => {
 
         <Typography>
           <span className={classes.wrapIcon}>
-            <PersonOutlineOutlinedIcon className={classes.icon} />{" "}
+            <PersonOutlineOutlinedIcon className={classes.icon} />
             {seminar.speaker.speaker}
           </span>
         </Typography>
 
         <Typography>
           <span className={classes.wrapIcon}>
-            <LocationOnOutlinedIcon className={classes.icon} />{" "}
+            <LocationOnOutlinedIcon className={classes.icon} />
             {seminar.location.location}
           </span>
         </Typography>
