@@ -6,6 +6,7 @@ import { Box, Typography, makeStyles, Paper } from "@material-ui/core";
 import ScheduleOutlinedIcon from "@material-ui/icons/ScheduleOutlined";
 import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
+import CalendarTodayOutlinedIcon from "@material-ui/icons/CalendarTodayOutlined";
 
 import LoadingSpinner from "../components/LoadingSpinner";
 
@@ -13,9 +14,11 @@ const useStyles = makeStyles((theme) => ({
   wrapIcon: {
     verticalAlign: "middle",
     display: "inline-flex",
+    marginBottom: theme.spacing(0.5),
   },
-  whiteText: {
-    color: theme.palette.common.white,
+  icon: {
+    marginRight: theme.spacing(1),
+    color: theme.palette.primary.main,
   },
 }));
 
@@ -49,8 +52,14 @@ const Seminar = () => {
 
         <Typography>
           <span className={classes.wrapIcon}>
-            <ScheduleOutlinedIcon />{" "}
-            {moment(seminar.start_time).format("Do MMMM YYYY")},{" "}
+            <CalendarTodayOutlinedIcon className={classes.icon} />{" "}
+            {moment(seminar.start_time).format("Do MMMM YYYY")}
+          </span>
+        </Typography>
+
+        <Typography>
+          <span className={classes.wrapIcon}>
+            <ScheduleOutlinedIcon className={classes.icon} />{" "}
             {moment(seminar.start_time).format("H:mm")} -{" "}
             {moment(seminar.end_time).format("H:mm")}
           </span>
@@ -58,13 +67,15 @@ const Seminar = () => {
 
         <Typography>
           <span className={classes.wrapIcon}>
-            <PersonOutlineOutlinedIcon /> {seminar.speaker.speaker}
+            <PersonOutlineOutlinedIcon className={classes.icon} />{" "}
+            {seminar.speaker.speaker}
           </span>
         </Typography>
 
         <Typography>
           <span className={classes.wrapIcon}>
-            <LocationOnOutlinedIcon /> {seminar.location.location}
+            <LocationOnOutlinedIcon className={classes.icon} />{" "}
+            {seminar.location.location}
           </span>
         </Typography>
 
