@@ -8,6 +8,7 @@ import Lucky from "./views/Lucky";
 import Recommendations from "./views/Recommendations";
 import Seminar from "./views/Seminar";
 import FourZeroFour from "./views/FourZeroFour";
+import SeminarNotFound from "./views/SeminarNotFound";
 
 const Router = () => {
   return (
@@ -38,6 +39,12 @@ const Router = () => {
           layout={Layout}
           exact
           path="/recommendations"
+        />
+        <RouteWithLayout
+          component={SeminarNotFound}
+          layout={Layout}
+          exact
+          path="/seminar/not-found"
         />
         <RouteWithLayout
           component={Seminar}

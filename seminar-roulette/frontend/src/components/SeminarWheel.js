@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { Wheel } from "react-custom-roulette";
 import { Backdrop, makeStyles } from "@material-ui/core";
@@ -37,6 +38,25 @@ const SeminarWheel = (props) => {
 
   const randomNumber = Math.floor(Math.random * data.length);
 
+  const handleStopSpinning = () => {
+    setSpin(false);
+
+    const timeQuery = time ? `?time=${time}` : "";
+    const userQuery = user ? `&guid=${user.guid}` : "";
+    const foodQuery = food ? "&food=true" : "";
+
+    axios
+      .get(`/api/seminars/random.json${timeQuery}${userQuery}${foodQuery}`)
+      .then((res) => {
+        if (res.data == "No seminar found") {
+          history.push("/seminar/not-found");
+        } else {
+          history.push(`/seminar/${res.data.id}`);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <Backdrop className={classes.backdrop} open={spin}>
       {spin && (
@@ -54,13 +74,7 @@ const SeminarWheel = (props) => {
           radiusLineColor={"#eeeeee"}
           radiusLineWidth={2}
           textDistance={60}
-          onStopSpinning={() => {
-            setSpin(false);
-
-            const foodQuery = food ? "&food=true" : "";
-
-            history.push(`/lucky/?time=${time}&guid=${user.guid}${foodQuery}`);
-          }}
+          onStopSpinning={() => handleStopSpinning()}
         />
       )}
     </Backdrop>

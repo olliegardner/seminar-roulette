@@ -47,11 +47,7 @@ const RandomSeminarDialog = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     setSpin(true);
-    setFood(false);
-    setTime("hour");
-
     onClose();
   };
 
@@ -121,9 +117,9 @@ const RandomSeminarDialog = (props) => {
   );
 };
 
-export default RandomSeminarDialog;
-
 RandomSeminarDialog.propTypes = {
   open: PropTypes.bool,
   onClose: PropTypes.func,
 };
+
+export default RandomSeminarDialog;
