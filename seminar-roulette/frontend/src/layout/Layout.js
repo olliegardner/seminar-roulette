@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core";
-import SpeedDial from "@material-ui/lab/SpeedDial";
-import SpeedDialAction from "@material-ui/lab/SpeedDialAction";
+import { Fab, makeStyles } from "@material-ui/core";
+import CasinoOutlinedIcon from "@material-ui/icons/CasinoOutlined";
 
 import Topbar from "./Topbar/Topbar";
-
-import CasinoOutlinedIcon from "@material-ui/icons/CasinoOutlined";
-import FastfoodOutlinedIcon from "@material-ui/icons/FastfoodOutlined";
-import AutorenewOutlinedIcon from "@material-ui/icons/AutorenewOutlined";
+import RandomSeminarDialog from "../components/RandomSeminarDialog";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,57 +28,48 @@ const useStyles = makeStyles((theme) => ({
   wrapper: {
     padding: theme.spacing(3),
   },
-  speedDial: {
+  fab: {
     position: "fixed",
     bottom: theme.spacing(2),
     right: theme.spacing(2),
   },
+  fabIcon: {
+    marginRight: theme.spacing(1),
+  },
 }));
-
-const actions = [
-  { icon: <CasinoOutlinedIcon />, name: "Random" },
-  { icon: <FastfoodOutlinedIcon />, name: "Food" },
-];
 
 const Layout = (props) => {
   const { children } = props;
   const classes = useStyles();
 
-  const [open, setOpen] = useState(false);
+  const [fabOpen, setFabOpen] = useState(false);
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleFabOpen = () => {
+    setFabOpen(true);
   };
 
-  const handleOpen = () => {
-    setOpen(true);
+  const handleFabClose = () => {
+    setFabOpen(false);
   };
 
   return (
     <div className={classes.root}>
       <Topbar />
+
       <main className={classes.content}>
         <div className={classes.wrapper}>{children}</div>
       </main>
-      <SpeedDial
-        ariaLabel="Seminar Roulette speed dial"
-        className={classes.speedDial}
-        icon={<AutorenewOutlinedIcon />}
-        onClose={handleClose}
-        onOpen={handleOpen}
-        open={open}
-        direction="up"
+
+      <Fab
+        color="primary"
+        variant="extended"
+        className={classes.fab}
+        onClick={handleFabOpen}
       >
-        {actions.map((action) => (
-          <SpeedDialAction
-            key={action.name}
-            icon={action.icon}
-            tooltipTitle={action.name}
-            tooltipOpen
-            onClick={handleClose}
-          />
-        ))}
-      </SpeedDial>
+        <CasinoOutlinedIcon className={classes.fabIcon} />
+        Random Seminar
+      </Fab>
+      <RandomSeminarDialog open={fabOpen} onClose={handleFabClose} />
     </div>
   );
 };
