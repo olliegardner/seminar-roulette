@@ -5,26 +5,38 @@ import django
 django.setup()
 
 from backend.models import *
+from eventbrite import Eventbrite
+
 import requests
 import json
 import sys
 import re
+import environ
+import datetime
+import yaml
 
 
 class EventFeeds():
     def __init__(self):
-        command_help = 'python event_feed.py [delete, samoa]'
+        command_help = 'python event_feed.py [delete, samoa, eventbrite]'
 
         if len(sys.argv) == 2:
             if sys.argv[1] == 'delete':
                 self.delete_data()
             elif sys.argv[1] == 'samoa':
                 self.samoa_feed()
+            elif sys.argv[1] == 'eventbrite':
+                env = environ.Env()
+                env_file = os.path.join(os.getcwd(), ".env")
+                environ.Env.read_env(env_file)
+
+                self.eventbrite_feed(env('EVENTBRITE_KEY'))
             else:
                 print(command_help)
         else:
             print(command_help)
 
+    # deletes all data in the database
     def delete_data(self):
         print('Deleting all data. Please wait...')
 
@@ -35,6 +47,7 @@ class EventFeeds():
 
         print('Data deleted!')
 
+    # gets event feed from Samoa
     def samoa_feed(self):
         print('Retrieving event feed from Samoa. Please wait...')
 
@@ -97,6 +110,7 @@ class EventFeeds():
                 seminar.registration_url = event['registrationUrl']
                 seminar.start_time = event['startTime']
                 seminar.end_time = event['endTime']
+                seminar.online = location.online
                 seminar.speaker = speaker
                 seminar.seminar_group = seminar_group
                 seminar.location = location
@@ -106,6 +120,64 @@ class EventFeeds():
                 continue
 
         print('Samoa event feed retrieved!')
+
+    # gets event feed from EventBrite
+    def eventbrite_feed(self, key):
+        print('Retrieving event feed from EventBrite. Please wait...')
+
+        eventbrite = Eventbrite(key)
+
+        config = yaml.safe_load(open('config.yaml'))
+        organisers = config['organisers']
+
+        for organiser_id in organisers:
+            organiser = eventbrite.get_organizers(organiser_id)
+            organiser_events = eventbrite.get_organizer_events(
+                organiser_id, expand='venue'
+            )
+
+            seminar_group, seminar_group_created = SeminarGroup.objects.get_or_create(
+                name=organiser['name']
+            )
+            seminar_group.description = organiser['long_description']['text']
+            seminar_group.url = organiser['url']
+            seminar_group.save()
+
+            for event in organiser_events['events']:
+                now = datetime.datetime.now()
+                start = datetime.datetime.strptime(
+                    event['start']['local'], '%Y-%m-%dT%H:%M:%S'
+                )
+
+                if start >= now:  # get future EventBrite events for the organisation
+                    seminar, seminar_created = Seminar.objects.get_or_create(
+                        eventbrite_id=event['id']
+                    )
+                    seminar.title = event['name']['text']
+                    seminar.description = event['description']['text']
+                    seminar.registration_url = event['url']
+                    seminar.start_time = event['start']['local']
+                    seminar.end_time = event['end']['local']
+                    seminar.online = event['online_event']
+                    seminar.seminar_group = seminar_group
+
+                    venue = event['venue']
+
+                    if venue:
+                        location, location_created = Location.objects.get_or_create(
+                            location=venue['name'],
+                            latitude=venue['latitude'],
+                            longitude=venue['longitude'],
+                            online=event['online_event'],
+                        )
+
+                        seminar.location = location
+                        seminar_group.location.add(location)
+
+                    seminar.save()
+                    seminar_group.save()
+
+        print('EventBrite event feed retrieved!')
 
 
 if __name__ == '__main__':
