@@ -5,21 +5,32 @@ import django
 django.setup()
 
 from backend.models import *
+from eventbrite import Eventbrite
+
 import requests
 import json
 import sys
 import re
+import environ
+import datetime
+import yaml
 
 
 class EventFeeds():
     def __init__(self):
-        command_help = 'python event_feed.py [delete, samoa]'
+        command_help = 'python event_feed.py [delete, samoa, eventbrite]'
 
         if len(sys.argv) == 2:
             if sys.argv[1] == 'delete':
                 self.delete_data()
             elif sys.argv[1] == 'samoa':
                 self.samoa_feed()
+            elif sys.argv[1] == 'eventbrite':
+                env = environ.Env()
+                env_file = os.path.join(os.getcwd(), ".env")
+                environ.Env.read_env(env_file)
+
+                self.eventbrite_feed(env('EVENTBRITE_KEY'))
             else:
                 print(command_help)
         else:
@@ -106,6 +117,30 @@ class EventFeeds():
                 continue
 
         print('Samoa event feed retrieved!')
+
+    def eventbrite_feed(self, key):
+        print('Retrieving event feed from EventBrite. Please wait...')
+
+        eventbrite = Eventbrite(key)
+
+        config = yaml.safe_load(open('config.yaml'))
+        organisers = config['organisers']
+
+        for organiser in organisers:
+            organiser_events = eventbrite.get_organizer_events(organiser)
+
+            for event in organiser_events['events']:
+                now = datetime.datetime.now()
+                start = datetime.datetime.strptime(
+                    event['start']['local'], '%Y-%m-%dT%H:%M:%S'
+                )
+
+                if start >= now:  # get future EventBrite events for the organisation
+                    print(event['name']['text'])
+                    print(event['start']['local'])
+                    print('\n')
+
+        print('EventBrite event feed retrieved!')
 
 
 if __name__ == '__main__':

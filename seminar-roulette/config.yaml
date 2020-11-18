@@ -1,0 +1,8 @@
+# list of EventBrite organiser id's where future events/seminars will be scraped from
+# e.g. 6830828415 (https://www.eventbrite.com/o/school-of-computing-science-university-of-glasgow-6830828415)
+organisers:
+  - 6830828415
+  - 31432873611
+  - 10834796360
+  - 5991526139
+  - 2615700626

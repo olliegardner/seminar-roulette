@@ -5,6 +5,7 @@ chardet==3.0.4
 Django==3.1.2
 django-environ==0.4.5
 djangorestframework==3.12.1
+eventbrite==3.3.5
 idna==2.10
 isort==5.6.4
 lazy-object-proxy==1.4.3
@@ -15,6 +16,7 @@ psycopg2-binary==2.8.6
 pylint==2.6.0
 python-dateutil==2.8.1
 pytz==2020.1
+PyYAML==5.3.1
 requests==2.24.0
 scipy==1.5.4
 six==1.15.0
