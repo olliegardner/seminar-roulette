@@ -163,3 +163,9 @@ N/A - projects not released.
 - _2 hour_ Continued improving the frontend of the system.
 - _1 hour_ Weekly meeting with Jeremy and wrote up the meeting minutes.
 - _1 hour_ More frontend improvements.
+
+## Week 9
+
+### 18 Nov 2020
+
+- _2.5 hour_ Wrote a script which scrapes events/seminars on EventBrite and adds them to the database.
