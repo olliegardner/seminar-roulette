@@ -11,6 +11,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'backend',
     'frontend',
+    'shibboleth',
 ]
 
 MIDDLEWARE = [
@@ -19,6 +20,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'shibboleth.middleware.ShibbolethRemoteUserMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -47,3 +49,15 @@ SECURE_SSL_REDIRECT = True
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': ('rest_framework.renderers.JSONRenderer', )
 }
+
+# Shibboleth
+AUTHENTICATION_BACKENDS += ('shibboleth.backends.ShibbolethRemoteUserBackend', )
+
+SHIBBOLETH_ATTRIBUTE_MAP = {
+    "nickname": (True, "guid"),
+    "displayName": (True, "name")
+}
+
+SHIBBOLETH_GROUP_ATTRIBUTES = ['affiliation']
+
+LOGIN_URL = 'https://howard.dcs.gla.ac.uk/Shibboleth.sso/Login'

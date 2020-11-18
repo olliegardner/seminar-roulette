@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('backend.urls')),
     path('', include('frontend.urls')),
+    path('shib/', include('shibboleth.urls', namespace='shibboleth')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
