@@ -42,9 +42,6 @@ const muiTheme = createMuiTheme({
     },
   },
   props: {
-    MuiPaper: {
-      elevation: 0,
-    },
     MuiButton: {
       disableElevation: true,
     },

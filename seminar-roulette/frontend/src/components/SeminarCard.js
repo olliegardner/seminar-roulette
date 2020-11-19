@@ -31,7 +31,7 @@ const SeminarCard = (props) => {
   const classes = useStyles();
 
   return (
-    <Paper variant="outlined" className={classes.seminarCard}>
+    <Paper className={classes.seminarCard}>
       <Box p={2}>
         <Typography variant="h6" gutterBottom>
           {seminar.title}

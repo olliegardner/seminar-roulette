@@ -4,20 +4,22 @@ import clsx from "clsx";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/styles";
 import { AppBar, Toolbar, Hidden, Typography } from "@material-ui/core";
+import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
+import RateReviewOutlinedIcon from "@material-ui/icons/RateReviewOutlined";
 
+import TopbarButton from "./TopbarButton";
 import ProfileMenu from "./ProfileMenu";
-import HistoryMenu from "./HistoryMenu";
-import RecommendationsMenu from "./RecommendationsMenu";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     boxShadow: "none",
+    backgroundColor: theme.palette.common.white,
   },
   titleLink: {
     display: "flex",
     alignItems: "inherit",
     textDecoration: "none",
-    color: "white",
+    color: theme.palette.primary.main,
   },
   flexGrow: {
     flexGrow: 1,
@@ -41,8 +43,16 @@ const Topbar = (props) => {
 
         <div className={classes.flexGrow} />
 
-        <RecommendationsMenu />
-        <HistoryMenu />
+        <TopbarButton
+          text="Recommendations"
+          icon={<FavoriteBorderOutlinedIcon />}
+          href="recommendations"
+        />
+        <TopbarButton
+          text="History"
+          icon={<RateReviewOutlinedIcon />}
+          href="history"
+        />
         <ProfileMenu />
       </Toolbar>
     </AppBar>

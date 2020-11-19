@@ -13,7 +13,9 @@ const Landing = () => {
 
   return (
     <div className={classes.root}>
-      <Typography variant="h4">Dashboard</Typography>
+      <Typography variant="h5" gutterBottom>
+        Seminars at the University of Glasgow
+      </Typography>
       <Tabs />
     </div>
   );
