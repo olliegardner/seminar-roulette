@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     },
     height: "100%",
     flex: "1 1 auto",
-    backgroundColor: theme.palette.background.dark,
+    backgroundColor: "#f8f8f8",
   },
   wrapper: {
     padding: theme.spacing(3),

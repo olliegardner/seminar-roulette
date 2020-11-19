@@ -2,7 +2,7 @@ import React from "react";
 import { Switch, Route, BrowserRouter } from "react-router-dom";
 import RouteWithLayout from "./components/RouteWithLayout";
 import Layout from "./layout/Layout";
-import Dashboard from "./views/Dashboard";
+import Dashboard from "./views/Dashboard/Dashboard";
 import History from "./views/History";
 import Recommendations from "./views/Recommendations";
 import Seminar from "./views/Seminar";

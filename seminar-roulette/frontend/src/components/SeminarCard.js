@@ -2,14 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
 import { Link as RouterLink } from "react-router-dom";
-import {
-  Box,
-  Button,
-  Link,
-  makeStyles,
-  Paper,
-  Typography,
-} from "@material-ui/core";
+import { Box, Button, makeStyles, Paper, Typography } from "@material-ui/core";
 import ScheduleOutlinedIcon from "@material-ui/icons/ScheduleOutlined";
 import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
@@ -41,9 +34,7 @@ const SeminarCard = (props) => {
     <Paper variant="outlined" className={classes.seminarCard}>
       <Box p={2}>
         <Typography variant="h6" gutterBottom>
-          <Link color="inherit" href={`/seminar/${seminar.id}`}>
-            {seminar.title}
-          </Link>
+          {seminar.title}
         </Typography>
 
         <Typography>
@@ -53,7 +44,7 @@ const SeminarCard = (props) => {
           </span>
         </Typography>
 
-        <Typography className={classes.whiteText}>
+        <Typography>
           <span className={classes.wrapIcon}>
             <ScheduleOutlinedIcon className={classes.icon} />
             {moment(seminar.start_time).format("H:mm")} -{" "}
@@ -61,21 +52,28 @@ const SeminarCard = (props) => {
           </span>
         </Typography>
 
-        <Typography className={classes.whiteText}>
-          <span className={classes.wrapIcon}>
-            <PersonOutlineOutlinedIcon className={classes.icon} />
-            {seminar.speaker.speaker}
-          </span>
-        </Typography>
-
-        <Typography className={classes.whiteText}>
-          <span className={classes.wrapIcon}>
-            <LocationOnOutlinedIcon className={classes.icon} />
-            {seminar.location.location}
-          </span>
-        </Typography>
+        <span className={classes.wrapIcon}>
+          <PersonOutlineOutlinedIcon className={classes.icon} />
+          {seminar.speaker != null ? (
+            <Typography>{seminar.speaker.speaker}</Typography>
+          ) : (
+            <Typography>-</Typography>
+          )}
+        </span>
 
         <br />
+
+        <span className={classes.wrapIcon}>
+          <LocationOnOutlinedIcon className={classes.icon} />
+          {seminar.location != null ? (
+            <Typography>{seminar.location.location}</Typography>
+          ) : (
+            <Typography>-</Typography>
+          )}
+        </span>
+
+        <br />
+
         <Button
           variant="outlined"
           color="secondary"

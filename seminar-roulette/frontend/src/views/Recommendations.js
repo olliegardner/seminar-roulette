@@ -63,6 +63,6 @@ const Recommendations = () => {
   );
 };
 
-export default Recommendations;
-
 Recommendations.propTypes = {};
+
+export default Recommendations;

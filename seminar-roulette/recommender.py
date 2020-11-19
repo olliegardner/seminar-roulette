@@ -118,11 +118,11 @@ def recommendation_engine(user):
     seminars = []
     count, seminar_count = 0, 0
 
-    while count < 5 and seminar_count < len(recommendation_seminars):
-        if recommendation_seminars[
-            seminar_count
-        ] not in seminars_attended_discarded and recommendation_seminars[
-            seminar_count].is_future():
+    while count < 6 and seminar_count < len(recommendation_seminars):
+        seminar = recommendation_seminars[seminar_count]
+
+        if seminar not in seminars_attended_discarded and seminar is not None and seminar.is_future(
+        ):
             seminars.append(recommendation_seminars[seminar_count])
             count += 1
         seminar_count += 1
