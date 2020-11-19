@@ -49,8 +49,8 @@ const Topbar = (props) => {
   );
 };
 
-export default Topbar;
-
 Topbar.propTypes = {
   className: PropTypes.string,
 };
+
+export default Topbar;

@@ -63,6 +63,6 @@ const History = () => {
   );
 };
 
-export default History;
-
 History.propTypes = {};
+
+export default History;

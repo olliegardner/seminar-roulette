@@ -81,11 +81,11 @@ const SeminarWheel = (props) => {
   );
 };
 
-export default SeminarWheel;
-
 SeminarWheel.propTypes = {
   spin: PropTypes.bool,
   setSpin: PropTypes.func,
   time: PropTypes.string,
   food: PropTypes.bool,
 };
+
+export default SeminarWheel;
