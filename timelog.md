@@ -169,3 +169,7 @@ N/A - projects not released.
 ### 18 Nov 2020
 
 - _2.5 hour_ Wrote a script which scrapes events/seminars on EventBrite and adds them to the database.
+
+### 19 Nov 2020
+
+- _2 hour_ Continued hacking away at the VM, trying to get it deploye for wider use.
