@@ -213,3 +213,58 @@ class SeminarFromID(APIView):
 
         serializer = SeminarSerializer(seminar)
         return Response(serializer.data)
+
+
+class AllSeminars(APIView):
+    """
+    Get all the seminars in the database.
+    """
+    def get(self, request, format=None):
+        seminars = Seminar.objects.all().order_by('start_time')
+        serializer = SeminarSerializer(seminars, many=True)
+        return Response(serializer.data)
+
+
+class SeminarsByTime(APIView):
+    """
+    Find seminars within a timeframe.
+    """
+    def get(self, request, format=None):
+        time = self.request.query_params.get('time')
+
+        now = timezone.now()
+
+        if time == "hour":
+            then = now + timezone.timedelta(hours=1)
+
+            seminars = Seminar.objects.filter(
+                start_time__gte=now, start_time__lte=then
+            )
+        elif time == "today":
+            seminars = Seminar.objects.filter(
+                start_time__gte=now, start_time__date=now.date()
+            )
+        elif time == "tomorrow":
+            tomorrow = now + timezone.timedelta(days=1)
+
+            seminars = Seminar.objects.filter(start_time__date=tomorrow)
+        elif time == "week":
+            end_of_week = now + timezone.timedelta(days=6 - now.weekday())
+
+            seminars = Seminar.objects.filter(
+                start_time__gte=now,
+                start_time__date__range=(now.date(), end_of_week)
+            )
+        elif time == "month":
+            end_of_month = datetime.date(
+                now.year, now.month,
+                calendar.monthrange(now.year, now.month)[-1]
+            )
+
+            seminars = Seminar.objects.filter(
+                start_time__gte=now,
+                start_time__date__range=(now.date(), end_of_month)
+            )
+
+        serializer = SeminarSerializer(seminars, many=True)
+        return Response(serializer.data)

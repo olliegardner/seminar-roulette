@@ -51,7 +51,7 @@ REST_FRAMEWORK = {
 }
 
 # Shibboleth
-AUTHENTICATION_BACKENDS += ('shibboleth.backends.ShibbolethRemoteUserBackend', )
+AUTHENTICATION_BACKENDS = ('shibboleth.backends.ShibbolethRemoteUserBackend', )
 
 SHIBBOLETH_ATTRIBUTE_MAP = {
     "nickname": (True, "guid"),

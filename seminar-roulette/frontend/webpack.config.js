@@ -1,7 +1,7 @@
 const Dotenv = require("dotenv-webpack");
 
 module.exports = {
-  watch: false,
+  watch: true,
   module: {
     rules: [
       {

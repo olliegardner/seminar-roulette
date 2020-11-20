@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Fab, makeStyles } from "@material-ui/core";
+import { Container, Fab, makeStyles } from "@material-ui/core";
 import CasinoOutlinedIcon from "@material-ui/icons/CasinoOutlined";
 
 import Topbar from "./Topbar/Topbar";
@@ -23,10 +23,7 @@ const useStyles = makeStyles((theme) => ({
     },
     height: "100%",
     flex: "1 1 auto",
-    backgroundColor: theme.palette.background.dark,
-  },
-  wrapper: {
-    padding: theme.spacing(3),
+    backgroundColor: theme.palette.common.white,
   },
   fab: {
     position: "fixed",
@@ -57,7 +54,7 @@ const Layout = (props) => {
       <Topbar />
 
       <main className={classes.content}>
-        <div className={classes.wrapper}>{children}</div>
+        <Container disableGutters>{children}</Container>
       </main>
 
       <Fab
@@ -74,8 +71,8 @@ const Layout = (props) => {
   );
 };
 
-export default Layout;
-
 Layout.propTypes = {
   children: PropTypes.node,
 };
+
+export default Layout;
