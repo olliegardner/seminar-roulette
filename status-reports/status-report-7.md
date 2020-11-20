@@ -1,6 +1,6 @@
 # Status Report 7
 
-This week, I have successfully managed to get a stream of data from EventBrite. I did this by using the EventBrite python API. I also considered web scraping EventBrite to retrieve the data but thought using the API would be easier and more logical. This means that Seminar Roulette now has a data stream from both Samoa and EventBrite.
+This week, I have successfully managed to get a stream of data from EventBrite. I did this by using the EventBrite Python API. I have added a config.yaml which allows an admin to put in a list of organiser IDs where future events should be pulled from. I considered web scraping EventBrite to retrieve the data but thought using the API would be easier and more logical. This means that Seminar Roulette now has a data stream from both Samoa and EventBrite.
 
 Following the implementation of EventBrite, I created a dashboard where the user can see seminars at a glance. I have based this dashboard off the EventBrite dashboard. On the dashboard, you are able to see seminars sorted by different categories e.g. for you, today, tomorrow, etc.
 
