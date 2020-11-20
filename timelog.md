@@ -173,3 +173,8 @@ N/A - projects not released.
 ### 19 Nov 2020
 
 - _2 hour_ Continued hacking away at the VM, trying to get it deploye for wider use.
+
+### 20 Nov 2020
+
+- _1 hour_ Continued working on getting the system deployed to the VM
+- _2 hour_ Created a dashboard and improved the look and feel of the system.
