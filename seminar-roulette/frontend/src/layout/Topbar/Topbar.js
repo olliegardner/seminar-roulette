@@ -10,6 +10,7 @@ import {
   Slide,
   Typography,
   useScrollTrigger,
+  List,
 } from "@material-ui/core";
 import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import RateReviewOutlinedIcon from "@material-ui/icons/RateReviewOutlined";

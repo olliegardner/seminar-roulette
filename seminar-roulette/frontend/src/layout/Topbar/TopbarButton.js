@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Button, Typography, makeStyles, Box } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -26,15 +26,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CustomRouterLink = forwardRef((props, ref) => {
-  const exact = props.to == "/";
-  return (
-    <div ref={ref}>
-      <RouterLink {...props} exact={exact} />
-    </div>
-  );
-});
-
 const TopbarButton = (props) => {
   const { text, icon, href } = props;
 
@@ -43,10 +34,10 @@ const TopbarButton = (props) => {
   return (
     <Box mx={1}>
       <Button
-        activeClassName={classes.active}
         className={classes.button}
-        component={CustomRouterLink}
+        component={NavLink}
         to={href}
+        activeClassName={classes.active}
       >
         <div className={classes.column}>
           <div className={classes.icon}>{icon}</div>
