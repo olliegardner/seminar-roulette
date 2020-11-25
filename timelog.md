@@ -179,3 +179,7 @@ N/A - projects not released.
 ### 20 Nov 2020
 
 - _1 hour_ Weekly meeting with Jeremy and wrote up the meeting minutes.
+
+### 25 Nov 2020
+
+- _2 hour_ Finally deployed system to the howard.dcs VM :)
