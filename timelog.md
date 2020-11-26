@@ -169,12 +169,17 @@ N/A - projects not released.
 ### 18 Nov 2020
 
 - _2.5 hour_ Wrote a script which scrapes events/seminars on EventBrite and adds them to the database.
+- _2 hour_ Continued hacking away at the VM, trying to get it deployed for wider use.
 
 ### 19 Nov 2020
 
-- _2 hour_ Continued hacking away at the VM, trying to get it deploye for wider use.
+- _1 hour_ Continued working on getting the system deployed to the VM
+- _2 hour_ Created a dashboard and improved the look and feel of the system.
 
 ### 20 Nov 2020
 
-- _1 hour_ Continued working on getting the system deployed to the VM
-- _2 hour_ Created a dashboard and improved the look and feel of the system.
+- _1 hour_ Weekly meeting with Jeremy and wrote up the meeting minutes.
+
+### 25 Nov 2020
+
+- _2 hour_ Finally deployed system to the howard.dcs VM :)

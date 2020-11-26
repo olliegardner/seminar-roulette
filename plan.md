@@ -50,8 +50,10 @@ Week-by-week plan for the whole project.
   - Use EventBrite as another data stream.
   - Get current system deployed to the VM.
   - Prepare for initial evaluation.
-  - Look into connecting to the user's calendar.
 - **Week 10**
+  - Look into connecting to the user's calendar.
+  - Shibboleth integration.
+  - Continue with frontend improvements.
 - **Week 11 [PROJECT WEEK]**
 - **Week 12 [PROJECT WEEK]** Status report submitted.
 
