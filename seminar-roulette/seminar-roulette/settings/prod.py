@@ -1,5 +1,6 @@
 DEBUG = False
 ALLOWED_HOSTS = ['howard.dcs.gla.ac.uk']
+CSRF_TRUSTED_ORIGINS = ['milngavie.cent.gla.ac.uk']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -60,4 +61,8 @@ SHIBBOLETH_ATTRIBUTE_MAP = {
 
 SHIBBOLETH_GROUP_ATTRIBUTES = ['affiliation']
 
-LOGIN_URL = 'https://howard.dcs.gla.ac.uk/Shibboleth.sso/Login'
+LOGIN_URL = 'https://howard.dcs.gla.ac.uk/Shibboleth.sso/Login?target=/'
+LOGOUT_URL = 'https://howard.dcs.gla.ac.uk/Shibboleth.sso/Logout'
+
+SHIBBOLETH_LOGOUT_URL = 'https://howard.dcs.gla.ac.uk/Shibboleth.sso/Logout?return=%s'
+SHIBBOLETH_LOGOUT_REDIRECT_URL = 'https://milngavie.cent.gla.ac.uk/idp/profile/Logout'
