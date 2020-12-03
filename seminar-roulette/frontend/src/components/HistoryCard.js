@@ -47,9 +47,9 @@ const HistoryCard = (props) => {
   const user = useContext(UserContext);
   const csrftoken = Cookies.get("csrftoken");
 
-  const [rating, setRating] = useState(0);
+  // const [rating, setRating] = useState(0);
 
-  const setSeminarAttended = (seminarId, discarded) => {
+  const setSeminarAttended = (seminarId, discarded, rating) => {
     axios
       .put(
         `/api/seminars/history/attended.json?guid=${user.guid}`,
@@ -88,12 +88,15 @@ const HistoryCard = (props) => {
             name={`rating-${seminar.id}`}
             defaultValue={0}
             precision={0.5}
-            value={rating}
-            onChange={(e) => setRating(e.target.value)}
+            // value={rating}
+            // onChange={(e) => setRating(e.target.value)}
+            onChange={(e) =>
+              setSeminarAttended(seminar.id, false, e.target.value)
+            }
           />
         </FormControl>
 
-        <div className={classes.noYesRow}>
+        {/* <div className={classes.noYesRow}>
           <Button
             variant="contained"
             color="secondary"
@@ -110,7 +113,7 @@ const HistoryCard = (props) => {
           >
             Yes
           </Button>
-        </div>
+        </div> */}
       </Box>
     </Paper>
   );
