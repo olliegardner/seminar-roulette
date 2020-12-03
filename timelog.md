@@ -183,3 +183,13 @@ N/A - projects not released.
 ### 25 Nov 2020
 
 - _2 hour_ Finally deployed system to the howard.dcs VM :)
+
+### 26 Nov 2020
+
+- _1.5 hour_ Continued setting up Shibboleth on the VM.
+
+### 27 Nov 2020
+
+- _1 hour_ Weekly meeting with Jeremy and wrote up meeting minutes.
+
+## Week 10
