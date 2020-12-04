@@ -1,17 +1,18 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import moment from "moment";
 import Cookies from "js-cookie";
 import {
   Box,
-  Button,
+  IconButton,
   makeStyles,
   Typography,
   FormControl,
   Paper,
   Link,
 } from "@material-ui/core";
+import ClearIcon from "@material-ui/icons/Clear";
 import Rating from "@material-ui/lab/Rating";
 import UserContext from "../context/UserContext";
 
@@ -26,18 +27,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
   },
-  noYesRow: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: theme.spacing(2),
-  },
-  noButton: {
-    marginRight: theme.spacing(2),
-  },
-  yesButton: {
-    marginLeft: theme.spacing(2),
-  },
 }));
 
 const HistoryCard = (props) => {
@@ -46,8 +35,6 @@ const HistoryCard = (props) => {
   const classes = useStyles();
   const user = useContext(UserContext);
   const csrftoken = Cookies.get("csrftoken");
-
-  // const [rating, setRating] = useState(0);
 
   const setSeminarAttended = (seminarId, discarded, rating) => {
     axios
@@ -68,7 +55,17 @@ const HistoryCard = (props) => {
 
   return (
     <Paper variant="outlined" className={classes.historyCard}>
-      <Box p={2} textAlign="center">
+      <Box textAlign="right">
+        <IconButton
+          aria-label="clear"
+          color="secondary"
+          onClick={() => setSeminarAttended(seminar.id, true)}
+        >
+          <ClearIcon />
+        </IconButton>
+      </Box>
+
+      <Box pb={2} px={2} textAlign="center">
         <Typography variant="h6" gutterBottom>
           <Link color="inherit" href={`/seminar/${seminar.id}`}>
             {seminar.title}
@@ -88,32 +85,11 @@ const HistoryCard = (props) => {
             name={`rating-${seminar.id}`}
             defaultValue={0}
             precision={0.5}
-            // value={rating}
-            // onChange={(e) => setRating(e.target.value)}
             onChange={(e) =>
               setSeminarAttended(seminar.id, false, e.target.value)
             }
           />
         </FormControl>
-
-        {/* <div className={classes.noYesRow}>
-          <Button
-            variant="contained"
-            color="secondary"
-            className={classes.noButton}
-            onClick={() => setSeminarAttended(seminar.id, true)}
-          >
-            No
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            className={classes.yesButton}
-            onClick={() => setSeminarAttended(seminar.id, false)}
-          >
-            Yes
-          </Button>
-        </div> */}
       </Box>
     </Paper>
   );

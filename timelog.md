@@ -193,3 +193,7 @@ N/A - projects not released.
 - _1 hour_ Weekly meeting with Jeremy and wrote up meeting minutes.
 
 ## Week 10
+
+### 3 Dec 2020
+
+- _0.5 hour_ Added clear button to the seminar cards on the history page.
