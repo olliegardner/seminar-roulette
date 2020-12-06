@@ -200,4 +200,4 @@ N/A - projects not released.
 
 ### 6 Dec 2020
 
-- _1 hour_ Updated PostgreSQL version on the VM so that it was compatiable with Django.
+- _1 hour_ Updated PostgreSQL version on the VM so that it was compatible with Django.
