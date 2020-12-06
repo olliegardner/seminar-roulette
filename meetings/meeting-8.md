@@ -1,4 +1,4 @@
-# Meeting 8 - 2- Nov 2020
+# Meeting 8 - 20 Nov 2020
 
 The meeting started with me giving Jeremy a demo of the progress I had made this week. On the seminar history, page he had an idea where if a user clicks on the stars to rate them, this should automatically set the seminar as attended in the database. This will reduce the number of clicks the user has to perform on this page. To dismiss the seminar, there could be a cross in the top right hand corner.
 

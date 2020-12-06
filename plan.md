@@ -55,6 +55,9 @@ Week-by-week plan for the whole project.
   - Shibboleth integration.
   - Continue with frontend improvements.
 - **Week 11 [PROJECT WEEK]**
+  - Conduct initial evaluations.
+  - Add a search bar.
+  - Fix issues which have arised from initial evaluations.
 - **Week 12 [PROJECT WEEK]** Status report submitted.
 
 ## Winter break

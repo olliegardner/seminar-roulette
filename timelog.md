@@ -183,3 +183,21 @@ N/A - projects not released.
 ### 25 Nov 2020
 
 - _2 hour_ Finally deployed system to the howard.dcs VM :)
+
+### 26 Nov 2020
+
+- _1.5 hour_ Continued setting up Shibboleth on the VM.
+
+### 27 Nov 2020
+
+- _1 hour_ Weekly meeting with Jeremy and wrote up meeting minutes.
+
+## Week 10
+
+### 3 Dec 2020
+
+- _0.5 hour_ Added clear button to the seminar cards on the history page.
+
+### 6 Dec 2020
+
+- _1 hour_ Updated PostgreSQL version on the VM so that it was compatible with Django.
