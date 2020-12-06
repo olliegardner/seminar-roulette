@@ -197,3 +197,7 @@ N/A - projects not released.
 ### 3 Dec 2020
 
 - _0.5 hour_ Added clear button to the seminar cards on the history page.
+
+### 6 Dec 2020
+
+- _1 hour_ Updated PostgreSQL version on the VM so that it was compatiable with Django.
