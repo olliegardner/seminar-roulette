@@ -98,25 +98,29 @@ class RandomSeminar(APIView):
             id__in=seminars_attended_discarded
         )
 
-        if food == 'true':
-            food_seminars = []
-            food_words = [
-                'refreshment', 'breakfast', 'lunch', 'dinner', 'snack'
-            ]
+        # if food == 'true':
+        #     food_seminars = []
+        #     food_words = [
+        #         'refreshment', 'breakfast', 'lunch', 'dinner', 'snack'
+        #     ]
 
-            # get seminars which serve food
-            for food_word in food_words:
-                seminars = available_seminars.filter(
-                    description__icontains=food_word
-                )
-                for seminar in seminars:
-                    if seminar not in food_seminars:
-                        food_seminars.append(seminar.id)
+        #     # get seminars which serve food
+        #     for food_word in food_words:
+        #         seminars = available_seminars.filter(
+        #             description__icontains=food_word
+        #         )
+        #         for seminar in seminars:
+        #             if seminar not in food_seminars:
+        #                 food_seminars.append(seminar.id)
 
-            random_seminar = Seminar.objects.filter(id__in=food_seminars
-                                                   ).order_by('?').first()
-        else:
-            random_seminar = available_seminars.order_by('?').first()
+        #     random_seminar = Seminar.objects.filter(id__in=food_seminars
+        #                                            ).order_by('?').first()
+        # else:
+        #     random_seminar = available_seminars.order_by('?').first()
+
+        random_seminar = available_seminars.filter(
+            serves_food=(food == 'true')
+        ).order_by('?').first()
 
         if random_seminar:
             serializer = SeminarSerializer(random_seminar)

@@ -28,6 +28,7 @@ class SeminarAdmin(admin.ModelAdmin):
     readonly_fields = (
         'description',
         'registration_url',
+        'serves_food',
     )
 
 
