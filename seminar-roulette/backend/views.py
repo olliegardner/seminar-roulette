@@ -220,7 +220,12 @@ class AllSeminars(APIView):
     Get all the seminars in the database.
     """
     def get(self, request, format=None):
-        seminars = Seminar.objects.all().order_by('start_time')
+        now = timezone.now()
+
+        seminars = Seminar.objects.filter(
+            start_time__gte=now, end_time__gte=now
+        ).order_by('start_time')
+
         serializer = SeminarSerializer(seminars, many=True)
         return Response(serializer.data)
 
