@@ -53,15 +53,15 @@ REST_FRAMEWORK = {
 # Shibboleth
 AUTHENTICATION_BACKENDS = ('shibboleth.backends.ShibbolethRemoteUserBackend', )
 
-# SHIBBOLETH_ATTRIBUTE_MAP = {
-#     "nickname": (True, "guid"),
-#     "displayName": (True, "name")
-# }
+SHIBBOLETH_ATTRIBUTE_MAP = {
+    'HTTP_DH75HDYT76': (True, 'guid'),
+    'HTTP_DH75HDYT77': (True, 'name')
+}
 
-# SHIBBOLETH_GROUP_ATTRIBUTES = ['affiliation']
+SHIBBOLETH_GROUP_ATTRIBUTES = ['HTTP_DH75HDYT78']
 
 LOGIN_URL = 'https://howard.dcs.gla.ac.uk/Shibboleth.sso/Login?target=/'
 LOGOUT_URL = 'https://howard.dcs.gla.ac.uk/Shibboleth.sso/Logout'
 
-SHIBBOLETH_LOGOUT_URL = 'https://howard.dcs.gla.ac.uk/Shibboleth.sso/Logout?return=%s'
-SHIBBOLETH_LOGOUT_REDIRECT_URL = 'https://milngavie.cent.gla.ac.uk/idp/profile/Logout'
+# SHIBBOLETH_LOGOUT_URL = 'https://howard.dcs.gla.ac.uk/Shibboleth.sso/Logout?return=%s'
+# SHIBBOLETH_LOGOUT_REDIRECT_URL = 'https://milngavie.cent.gla.ac.uk/idp/profile/Logout'
