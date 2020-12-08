@@ -90,6 +90,7 @@ class Seminar(models.Model):
     class Meta:
         unique_together = ['title', 'start_time', 'end_time', 'speaker']
 
+    @property
     def is_future(self):
         return self.start_time >= timezone.now()
 

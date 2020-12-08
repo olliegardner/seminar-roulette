@@ -60,8 +60,5 @@ SHIBBOLETH_ATTRIBUTE_MAP = {
 
 SHIBBOLETH_GROUP_ATTRIBUTES = ['HTTP_DH75HDYT78']
 
-LOGIN_URL = 'https://howard.dcs.gla.ac.uk/Shibboleth.sso/Login?target=/'
+LOGIN_URL = 'https://howard.dcs.gla.ac.uk/Shibboleth.sso/Login'
 LOGOUT_URL = 'https://howard.dcs.gla.ac.uk/Shibboleth.sso/Logout'
-
-# SHIBBOLETH_LOGOUT_URL = 'https://howard.dcs.gla.ac.uk/Shibboleth.sso/Logout?return=%s'
-# SHIBBOLETH_LOGOUT_REDIRECT_URL = 'https://milngavie.cent.gla.ac.uk/idp/profile/Logout'

@@ -4,8 +4,6 @@ import moment from "moment";
 import { Link as RouterLink } from "react-router-dom";
 import {
   Avatar,
-  Box,
-  Button,
   Card,
   CardActionArea,
   CardActions,
@@ -13,41 +11,37 @@ import {
   CardHeader,
   IconButton,
   makeStyles,
-  Paper,
   Tooltip,
   Typography,
 } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
-import ScheduleOutlinedIcon from "@material-ui/icons/ScheduleOutlined";
-import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
-import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
-import CalendarTodayOutlinedIcon from "@material-ui/icons/CalendarTodayOutlined";
 import ClearIcon from "@material-ui/icons/Clear";
 import FastfoodOutlinedIcon from "@material-ui/icons/FastfoodOutlined";
+import LanguageOutlinedIcon from "@material-ui/icons/LanguageOutlined";
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: theme.palette.primary.main,
   },
-  seminarCard: {
-    // display: "flex",
-    // flexDirection: "column",
+  fullHeight: {
     height: "100%",
-    // justifyContent: "space-between",
   },
   date: {
     textAlign: "center",
     fontSize: 10,
   },
-  // wrapIcon: {
-  //   verticalAlign: "middle",
-  //   display: "inline-flex",
-  //   marginBottom: theme.spacing(0.5),
-  // },
-  // icon: {
-  //   marginRight: theme.spacing(1),
-  //   color: theme.palette.primary.main,
-  // },
+  flexGrow: {
+    flexGrow: 1,
+  },
+  rating: {
+    marginRight: theme.spacing(1),
+  },
+  online: {
+    marginRight: theme.spacing(1),
+  },
+  food: {
+    marginRight: theme.spacing(1),
+  },
 }));
 
 const truncate = (str) => {
@@ -62,8 +56,12 @@ const SeminarCard = (props) => {
   const startMonth = moment(seminar.start_time).format("MMM").toUpperCase();
 
   return (
-    <Card variant="outlined" className={classes.seminarCard}>
-      <CardActionArea component={RouterLink} to={`/seminar/${seminar.id}`}>
+    <Card variant="outlined" className={classes.fullHeight}>
+      <CardActionArea
+        component={RouterLink}
+        to={`/seminar/${seminar.id}`}
+        className={classes.fullHeight}
+      >
         <CardHeader
           avatar={
             <Avatar
@@ -82,9 +80,15 @@ const SeminarCard = (props) => {
             <IconButton
               aria-label="clear"
               color="secondary"
-              onClick={() => console.log("CLEAR")}
+              onMouseDown={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+              }}
             >
-              <ClearIcon />
+              <Tooltip title="Discard seminar" placement="top">
+                <ClearIcon />
+              </Tooltip>
             </IconButton>
           }
           title={<b>{seminar.title}</b>}
@@ -106,34 +110,43 @@ const SeminarCard = (props) => {
             name={`rating-${seminar.id}`}
             defaultValue={0}
             precision={0.5}
-            onChange={(e) => console.log("change rating")}
+            onMouseDown={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+            }}
+            // onChange={(e) => {
+            //   e.stopPropagation();
+            //   e.preventDefault();
+            // }}
+            disabled={seminar.is_future}
           />
 
-          {!seminar.serves_food && (
-            <Tooltip title="This seminar serves food!" placement="top">
-              <FastfoodOutlinedIcon color="secondary" />
+          <div className={classes.flexGrow}></div>
+
+          {seminar.online && (
+            <Tooltip
+              title="Online seminar"
+              placement="top"
+              className={classes.online}
+            >
+              <LanguageOutlinedIcon color="secondary" />
             </Tooltip>
           )}
 
-          {/* <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
-          </IconButton>
-          <IconButton aria-label="share">
-            <ShareIcon />
-          </IconButton>
-          <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
-          </IconButton> */}
+          {seminar.serves_food && (
+            <Tooltip
+              title="This seminar serves food!"
+              placement="top"
+              className={classes.food}
+            >
+              <FastfoodOutlinedIcon color="secondary" />
+            </Tooltip>
+          )}
         </CardActions>
       </CardActionArea>
     </Card>
+
     // <Paper className={classes.seminarCard}>
     //   <Box p={2}>
     //     <Typography variant="h6" gutterBottom>
