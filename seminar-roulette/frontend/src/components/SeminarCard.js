@@ -122,7 +122,7 @@ const SeminarCard = (props) => {
             disabled={seminar.is_future}
           />
 
-          <div className={classes.flexGrow}></div>
+          <div className={classes.flexGrow} />
 
           {seminar.online && (
             <Tooltip

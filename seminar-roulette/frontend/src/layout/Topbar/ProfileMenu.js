@@ -15,9 +15,9 @@ import UserContext from "../../context/UserContext";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
-    color: theme.palette.icon,
     display: "flex",
     justifyContent: "center",
+    marginRight: theme.spacing(1),
   },
   column: {
     flexDirection: "column",
@@ -39,15 +39,11 @@ const ProfileMenu = () => {
   return (
     <Fragment>
       <Box mx={1}>
-        <Button onClick={handleOpen}>
-          <div className={classes.column}>
-            <div className={classes.icon}>
-              <AccountCircleOutlinedIcon />
-            </div>
-            <Typography variant="caption" component="span">
-              Profile
-            </Typography>
+        <Button onClick={handleOpen} color="inherit">
+          <div className={classes.icon}>
+            <AccountCircleOutlinedIcon />
           </div>
+          {user.name}
           <ExpandMoreIcon />
         </Button>
       </Box>
@@ -69,8 +65,6 @@ const ProfileMenu = () => {
       >
         <Box py={1}>
           <MenuItem color="inherit" disabled>
-            {user.name}
-            <br />
             {user.guid}
           </MenuItem>
           <MenuItem component={RouterLink} to={"/logout"} color="inherit">
