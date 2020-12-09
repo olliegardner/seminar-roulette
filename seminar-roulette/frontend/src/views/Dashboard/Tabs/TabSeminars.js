@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 import { Grid, Typography } from "@material-ui/core";
@@ -22,9 +22,9 @@ const TabSeminars = (props) => {
   }, []);
 
   return (
-    <Fragment>
+    <>
       {loaded ? (
-        <Fragment>
+        <>
           {seminars.length > 0 ? (
             <Grid container spacing={3}>
               {seminars.map((seminar) => (
@@ -36,11 +36,11 @@ const TabSeminars = (props) => {
           ) : (
             <Typography>{notFoundText}</Typography>
           )}
-        </Fragment>
+        </>
       ) : (
         <LoadingSpinner />
       )}
-    </Fragment>
+    </>
   );
 };
 

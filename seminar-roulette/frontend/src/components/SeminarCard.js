@@ -22,6 +22,8 @@ import LanguageOutlinedIcon from "@material-ui/icons/LanguageOutlined";
 const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: theme.palette.primary.main,
+    width: theme.spacing(6),
+    height: theme.spacing(6),
   },
   fullHeight: {
     height: "100%",
@@ -52,8 +54,10 @@ const SeminarCard = (props) => {
   const { seminar } = props;
   const classes = useStyles();
 
-  const startDay = moment(seminar.start_time).format("D");
-  const startMonth = moment(seminar.start_time).format("MMM").toUpperCase();
+  const startTime = moment(seminar.start_time);
+  const startDay = startTime.format("D");
+  const startMonth = startTime.format("MMM").toUpperCase();
+  const startYear = startTime.format("YY");
 
   return (
     <Card variant="outlined" className={classes.fullHeight}>
@@ -73,6 +77,8 @@ const SeminarCard = (props) => {
                 <b style={{ fontSize: 12 }}>{startDay}</b>
                 <br />
                 {startMonth}
+                <br />
+                {startYear}
               </span>
             </Avatar>
           }
@@ -93,9 +99,7 @@ const SeminarCard = (props) => {
           }
           title={<b>{seminar.title}</b>}
           subheader={
-            moment(seminar.start_time).format("H:mm") +
-            " - " +
-            moment(seminar.end_time).format("H:mm")
+            startTime.format("H:mm") + " - " + startTime.format("H:mm")
           }
         />
 

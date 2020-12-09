@@ -11,6 +11,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'backend',
     'frontend',
+    'watson',
 ]
 
 MIDDLEWARE = [
@@ -21,6 +22,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'watson.middleware.SearchContextMiddleware',
 ]
 
 TEMPLATES = [

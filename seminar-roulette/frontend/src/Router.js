@@ -6,6 +6,7 @@ import Dashboard from "./views/Dashboard/Dashboard";
 import Seminar from "./views/Seminar";
 import FourZeroFour from "./views/FourZeroFour";
 import SeminarNotFound from "./views/SeminarNotFound";
+import Search from "./views/Search";
 
 const Router = () => {
   const onProduction = process.env.PRODUCTION == "true";
@@ -45,6 +46,13 @@ const Router = () => {
           exact
           path="/seminar/:seminarId"
         />
+        <RouteWithLayout
+          component={Search}
+          layout={Layout}
+          exact
+          path="/search/:search"
+        />
+
         <Route component={FourZeroFour} />
       </Switch>
     </BrowserRouter>

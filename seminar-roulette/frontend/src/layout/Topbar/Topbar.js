@@ -1,5 +1,5 @@
-import React from "react";
-import { Link as RouterLink } from "react-router-dom";
+import React, { useState } from "react";
+import { Link as RouterLink, useHistory } from "react-router-dom";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import {
@@ -88,7 +88,19 @@ HideOnScroll.propTypes = {
 
 const Topbar = (props) => {
   const { className, ...rest } = props;
+
   const classes = useStyles();
+  const history = useHistory();
+
+  const [search, setSearch] = useState("");
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (search) {
+      history.push(`/search/${search}`);
+      setSearch("");
+    }
+  };
 
   return (
     <HideOnScroll {...props}>
@@ -104,19 +116,23 @@ const Topbar = (props) => {
 
           <div className={classes.flexGrow} />
 
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
+          <form noValidate autoComplete="off" onSubmit={handleSearchSubmit}>
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search seminars…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ "aria-label": "search" }}
+                onChange={(e) => setSearch(e.target.value)}
+                value={search}
+              />
             </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
-          </div>
+          </form>
 
           <div className={classes.flexGrow} />
 

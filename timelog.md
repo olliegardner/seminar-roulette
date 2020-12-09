@@ -198,6 +198,20 @@ N/A - projects not released.
 
 - _0.5 hour_ Added clear button to the seminar cards on the history page.
 
-### 6 Dec 2020
+### 5 Dec 2020
 
 - _1 hour_ Updated PostgreSQL version on the VM so that it was compatible with Django.
+
+### 6 Dec 2020
+
+- _2 hour_ Finally finished configuring Shibboleth - headers are now returned to the Django application and users can log in with thier university credentials.
+
+## Week 11
+
+### 7 Dec 2020
+
+- _4 hour_ Continued improving the frontend of the application. Started implementation of the search bar.
+
+### 8 Dec 2020
+
+- _4 hour_ Attended dissertation guidance lectures.

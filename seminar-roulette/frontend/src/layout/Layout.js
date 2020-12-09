@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     flex: "1 1 auto",
     backgroundColor: theme.palette.common.white,
+    // marginTop: theme.spacing(2),
   },
   fab: {
     position: "fixed",
@@ -32,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
   },
   fabIcon: {
     marginRight: theme.spacing(1),
+  },
+  container: {
+    paddingTop: theme.spacing(2),
   },
 }));
 
@@ -54,7 +58,9 @@ const Layout = (props) => {
       <Topbar />
 
       <main className={classes.content}>
-        <Container disableGutters>{children}</Container>
+        <Container disableGutters className={classes.container}>
+          {children}
+        </Container>
       </main>
 
       <Fab

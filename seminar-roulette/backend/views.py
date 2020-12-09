@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from watson import search as watson
 
 from .models import *
 from .serializers import *
@@ -13,18 +14,18 @@ import datetime
 import calendar
 
 
-class Helpers():
-    def get_user(self, guid):
-        try:
-            return UniversityUser.objects.get(guid=guid)
-        except UniversityUser.DoesNotExist:
-            raise Http404
+def get_user(guid):
+    try:
+        return UniversityUser.objects.get(guid=guid)
+    except UniversityUser.DoesNotExist:
+        raise Http404
 
-    def get_seminar(self, seminar_id):
-        try:
-            return Seminar.objects.get(id=seminar_id)
-        except Seminar.DoesNotExist:
-            raise Http404
+
+def get_seminar(seminar_id):
+    try:
+        return Seminar.objects.get(id=seminar_id)
+    except Seminar.DoesNotExist:
+        raise Http404
 
 
 class CurrentUser(APIView):
@@ -44,13 +45,11 @@ class RandomSeminar(APIView):
     Chooses a random upcoming seminar.
     """
     def get(self, request, format=None):
-        helpers = Helpers()
-
         time = self.request.query_params.get('time')
         guid = self.request.query_params.get('guid')
         food = self.request.query_params.get('food')
 
-        user = helpers.get_user(guid)
+        user = get_user(guid)
         now = timezone.now()
 
         if time == "hour":
@@ -134,10 +133,8 @@ class UserSeminarHistory(APIView):
     Create seminar history for a user.
     """
     def get(self, request, format=None):
-        helpers = Helpers()
-
         guid = self.request.query_params.get('guid')
-        user = helpers.get_user(guid)
+        user = get_user(guid)
 
         now = timezone.now()
 
@@ -172,11 +169,9 @@ class DidAttendSeminar(APIView):
     Set a seminar to attended.
     """
     def put(self, request, format=None):
-        helpers = Helpers()
-
         guid = self.request.query_params.get('guid')
-        user = helpers.get_user(guid)
-        seminar = helpers.get_seminar(request.data['seminar'])
+        user = get_user(guid)
+        seminar = get_seminar(request.data['seminar'])
         discarded = request.data['discarded']
 
         seminar_history = SeminarHistory.objects.get(seminar=seminar, user=user)
@@ -194,10 +189,8 @@ class UserRecommendations(APIView):
     Get seminar recommendations for a user.
     """
     def get(self, request, format=None):
-        helpers = Helpers()
-
         guid = self.request.query_params.get('guid')
-        user = helpers.get_user(guid)
+        user = get_user(guid)
 
         recommendations = recommendation_engine(user)
 
@@ -210,10 +203,8 @@ class SeminarFromID(APIView):
     Get seminar from seminar ID.
     """
     def get(self, request, format=None):
-        helpers = Helpers()
-
         seminar_id = self.request.query_params.get('id')
-        seminar = helpers.get_seminar(seminar_id)
+        seminar = get_seminar(seminar_id)
 
         serializer = SeminarSerializer(seminar)
         return Response(serializer.data)
@@ -277,3 +268,31 @@ class SeminarsByTime(APIView):
 
         serializer = SeminarSerializer(seminars, many=True)
         return Response(serializer.data)
+
+
+class Search(APIView):
+    """
+    Retrieve search results from models.
+    """
+    def handle_search(self, query, model):
+        search_results = watson.search(query, models=(model, ))
+        search_results = map(lambda x: x.object, search_results)
+
+        # remove invalid results
+        search_results = filter(lambda x: x is not None, search_results)
+        search_results = [x for x in search_results if x != None]
+
+        search_results = sorted(search_results, key=lambda x: x.start_time)
+
+        return search_results
+
+    def get(self, request, format=None):
+        query = request.GET.get('q')
+
+        if query:  # if a search has taken place
+            seminar_serializer = SeminarSerializer(
+                self.handle_search(query, Seminar), many=True
+            )
+            return Response(seminar_serializer.data)
+
+        return Response('No search results found.')
