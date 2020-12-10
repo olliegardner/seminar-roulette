@@ -83,19 +83,23 @@ const SeminarCard = (props) => {
             </Avatar>
           }
           action={
-            <IconButton
-              aria-label="clear"
-              color="secondary"
-              onMouseDown={(e) => e.stopPropagation()}
-              onClick={(e) => {
-                e.stopPropagation();
-                e.preventDefault();
-              }}
-            >
-              <Tooltip title="Discard seminar" placement="top">
-                <ClearIcon />
-              </Tooltip>
-            </IconButton>
+            <>
+              {!seminar.is_future && (
+                <IconButton
+                  aria-label="clear"
+                  color="secondary"
+                  onMouseDown={(e) => e.stopPropagation()}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                  }}
+                >
+                  <Tooltip title="Discard seminar" placement="top">
+                    <ClearIcon />
+                  </Tooltip>
+                </IconButton>
+              )}
+            </>
           }
           title={<b>{seminar.title}</b>}
           subheader={
@@ -110,21 +114,23 @@ const SeminarCard = (props) => {
         </CardContent>
 
         <CardActions disableSpacing>
-          <Rating
-            name={`rating-${seminar.id}`}
-            defaultValue={0}
-            precision={0.5}
-            onMouseDown={(e) => e.stopPropagation()}
-            onClick={(e) => {
-              e.stopPropagation();
-              e.preventDefault();
-            }}
-            // onChange={(e) => {
-            //   e.stopPropagation();
-            //   e.preventDefault();
-            // }}
-            disabled={seminar.is_future}
-          />
+          {!seminar.is_future && (
+            <Rating
+              name={`rating-${seminar.id}`}
+              defaultValue={0}
+              precision={0.5}
+              onMouseDown={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+              }}
+              // onChange={(e) => {
+              //   e.stopPropagation();
+              //   e.preventDefault();
+              // }}
+              // disabled={seminar.is_future}
+            />
+          )}
 
           <div className={classes.flexGrow} />
 
