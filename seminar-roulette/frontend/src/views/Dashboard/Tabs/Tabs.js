@@ -67,6 +67,7 @@ const TabsContainer = () => {
           <Tab label="Tomorrow" />
           <Tab label="This week" />
           <Tab label="This month" />
+          <Tab label="Past" />
         </Tabs>
       </AppBar>
 
@@ -110,6 +111,12 @@ const TabsContainer = () => {
         <TabSeminars
           request="api/seminars/time.json?time=month"
           notFoundText="No seminars happening this month."
+        />
+      </TabPanel>
+      <TabPanel value={value} index={7} dir={theme.direction}>
+        <TabSeminars
+          request="api/seminars/time.json?time=past"
+          notFoundText="No past seminars found."
         />
       </TabPanel>
     </div>

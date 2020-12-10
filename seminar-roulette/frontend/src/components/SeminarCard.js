@@ -103,7 +103,9 @@ const SeminarCard = (props) => {
           }
           title={<b>{seminar.title}</b>}
           subheader={
-            startTime.format("H:mm") + " - " + startTime.format("H:mm")
+            startTime.format("H:mm") +
+            " - " +
+            moment(seminar.end_time).format("H:mm")
           }
         />
 

@@ -265,6 +265,12 @@ class SeminarsByTime(APIView):
                 start_time__gte=now,
                 start_time__date__range=(now.date(), end_of_month)
             )
+        elif time == 'past':
+            seminars = Seminar.objects.filter(
+                start_time__lt=now, end_time__lt=now
+            )
+
+        seminars = seminars.order_by('start_time')
 
         serializer = SeminarSerializer(seminars, many=True)
         return Response(serializer.data)
