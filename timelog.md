@@ -215,3 +215,4 @@ N/A - projects not released.
 ### 8 Dec 2020
 
 - _4 hour_ Attended dissertation guidance lectures.
+- _2 hour_ Finished implementation of the search bar - allows users to search for seminars.
