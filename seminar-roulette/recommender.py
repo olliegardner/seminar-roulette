@@ -31,6 +31,7 @@ class Recommender:
             guids, seminars, ratings_mean, ratings_demeaned, user.guid
         )
 
+    # unused function - only implemented for testing purposes
     def create_fake_ratings(self):
         print('Creating fake ratings csv. Please wait...')
 
@@ -107,6 +108,7 @@ def recommendation_engine(user):
         upcoming_seminar = Seminar.objects.filter(
             title=recommendation
         ).order_by('start_time').first()
+
         recommendation_seminars.append(upcoming_seminar)
 
     # get seminars which user has attended OR discarded
@@ -121,8 +123,7 @@ def recommendation_engine(user):
     while count < 6 and seminar_count < len(recommendation_seminars):
         seminar = recommendation_seminars[seminar_count]
 
-        if seminar not in seminars_attended_discarded and seminar is not None and seminar.is_future(
-        ):
+        if seminar not in seminars_attended_discarded and seminar is not None and seminar.is_future:
             seminars.append(recommendation_seminars[seminar_count])
             count += 1
         seminar_count += 1

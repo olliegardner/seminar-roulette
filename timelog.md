@@ -184,7 +184,7 @@ N/A - projects not released.
 
 - _2 hour_ Finally deployed system to the howard.dcs VM :)
 
-### 26 Nov 2020
+### 26 Nov 2020
 
 - _1.5 hour_ Continued setting up Shibboleth on the VM.
 
@@ -216,3 +216,14 @@ N/A - projects not released.
 
 - _4 hour_ Attended dissertation guidance lectures.
 - _2 hour_ Finished implementation of the search bar - allows users to search for seminars.
+
+### 11 Dec 2020
+
+- _2 hour_ Implemented nightly cronjob to automatically pull data in from Samoa and EventBrite.
+- _1 hour_ Weekly meeting with Jeremy and wrote up meeting minutes.
+
+## Week 12
+
+### 14 Dec 2020
+
+- _0.5 hour_ Completed SoCS ethics form and got Jeremy to sign it.
