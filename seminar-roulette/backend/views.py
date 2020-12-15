@@ -5,6 +5,7 @@ from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from watson import search as watson
+from collections import Counter
 
 from .models import *
 from .serializers import *
@@ -12,6 +13,14 @@ from recommender import recommendation_engine
 
 import datetime
 import calendar
+import string
+
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+
+nltk.download('stopwords')
+nltk.download('punkt')
 
 
 def get_user(guid):
@@ -186,6 +195,41 @@ class SeminarFromID(APIView):
 
         serializer = SeminarSerializer(seminar)
         return Response(serializer.data)
+
+
+class SeminarKeywords(APIView):
+    """
+    Get keywords from a seminar's description.
+    """
+    def get(self, request, format=None):
+        seminar_id = self.request.query_params.get('id')
+        seminar = get_seminar(seminar_id)
+
+        stop_words = set(stopwords.words('english'))
+        word_tokens = word_tokenize(seminar.description)
+
+        no_stop_word_desc = [
+            word for word in word_tokens if not word in stop_words
+        ]
+
+        no_punctuation_desc = list(
+            filter(
+                lambda token: token not in string.punctuation, no_stop_word_desc
+            )
+        )
+
+        word_occurrences = Counter(no_punctuation_desc)
+        seminar_keywords = []
+
+        for occurrence in word_occurrences:
+            seminar_keywords.append(
+                {
+                    'text': occurrence,
+                    'value': word_occurrences[occurrence]
+                }
+            )
+
+        return Response(seminar_keywords)
 
 
 class AllSeminars(APIView):

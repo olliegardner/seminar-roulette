@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
 import { Redirect, useParams } from "react-router-dom";
+import ReactWordcloud from "react-wordcloud";
 import { Box, Typography, makeStyles, Paper } from "@material-ui/core";
 import ScheduleOutlinedIcon from "@material-ui/icons/ScheduleOutlined";
 import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
@@ -27,16 +28,39 @@ const Seminar = () => {
   const classes = useStyles();
 
   const [seminar, setSeminar] = useState({});
+  const [keywords, setKeywords] = useState({});
   const [loaded, setLoaded] = useState(false);
   const [notFound, setNotFound] = useState(false);
 
+  const options = {
+    colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b"],
+    enableTooltip: false,
+    deterministic: false,
+    // fontFamily: "impact",
+    fontSizes: [10, 60],
+    fontStyle: "normal",
+    fontWeight: "normal",
+    padding: 1,
+    // rotations: 3,
+    // rotationAngles: [0, 90],
+    scale: "sqrt",
+    spiral: "archimedean",
+    transitionDuration: 1000,
+  };
+
   useEffect(() => {
     axios
-      .get(`/api/seminar.json?id=${seminarId}`)
-      .then((res) => {
-        setSeminar(res.data);
-        setLoaded(true);
-      })
+      .all([
+        axios.get(`/api/seminar.json?id=${seminarId}`),
+        axios.get(`/api/seminar/keywords.json?id=${seminarId}`),
+      ])
+      .then(
+        axios.spread((...res) => {
+          setSeminar(res[0].data);
+          setKeywords(res[1].data);
+          setLoaded(true);
+        })
+      )
       .catch((err) => {
         if (err.response.status == 404) setNotFound(true);
       });
@@ -81,6 +105,8 @@ const Seminar = () => {
 
         <br />
         <Typography>{seminar.description}</Typography>
+
+        <ReactWordcloud words={keywords} options={options} />
       </Box>
     </Paper>
   ) : (
