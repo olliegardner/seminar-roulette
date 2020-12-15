@@ -55,7 +55,7 @@ const truncate = (str) => {
 };
 
 const SeminarCard = (props) => {
-  const { seminar, currentRating } = props;
+  const { seminar, currentRating, currentlyDiscarded } = props;
 
   const classes = useStyles();
   const user = useContext(UserContext);
@@ -115,8 +115,16 @@ const SeminarCard = (props) => {
                     e.preventDefault();
                     setSeminarAttended(seminar.id, true);
                   }}
+                  disabled={currentlyDiscarded}
                 >
-                  <Tooltip title="Discard seminar" placement="top">
+                  <Tooltip
+                    title={
+                      currentlyDiscarded
+                        ? "Seminar already discarded"
+                        : "Discard seminar"
+                    }
+                    placement="top"
+                  >
                     <ClearIcon />
                   </Tooltip>
                 </IconButton>
@@ -138,7 +146,7 @@ const SeminarCard = (props) => {
         </CardContent>
 
         <CardActions disableSpacing>
-          {!seminar.is_future && (
+          {!seminar.is_future && !currentlyDiscarded && (
             <Rating
               name={`rating-${seminar.id}`}
               defaultValue={currentRating}
@@ -181,6 +189,7 @@ const SeminarCard = (props) => {
 SeminarCard.propTypes = {
   seminar: PropTypes.object,
   currentRating: PropTypes.number,
+  currentlyDiscarded: PropTypes.bool,
 };
 
 export default SeminarCard;

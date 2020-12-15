@@ -38,6 +38,7 @@ const TabSeminars = (props) => {
                   <SeminarCard
                     seminar={showRatings ? seminar.seminar : seminar}
                     currentRating={showRatings ? seminar.rating : null}
+                    currentlyDiscarded={showRatings ? seminar.discarded : false}
                   />
                 </Grid>
               ))}

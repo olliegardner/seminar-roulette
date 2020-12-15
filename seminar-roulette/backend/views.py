@@ -283,9 +283,11 @@ class PastSeminars(APIView):
     def get(self, request, format=None):
         guid = self.request.query_params.get('guid')
         rated = self.request.query_params.get('rated')
+        discarded = self.request.query_params.get('discarded')
 
-        show_rated = rated == 'true'
         user = get_user(guid)
+        show_rated = rated == 'true'
+        show_discarded = discarded == 'true'
 
         now = timezone.now()
 
@@ -301,17 +303,20 @@ class PastSeminars(APIView):
             user=user, attended=True
         ).values_list('seminar', flat=True)
 
-        if show_rated:
-            seminars = past_seminars
-            # seminars = Seminar.objects.filter(
-            #     id__in=seminar_histories, start_time__lt=now, end_time__lt=now
-            # ).order_by('-start_time')
-        else:
-            seminars = past_seminars.exclude(id__in=seminar_histories)
+        # user_discarded_seminars = SeminarHistory.objects.filter(
+        #     user=user, discarded=True
+        # ).values_list('seminar', flat=True)
+
+        if not show_rated:
+            past_seminars = past_seminars.exclude(id__in=seminar_histories)
+        # elif not show_discarded:
+        #     past_seminars = past_seminars.exclude(
+        #         id__in=user_discarded_seminars
+        #     )
 
         data = []
 
-        for seminar in seminars:
+        for seminar in past_seminars:
             try:
                 seminar_history = SeminarHistory.objects.get(
                     user=user, seminar=seminar
