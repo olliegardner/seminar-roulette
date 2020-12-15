@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
+import axios from "axios";
+import Cookies from "js-cookie";
 import { Link as RouterLink } from "react-router-dom";
 import {
   Avatar,
@@ -18,6 +20,8 @@ import Rating from "@material-ui/lab/Rating";
 import ClearIcon from "@material-ui/icons/Clear";
 import FastfoodOutlinedIcon from "@material-ui/icons/FastfoodOutlined";
 import LanguageOutlinedIcon from "@material-ui/icons/LanguageOutlined";
+
+import UserContext from "../context/UserContext";
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -51,13 +55,30 @@ const truncate = (str) => {
 };
 
 const SeminarCard = (props) => {
-  const { seminar } = props;
+  const { seminar, currentRating } = props;
+
   const classes = useStyles();
+  const user = useContext(UserContext);
+  const csrftoken = Cookies.get("csrftoken");
 
   const startTime = moment(seminar.start_time);
   const startDay = startTime.format("D");
   const startMonth = startTime.format("MMM").toUpperCase();
   const startYear = startTime.format("YY");
+
+  const setSeminarAttended = (seminarId, discarded, rating) => {
+    axios
+      .put(
+        `/api/seminar/attendance.json?guid=${user.guid}`,
+        { seminar: seminarId, rating: rating, discarded: discarded },
+        {
+          headers: {
+            "X-CSRFToken": csrftoken,
+          },
+        }
+      )
+      .catch((err) => console.log(err));
+  };
 
   return (
     <Card variant="outlined" className={classes.fullHeight}>
@@ -92,6 +113,7 @@ const SeminarCard = (props) => {
                   onClick={(e) => {
                     e.stopPropagation();
                     e.preventDefault();
+                    setSeminarAttended(seminar.id, true);
                   }}
                 >
                   <Tooltip title="Discard seminar" placement="top">
@@ -119,18 +141,13 @@ const SeminarCard = (props) => {
           {!seminar.is_future && (
             <Rating
               name={`rating-${seminar.id}`}
-              defaultValue={0}
+              defaultValue={currentRating}
               precision={0.5}
               onMouseDown={(e) => e.stopPropagation()}
-              onClick={(e) => {
-                e.stopPropagation();
-                e.preventDefault();
-              }}
-              // onChange={(e) => {
-              //   e.stopPropagation();
-              //   e.preventDefault();
-              // }}
-              // disabled={seminar.is_future}
+              onClick={(e) => e.stopPropagation()}
+              onChange={(e) =>
+                setSeminarAttended(seminar.id, false, e.target.value)
+              }
             />
           )}
 
@@ -158,65 +175,12 @@ const SeminarCard = (props) => {
         </CardActions>
       </CardActionArea>
     </Card>
-
-    // <Paper className={classes.seminarCard}>
-    //   <Box p={2}>
-    //     <Typography variant="h6" gutterBottom>
-    //       {seminar.title}
-    //     </Typography>
-
-    //     <Typography>
-    //       <span className={classes.wrapIcon}>
-    //         <CalendarTodayOutlinedIcon className={classes.icon} />
-    //         {moment(seminar.start_time).format("Do MMMM YYYY")}
-    //       </span>
-    //     </Typography>
-
-    //     <Typography>
-    //       <span className={classes.wrapIcon}>
-    //         <ScheduleOutlinedIcon className={classes.icon} />
-    //         {moment(seminar.start_time).format("H:mm")} -{" "}
-    //         {moment(seminar.end_time).format("H:mm")}
-    //       </span>
-    //     </Typography>
-
-    //     <span className={classes.wrapIcon}>
-    //       <PersonOutlineOutlinedIcon className={classes.icon} />
-    //       {seminar.speaker != null ? (
-    //         <Typography>{seminar.speaker.speaker}</Typography>
-    //       ) : (
-    //         <Typography>-</Typography>
-    //       )}
-    //     </span>
-
-    //     <br />
-
-    //     <span className={classes.wrapIcon}>
-    //       <LocationOnOutlinedIcon className={classes.icon} />
-    //       {seminar.location != null ? (
-    //         <Typography>{seminar.location.location}</Typography>
-    //       ) : (
-    //         <Typography>-</Typography>
-    //       )}
-    //     </span>
-
-    //     <br />
-
-    //     <Button
-    //       variant="outlined"
-    //       color="secondary"
-    //       component={RouterLink}
-    //       to={`/seminar/${seminar.id}`}
-    //     >
-    //       View Seminar
-    //     </Button>
-    //   </Box>
-    // </Paper>
   );
 };
 
 SeminarCard.propTypes = {
   seminar: PropTypes.object,
+  currentRating: PropTypes.number,
 };
 
 export default SeminarCard;

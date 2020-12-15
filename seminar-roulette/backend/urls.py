@@ -9,11 +9,12 @@ urlpatterns = [
 
     # seminar api calls
     path('seminar/', SeminarFromID.as_view()),
+    path('seminar/attendance/', SeminarAttendance.as_view()),
     path('seminars/', AllSeminars.as_view()),
     path('seminars/random/', RandomSeminar.as_view()),
-    path('seminars/history/', UserSeminarHistory.as_view()),
-    path('seminars/history/attended/', DidAttendSeminar.as_view()),
+    # path('seminars/history/', UserSeminarHistory.as_view()),
     path('seminars/time/', SeminarsByTime.as_view()),
+    path('seminars/past/', PastSeminars.as_view()),
 
     # misc api calls
     path('search/', Search.as_view()),

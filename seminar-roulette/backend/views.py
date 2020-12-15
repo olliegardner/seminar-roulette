@@ -128,45 +128,45 @@ class RandomSeminar(APIView):
             return Response('No seminar found')
 
 
-class UserSeminarHistory(APIView):
+# class UserSeminarHistory(APIView):
+#     """
+#     Create seminar history for a user.
+#     """
+#     def get(self, request, format=None):
+#         guid = self.request.query_params.get('guid')
+#         user = get_user(guid)
+
+#         now = timezone.now()
+
+#         past_seminars = Seminar.objects.filter(
+#             start_time__lte=now, end_time__lte=now
+#         )
+
+#         for seminar in past_seminars:
+#             seminar_history, seminar_history_created = SeminarHistory.objects.get_or_create(
+#                 user=user, seminar=seminar
+#             )
+
+#         seminar_history = SeminarHistory.objects.filter(
+#             user=user, attended=False, discarded=False
+#         )
+#         serializer = SeminarHistorySerializer(seminar_history, many=True)
+#         return Response(serializer.data)
+
+# def post(self, request, format=None):
+#     helpers = Helpers()
+#     user = helpers.get_user(request.data['guid'])
+#     seminar = helpers.get_seminar(request.data['seminar'])
+
+#     seminar_history = SeminarHistory.objects.create(
+#         seminar=seminar, user=user
+#     )
+#     return Response('success')
+
+
+class SeminarAttendance(APIView):
     """
-    Create seminar history for a user.
-    """
-    def get(self, request, format=None):
-        guid = self.request.query_params.get('guid')
-        user = get_user(guid)
-
-        now = timezone.now()
-
-        past_seminars = Seminar.objects.filter(
-            start_time__lte=now, end_time__lte=now
-        )
-
-        for seminar in past_seminars:
-            seminar_history, seminar_history_created = SeminarHistory.objects.get_or_create(
-                user=user, seminar=seminar
-            )
-
-        seminar_history = SeminarHistory.objects.filter(
-            user=user, attended=False, discarded=False
-        )
-        serializer = SeminarHistorySerializer(seminar_history, many=True)
-        return Response(serializer.data)
-
-    # def post(self, request, format=None):
-    #     helpers = Helpers()
-    #     user = helpers.get_user(request.data['guid'])
-    #     seminar = helpers.get_seminar(request.data['seminar'])
-
-    #     seminar_history = SeminarHistory.objects.create(
-    #         seminar=seminar, user=user
-    #     )
-    #     return Response('success')
-
-
-class DidAttendSeminar(APIView):
-    """
-    Set a seminar to attended.
+    Set a whether a user attended a seminar or not.
     """
     def put(self, request, format=None):
         guid = self.request.query_params.get('guid')
@@ -174,10 +174,14 @@ class DidAttendSeminar(APIView):
         seminar = get_seminar(request.data['seminar'])
         discarded = request.data['discarded']
 
-        seminar_history = SeminarHistory.objects.get(seminar=seminar, user=user)
+        seminar_history, seminar_history_created = SeminarHistory.objects.get_or_create(
+            seminar=seminar, user=user
+        )
         seminar_history.attended = not discarded
+
         if seminar_history.attended:
             seminar_history.rating = request.data['rating']
+
         seminar_history.discarded = discarded
         seminar_history.save()
 
@@ -265,15 +269,68 @@ class SeminarsByTime(APIView):
                 start_time__gte=now,
                 start_time__date__range=(now.date(), end_of_month)
             )
-        elif time == 'past':
-            seminars = Seminar.objects.filter(
-                start_time__lt=now, end_time__lt=now
-            )
 
         seminars = seminars.order_by('start_time')
 
         serializer = SeminarSerializer(seminars, many=True)
         return Response(serializer.data)
+
+
+class PastSeminars(APIView):
+    """
+    Get seminars which are now in the past.
+    """
+    def get(self, request, format=None):
+        guid = self.request.query_params.get('guid')
+        rated = self.request.query_params.get('rated')
+
+        show_rated = rated == 'true'
+        user = get_user(guid)
+
+        now = timezone.now()
+
+        # seminar_histories = user.seminarhistory_set.filter(
+        #     Q(attended=show_ratings) | Q(discarded=show_discarded)
+        # )
+
+        past_seminars = Seminar.objects.filter(
+            start_time__lt=now, end_time__lt=now
+        ).order_by('-start_time')
+
+        seminar_histories = SeminarHistory.objects.filter(
+            user=user, attended=True
+        ).values_list('seminar', flat=True)
+
+        if show_rated:
+            seminars = past_seminars
+            # seminars = Seminar.objects.filter(
+            #     id__in=seminar_histories, start_time__lt=now, end_time__lt=now
+            # ).order_by('-start_time')
+        else:
+            seminars = past_seminars.exclude(id__in=seminar_histories)
+
+        data = []
+
+        for seminar in seminars:
+            try:
+                seminar_history = SeminarHistory.objects.get(
+                    user=user, seminar=seminar
+                )
+                rating = seminar_history.rating
+                discarded = seminar_history.discarded
+            except SeminarHistory.DoesNotExist:
+                rating = None
+                discarded = None
+
+            data.append(
+                {
+                    'seminar': SeminarSerializer(seminar).data,
+                    'rating': rating,
+                    'discarded': discarded
+                }
+            )
+
+        return Response(data)
 
 
 class Search(APIView):
