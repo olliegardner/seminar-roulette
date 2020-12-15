@@ -232,3 +232,4 @@ N/A - projects not released.
 ### 15 Dec 2020
 
 - _1 hour_ Created a model to track the success of the nightly cronjobs.
+- _3 hour_ Created wordcloud which represents keywords within a seminar's description.
