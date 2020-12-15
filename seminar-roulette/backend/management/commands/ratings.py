@@ -4,6 +4,7 @@ from backend.models import *
 
 import pandas as pd
 import numpy as np
+import os
 
 
 class Command(BaseCommand):
@@ -11,6 +12,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         print('Updating ratings matrix. Please wait...')
+
+        if not os.path.isfile('ratings.csv'):
+            with open('ratings.csv', 'w') as ratings_file:
+                pass
 
         matrix = pd.read_csv('ratings.csv', index_col=0)
 
