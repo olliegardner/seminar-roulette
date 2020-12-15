@@ -128,42 +128,6 @@ class RandomSeminar(APIView):
             return Response('No seminar found')
 
 
-# class UserSeminarHistory(APIView):
-#     """
-#     Create seminar history for a user.
-#     """
-#     def get(self, request, format=None):
-#         guid = self.request.query_params.get('guid')
-#         user = get_user(guid)
-
-#         now = timezone.now()
-
-#         past_seminars = Seminar.objects.filter(
-#             start_time__lte=now, end_time__lte=now
-#         )
-
-#         for seminar in past_seminars:
-#             seminar_history, seminar_history_created = SeminarHistory.objects.get_or_create(
-#                 user=user, seminar=seminar
-#             )
-
-#         seminar_history = SeminarHistory.objects.filter(
-#             user=user, attended=False, discarded=False
-#         )
-#         serializer = SeminarHistorySerializer(seminar_history, many=True)
-#         return Response(serializer.data)
-
-# def post(self, request, format=None):
-#     helpers = Helpers()
-#     user = helpers.get_user(request.data['guid'])
-#     seminar = helpers.get_seminar(request.data['seminar'])
-
-#     seminar_history = SeminarHistory.objects.create(
-#         seminar=seminar, user=user
-#     )
-#     return Response('success')
-
-
 class SeminarAttendance(APIView):
     """
     Set a whether a user attended a seminar or not.
@@ -291,28 +255,28 @@ class PastSeminars(APIView):
 
         now = timezone.now()
 
-        # seminar_histories = user.seminarhistory_set.filter(
-        #     Q(attended=show_ratings) | Q(discarded=show_discarded)
-        # )
-
         past_seminars = Seminar.objects.filter(
             start_time__lt=now, end_time__lt=now
         ).order_by('-start_time')
 
-        seminar_histories = SeminarHistory.objects.filter(
+        attended_seminars = SeminarHistory.objects.filter(
             user=user, attended=True
         ).values_list('seminar', flat=True)
 
-        # user_discarded_seminars = SeminarHistory.objects.filter(
-        #     user=user, discarded=True
-        # ).values_list('seminar', flat=True)
+        discarded_seminars = SeminarHistory.objects.filter(
+            user=user, discarded=True
+        ).values_list('seminar', flat=True)
 
-        if not show_rated:
-            past_seminars = past_seminars.exclude(id__in=seminar_histories)
-        # elif not show_discarded:
-        #     past_seminars = past_seminars.exclude(
-        #         id__in=user_discarded_seminars
-        #     )
+        exclude_seminars = Seminar.objects.none()
+
+        if not show_rated and not show_discarded:
+            exclude_seminars = attended_seminars.union(discarded_seminars)
+        elif not show_rated and show_discarded:
+            exclude_seminars = attended_seminars
+        elif show_rated and not show_discarded:
+            exclude_seminars = discarded_seminars
+
+        past_seminars = past_seminars.exclude(id__in=exclude_seminars)
 
         data = []
 

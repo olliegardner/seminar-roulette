@@ -9,6 +9,7 @@ import {
   Box,
   FormControlLabel,
   Checkbox,
+  FormGroup,
 } from "@material-ui/core";
 
 import UserContext from "../../../context/UserContext";
@@ -48,6 +49,7 @@ const TabsContainer = () => {
 
   const [value, setValue] = useState(0);
   const [showRated, setShowRated] = useState(true);
+  const [showDiscarded, setShowDiscarded] = useState(true);
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
@@ -131,21 +133,33 @@ const TabsContainer = () => {
       </TabPanel>
 
       <TabPanel value={value} index={7} dir={theme.direction}>
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={showRated}
-              onChange={(e) => setShowRated(e.target.checked)}
-              name="rated"
-            />
-          }
-          label="Show previously rated seminars"
-        />
+        <FormGroup row>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={showRated}
+                onChange={(e) => setShowRated(e.target.checked)}
+                name="rated"
+              />
+            }
+            label="Show previously rated seminars"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={showDiscarded}
+                onChange={(e) => setShowDiscarded(e.target.checked)}
+                name="discarded"
+              />
+            }
+            label="Show discarded seminars"
+          />
+        </FormGroup>
 
         <TabSeminars
           request={`api/seminars/past.json?guid=${
             user.guid
-          }&rated=${showRated.toString()}`}
+          }&rated=${showRated.toString()}&discarded=${showDiscarded.toString()}`}
           notFoundText="No past seminars found."
           showRatings={true}
         />
