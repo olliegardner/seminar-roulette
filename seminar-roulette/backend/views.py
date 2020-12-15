@@ -117,9 +117,19 @@ class RandomSeminar(APIView):
         # else:
         #     random_seminar = available_seminars.order_by('?').first()
 
-        random_seminar = available_seminars.filter(
-            serves_food=(food == 'true')
-        ).order_by('?').first()
+        # random_seminar = available_seminars.filter(
+        #     serves_food=(food == 'true')
+        # ).order_by('?').first()
+
+        food_seminars = [
+            seminar.id for seminar in available_seminars if seminar.serves_food
+        ]
+
+        if food == 'true':
+            random_seminar = available_seminars.filter(id__in=food_seminars
+                                                      ).order_by('?').first()
+        else:
+            random_seminar = available_seminars.order_by('?').first()
 
         if random_seminar:
             serializer = SeminarSerializer(random_seminar)

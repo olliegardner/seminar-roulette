@@ -227,3 +227,4 @@ N/A - projects not released.
 ### 14 Dec 2020
 
 - _0.5 hour_ Completed SoCS ethics form and got Jeremy to sign it.
+- _4 hour_ Added filters to past seminars which allows a user to show/hide previously rated or discarded seminars.
