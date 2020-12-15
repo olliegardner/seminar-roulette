@@ -55,7 +55,13 @@ const truncate = (str) => {
 };
 
 const SeminarCard = (props) => {
-  const { seminar, currentRating, currentlyDiscarded } = props;
+  const {
+    seminar,
+    currentRating,
+    currentlyDiscarded,
+    seminarsUpdated,
+    setSeminarsUpdated,
+  } = props;
 
   const classes = useStyles();
   const user = useContext(UserContext);
@@ -77,6 +83,7 @@ const SeminarCard = (props) => {
           },
         }
       )
+      .then(() => setSeminarsUpdated(seminarsUpdated + 1))
       .catch((err) => console.log(err));
   };
 
@@ -190,6 +197,8 @@ SeminarCard.propTypes = {
   seminar: PropTypes.object,
   currentRating: PropTypes.number,
   currentlyDiscarded: PropTypes.bool,
+  seminarsUpdated: PropTypes.number,
+  setSeminarsUpdated: PropTypes.func,
 };
 
 export default SeminarCard;

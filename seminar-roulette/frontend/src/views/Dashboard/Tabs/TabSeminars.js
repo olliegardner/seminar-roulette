@@ -9,6 +9,7 @@ const TabSeminars = (props) => {
   const { request, notFoundText, showRatings } = props;
 
   const [seminars, setSeminars] = useState([]);
+  const [seminarsUpdated, setSeminarsUpdated] = useState(0);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -19,7 +20,7 @@ const TabSeminars = (props) => {
         setLoaded(true);
       })
       .catch((err) => console.log(err));
-  }, [request]);
+  }, [request, seminarsUpdated]);
 
   return (
     <>
@@ -39,6 +40,8 @@ const TabSeminars = (props) => {
                     seminar={showRatings ? seminar.seminar : seminar}
                     currentRating={showRatings ? seminar.rating : null}
                     currentlyDiscarded={showRatings ? seminar.discarded : false}
+                    seminarsUpdated={seminarsUpdated}
+                    setSeminarsUpdated={setSeminarsUpdated}
                   />
                 </Grid>
               ))}
