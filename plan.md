@@ -57,8 +57,14 @@ Week-by-week plan for the whole project.
 - **Week 11 [PROJECT WEEK]**
   - Conduct initial evaluations.
   - Add a search bar.
-  - Fix issues which have arised from initial evaluations.
+  - Add nightly cronjob to the VM to get seminars from the various data sources.
+  - Add more filters.
 - **Week 12 [PROJECT WEEK]** Status report submitted.
+  - Fix issues which have arised from initial evaluations.
+  - Add the ability to use the system anonymously.
+  - Implement pagination.
+  - Ensure the application is mobile friendly.
+  - Add a guided walkthrough for first time users.
 
 ## Winter break
 

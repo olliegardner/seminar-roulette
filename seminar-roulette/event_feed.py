@@ -18,34 +18,23 @@ import yaml
 
 class EventFeeds():
     def __init__(self):
-        command_help = 'python event_feed.py [delete, samoa, eventbrite]'
+        env = environ.Env()
+        env_file = os.path.join(os.getcwd(), ".env")
+        environ.Env.read_env(env_file)
 
-        if len(sys.argv) == 2:
-            if sys.argv[1] == 'delete':
-                self.delete_data()
-            elif sys.argv[1] == 'samoa':
-                self.samoa_feed()
-            elif sys.argv[1] == 'eventbrite':
-                env = environ.Env()
-                env_file = os.path.join(os.getcwd(), ".env")
-                environ.Env.read_env(env_file)
-
-                self.eventbrite_feed(env('EVENTBRITE_KEY'))
-            else:
-                print(command_help)
-        else:
-            print(command_help)
+        self.samoa_feed()
+        self.eventbrite_feed(env('EVENTBRITE_KEY'))
 
     # deletes all data in the database
-    def delete_data(self):
-        print('Deleting all data. Please wait...')
+    # def delete_data(self):
+    #     print('Deleting all data. Please wait...')
 
-        SeminarGroup.objects.all().delete()
-        Location.objects.all().delete()
-        Speaker.objects.all().delete()
-        Seminar.objects.all().delete()
+    #     SeminarGroup.objects.all().delete()
+    #     Location.objects.all().delete()
+    #     Speaker.objects.all().delete()
+    #     Seminar.objects.all().delete()
 
-        print('Data deleted!')
+    #     print('Data deleted!')
 
     # gets event feed from Samoa
     def samoa_feed(self):

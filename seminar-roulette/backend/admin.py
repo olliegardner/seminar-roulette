@@ -28,11 +28,20 @@ class SeminarAdmin(admin.ModelAdmin):
     readonly_fields = (
         'description',
         'registration_url',
+        'serves_food',
     )
 
 
 class SeminarHistoryAdmin(admin.ModelAdmin):
     list_display = ['seminar', 'user', 'attended', 'rating', 'discarded']
+
+
+class CronJobAdmin(admin.ModelAdmin):
+    list_display = ['timestamp', 'success', 'error_message']
+    readonly_fields = (
+        'timestamp',
+        'error_message',
+    )
 
 
 admin.site.register(UniversityUser, UniversityUserAdmin)
@@ -41,3 +50,4 @@ admin.site.register(Location, LocationAdmin)
 admin.site.register(Speaker, SpeakerAdmin)
 admin.site.register(Seminar, SeminarAdmin)
 admin.site.register(SeminarHistory, SeminarHistoryAdmin)
+admin.site.register(CronJob, CronJobAdmin)

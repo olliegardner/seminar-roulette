@@ -90,8 +90,15 @@ class Seminar(models.Model):
     class Meta:
         unique_together = ['title', 'start_time', 'end_time', 'speaker']
 
+    @property
     def is_future(self):
         return self.start_time >= timezone.now()
+
+    @property
+    def serves_food(self):
+        food_words = ['refreshment', 'breakfast', 'lunch', 'dinner', 'snack']
+        result = [food for food in food_words if (food in self.description)]
+        return bool(result)
 
     def __str__(self):
         return self.title
@@ -120,3 +127,13 @@ class SeminarHistory(models.Model):
 
     def __str__(self):
         return str(self.seminar) + ' - ' + str(self.user)
+
+
+# cronjob keeps track of the success of nightly job which pulls in data
+class CronJob(models.Model):
+    timestamp = models.DateTimeField(auto_now_add=True)
+    success = models.BooleanField(default=False)
+    error_message = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return str(self.timestamp)
