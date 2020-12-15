@@ -184,7 +184,7 @@ N/A - projects not released.
 
 - _2 hour_ Finally deployed system to the howard.dcs VM :)
 
-### 26 Nov 2020
+### 26 Nov 2020
 
 - _1.5 hour_ Continued setting up Shibboleth on the VM.
 
@@ -198,6 +198,33 @@ N/A - projects not released.
 
 - _0.5 hour_ Added clear button to the seminar cards on the history page.
 
-### 6 Dec 2020
+### 5 Dec 2020
 
 - _1 hour_ Updated PostgreSQL version on the VM so that it was compatible with Django.
+
+### 6 Dec 2020
+
+- _2 hour_ Finally finished configuring Shibboleth - headers are now returned to the Django application and users can log in with thier university credentials.
+
+## Week 11
+
+### 7 Dec 2020
+
+- _4 hour_ Continued improving the frontend of the application. Started implementation of the search bar.
+
+### 8 Dec 2020
+
+- _4 hour_ Attended dissertation guidance lectures.
+- _2 hour_ Finished implementation of the search bar - allows users to search for seminars.
+
+### 11 Dec 2020
+
+- _2 hour_ Implemented nightly cronjob to automatically pull data in from Samoa and EventBrite.
+- _1 hour_ Weekly meeting with Jeremy and wrote up meeting minutes.
+
+## Week 12
+
+### 14 Dec 2020
+
+- _0.5 hour_ Completed SoCS ethics form and got Jeremy to sign it.
+- _4 hour_ Added filters to past seminars which allows a user to show/hide previously rated or discarded seminars.

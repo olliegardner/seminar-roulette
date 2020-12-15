@@ -2,7 +2,6 @@ import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import clsx from "clsx";
 import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/styles";
 import {
   AppBar,
   Toolbar,
@@ -10,24 +9,22 @@ import {
   Slide,
   Typography,
   useScrollTrigger,
-  List,
+  makeStyles,
 } from "@material-ui/core";
-import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
-import RateReviewOutlinedIcon from "@material-ui/icons/RateReviewOutlined";
 
-import TopbarButton from "./TopbarButton";
 import ProfileMenu from "./ProfileMenu";
+import SearchBar from "./SearchBar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     boxShadow: "none",
-    backgroundColor: theme.palette.common.white,
+    backgroundColor: theme.palette.primary.main,
   },
   titleLink: {
     display: "flex",
     alignItems: "inherit",
     textDecoration: "none",
-    color: theme.palette.primary.main,
+    color: theme.palette.common.white,
   },
   flexGrow: {
     flexGrow: 1,
@@ -51,6 +48,7 @@ HideOnScroll.propTypes = {
 
 const Topbar = (props) => {
   const { className, ...rest } = props;
+
   const classes = useStyles();
 
   return (
@@ -66,8 +64,10 @@ const Topbar = (props) => {
           </Hidden>
 
           <div className={classes.flexGrow} />
+          <SearchBar />
+          <div className={classes.flexGrow} />
 
-          <TopbarButton
+          {/* <TopbarButton
             text="Recommendations"
             icon={<FavoriteBorderOutlinedIcon />}
             href="recommendations"
@@ -76,7 +76,7 @@ const Topbar = (props) => {
             text="History"
             icon={<RateReviewOutlinedIcon />}
             href="history"
-          />
+          /> */}
           <ProfileMenu />
         </Toolbar>
       </AppBar>

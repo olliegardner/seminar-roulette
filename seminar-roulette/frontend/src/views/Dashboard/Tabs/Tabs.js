@@ -7,6 +7,9 @@ import {
   Tab,
   AppBar,
   Box,
+  FormControlLabel,
+  Checkbox,
+  FormGroup,
 } from "@material-ui/core";
 
 import UserContext from "../../../context/UserContext";
@@ -45,6 +48,8 @@ const TabsContainer = () => {
   const user = useContext(UserContext);
 
   const [value, setValue] = useState(0);
+  const [showRated, setShowRated] = useState(true);
+  const [showDiscarded, setShowDiscarded] = useState(true);
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
@@ -67,6 +72,7 @@ const TabsContainer = () => {
           <Tab label="Tomorrow" />
           <Tab label="This week" />
           <Tab label="This month" />
+          <Tab label="Past" />
         </Tabs>
       </AppBar>
 
@@ -74,42 +80,88 @@ const TabsContainer = () => {
         <TabSeminars
           request="api/seminars.json"
           notFoundText="No seminars found."
+          showRatings={false}
         />
       </TabPanel>
+
       <TabPanel value={value} index={1} dir={theme.direction}>
         <TabSeminars
           request={`api/user/recommendations.json?guid=${user.guid}`}
           notFoundText="No seminar recommendations found."
+          showRatings={false}
         />
       </TabPanel>
+
       <TabPanel value={value} index={2} dir={theme.direction}>
         <TabSeminars
           request="api/seminars/time.json?time=hour"
           notFoundText="No seminars happening in an hour."
+          showRatings={false}
         />
       </TabPanel>
+
       <TabPanel value={value} index={3} dir={theme.direction}>
         <TabSeminars
           request="api/seminars/time.json?time=today"
           notFoundText="No seminars happening today."
-        />{" "}
+          showRatings={false}
+        />
       </TabPanel>
+
       <TabPanel value={value} index={4} dir={theme.direction}>
         <TabSeminars
           request="api/seminars/time.json?time=tomorrow"
           notFoundText="No seminars happening tomorrow."
+          showRatings={false}
         />
       </TabPanel>
+
       <TabPanel value={value} index={5} dir={theme.direction}>
         <TabSeminars
           request="api/seminars/time.json?time=week"
           notFoundText="No seminars happening this week."
+          showRatings={false}
         />
       </TabPanel>
+
       <TabPanel value={value} index={6} dir={theme.direction}>
         <TabSeminars
           request="api/seminars/time.json?time=month"
           notFoundText="No seminars happening this month."
+          showRatings={false}
+        />
+      </TabPanel>
+
+      <TabPanel value={value} index={7} dir={theme.direction}>
+        <FormGroup row>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={showRated}
+                onChange={(e) => setShowRated(e.target.checked)}
+                name="rated"
+              />
+            }
+            label="Show previously rated seminars"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={showDiscarded}
+                onChange={(e) => setShowDiscarded(e.target.checked)}
+                name="discarded"
+              />
+            }
+            label="Show discarded seminars"
+          />
+        </FormGroup>
+
+        <TabSeminars
+          request={`api/seminars/past.json?guid=${
+            user.guid
+          }&rated=${showRated.toString()}&discarded=${showDiscarded.toString()}`}
+          notFoundText="No past seminars found."
+          showRatings={true}
         />
       </TabPanel>
     </div>
