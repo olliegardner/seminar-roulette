@@ -228,3 +228,7 @@ N/A - projects not released.
 
 - _0.5 hour_ Completed SoCS ethics form and got Jeremy to sign it.
 - _4 hour_ Added filters to past seminars which allows a user to show/hide previously rated or discarded seminars.
+
+### 15 Dec 2020
+
+- _1 hour_ Created a model to track the success of the nightly cronjobs.
