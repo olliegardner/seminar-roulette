@@ -10,7 +10,6 @@ from eventbrite import Eventbrite
 import requests
 import json
 import sys
-import re
 import environ
 import datetime
 import yaml
@@ -51,12 +50,6 @@ class EventFeeds():
             online_locations = ['online', 'zoom', 'gather.town']
             online = False
 
-            # remove html tags from description
-            pattern = re.compile(
-                '<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});'
-            )
-            # pattern = re.compile('<.*?>')
-
             if any(
                 loc in location['location'].lower() for loc in online_locations
             ):
@@ -76,9 +69,7 @@ class EventFeeds():
             )
             # in case location/description/url changes
             seminar_group.location.add(location)
-            seminar_group.description = re.sub(
-                pattern, '', group['description']
-            )
+            seminar_group.description = group['description']
             seminar_group.url = group['url']
             seminar_group.save()
 
@@ -96,7 +87,7 @@ class EventFeeds():
                 )
                 # in case any of these fields change
                 seminar.title = event['title']
-                seminar.description = re.sub(pattern, '', event['description'])
+                seminar.description = event['description']
                 seminar.registration_url = event['registrationUrl']
                 seminar.start_time = event['startTime']
                 seminar.end_time = event['endTime']

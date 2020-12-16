@@ -1,10 +1,10 @@
-from django.contrib.postgres.search import SearchVector
 from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import render
 from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from watson import search as watson
 from collections import Counter
 
 from .models import *
@@ -14,6 +14,7 @@ from recommender import recommendation_engine
 import datetime
 import calendar
 import string
+import re
 
 import nltk
 from nltk.corpus import stopwords
@@ -205,8 +206,15 @@ class SeminarKeywords(APIView):
         seminar_id = self.request.query_params.get('id')
         seminar = get_seminar(seminar_id)
 
+        # remove html tags from description
+        pattern = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
+
+        word_tokens = word_tokenize(
+            seminar.title.lower() + ' ' +
+            re.sub(pattern, '', seminar.description.lower())
+        )
+
         stop_words = set(stopwords.words('english'))
-        word_tokens = word_tokenize(seminar.title + ' ' + seminar.description)
 
         no_stop_word_desc = [
             word for word in word_tokens if not word in stop_words
@@ -360,19 +368,26 @@ class Search(APIView):
     """
     Retrieve search results from models.
     """
+    def handle_search(self, query, model):
+        search_results = watson.search(query, models=(model, ))
+        search_results = map(lambda x: x.object, search_results)
+
+        # remove invalid results
+        search_results = filter(lambda x: x is not None, search_results)
+        search_results = [x for x in search_results if x != None]
+
+        search_results = sorted(search_results, key=lambda x: x.start_time)
+
+        return search_results
+
     def get(self, request, format=None):
         query = request.GET.get('q')
 
         if query:  # if a search has taken place
-            seminars = Seminar.objects.annotate(
-                search=SearchVector(
-                    'title', 'description', 'speaker__speaker',
-                    'speaker__affiliation', 'seminar_group__name',
-                    'seminar_group__description', 'location__location'
-                )
-            ).filter(search=query)
+            seminar_serializer = SeminarSerializer(
+                self.handle_search(query, Seminar), many=True
+            )
 
-            serializer = SeminarSerializer(seminars, many=True)
-            return Response(serializer.data)
+            return Response(seminar_serializer.data)
 
         return Response('No search results found.')
