@@ -18,18 +18,13 @@ const Router = () => {
           <Route
             exact
             path="/logout"
-            render={() =>
-              (window.location =
-                "https://howard.dcs.gla.ac.uk/Shibboleth.sso/Logout")
-            }
+            render={() => (window.location = "/Shibboleth.sso/Logout")}
           />
         ) : (
           <Route
             exact
             path="/logout"
-            render={() =>
-              (window.location = "http://127.0.0.1:8000/admin/logout")
-            }
+            render={() => (window.location = "/admin/logout")}
           />
         )}
 
