@@ -13,6 +13,12 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         print('Updating ratings matrix. Please wait...')
 
+        for i in range(1, 11):
+            guid = 'user' + str(i)
+            user, user_created = UniversityUser.objects.get_or_create(
+                username=guid, guid=guid, name='User ' + str(i)
+            )
+
         if not os.path.isfile('ratings.csv'):
             with open('ratings.csv', 'w') as ratings_file:
                 pass
