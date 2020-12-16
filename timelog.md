@@ -233,3 +233,8 @@ N/A - projects not released.
 
 - _1 hour_ Created a model to track the success of the nightly cronjobs.
 - _3 hour_ Created wordcloud which represents keywords within a seminar's description.
+
+### 16 Dec 2020
+
+- _2 hour_ Conducted think aloud evaluations with 2 participants.
+- _0.5 hour_ Fixed issue where new Python packages were not being installed correctly on the VM.

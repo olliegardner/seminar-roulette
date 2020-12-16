@@ -14,6 +14,7 @@ from recommender import recommendation_engine
 import datetime
 import calendar
 import string
+import re
 
 import nltk
 from nltk.corpus import stopwords
@@ -205,8 +206,15 @@ class SeminarKeywords(APIView):
         seminar_id = self.request.query_params.get('id')
         seminar = get_seminar(seminar_id)
 
+        # remove html tags from description
+        pattern = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
+
+        word_tokens = word_tokenize(
+            seminar.title.lower() + ' ' +
+            re.sub(pattern, '', seminar.description.lower())
+        )
+
         stop_words = set(stopwords.words('english'))
-        word_tokens = word_tokenize(seminar.title + ' ' + seminar.description)
 
         no_stop_word_desc = [
             word for word in word_tokens if not word in stop_words
