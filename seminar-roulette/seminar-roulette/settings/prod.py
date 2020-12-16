@@ -24,7 +24,6 @@ MIDDLEWARE = [
     'shibboleth.middleware.ShibbolethRemoteUserMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'watson.middleware.SearchContextMiddleware',
 ]
 
 TEMPLATES = [
