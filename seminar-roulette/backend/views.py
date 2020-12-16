@@ -1,10 +1,10 @@
+from django.contrib.postgres.search import SearchVector
 from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import render
 from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from watson import search as watson
 from collections import Counter
 
 from .models import *
@@ -360,25 +360,19 @@ class Search(APIView):
     """
     Retrieve search results from models.
     """
-    def handle_search(self, query, model):
-        search_results = watson.search(query, models=(model, ))
-        search_results = map(lambda x: x.object, search_results)
-
-        # remove invalid results
-        search_results = filter(lambda x: x is not None, search_results)
-        search_results = [x for x in search_results if x != None]
-
-        search_results = sorted(search_results, key=lambda x: x.start_time)
-
-        return search_results
-
     def get(self, request, format=None):
         query = request.GET.get('q')
 
         if query:  # if a search has taken place
-            seminar_serializer = SeminarSerializer(
-                self.handle_search(query, Seminar), many=True
-            )
-            return Response(seminar_serializer.data)
+            seminars = Seminar.objects.annotate(
+                search=SearchVector(
+                    'title', 'description', 'speaker__speaker',
+                    'speaker__affiliation', 'seminar_group__name',
+                    'seminar_group__description', 'location__location'
+                )
+            ).filter(search=query)
+
+            serializer = SeminarSerializer(seminars, many=True)
+            return Response(serializer.data)
 
         return Response('No search results found.')
