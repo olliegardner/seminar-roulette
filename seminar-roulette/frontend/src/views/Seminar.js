@@ -3,6 +3,7 @@ import axios from "axios";
 import moment from "moment";
 import { Redirect, useParams } from "react-router-dom";
 import ReactWordcloud from "react-wordcloud";
+import parse from "html-react-parser";
 import { Box, Typography, makeStyles, Paper } from "@material-ui/core";
 import ScheduleOutlinedIcon from "@material-ui/icons/ScheduleOutlined";
 import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
@@ -100,8 +101,7 @@ const Seminar = () => {
           </span>
         </Typography>
 
-        <br />
-        <Typography>{seminar.description}</Typography>
+        <Typography>{parse(seminar.description)}</Typography>
 
         <ReactWordcloud words={keywords} options={options} />
       </Box>

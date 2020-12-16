@@ -238,3 +238,5 @@ N/A - projects not released.
 
 - _2 hour_ Conducted think aloud evaluations with 2 participants.
 - _0.5 hour_ Fixed issue where new Python packages were not being installed correctly on the VM.
+- _0.5 hour_ Fixed permissions error on VM which was preventing nltk from downloading correctly.
+- _0.5 hour_ Seminar descriptions now render html tags on the frontend if they are found in the text.
