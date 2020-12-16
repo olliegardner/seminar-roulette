@@ -55,6 +55,7 @@ class EventFeeds():
             pattern = re.compile(
                 '<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});'
             )
+            # pattern = re.compile('<.*?>')
 
             if any(
                 loc in location['location'].lower() for loc in online_locations

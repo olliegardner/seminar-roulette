@@ -206,7 +206,7 @@ class SeminarKeywords(APIView):
         seminar = get_seminar(seminar_id)
 
         stop_words = set(stopwords.words('english'))
-        word_tokens = word_tokenize(seminar.description)
+        word_tokens = word_tokenize(seminar.title + ' ' + seminar.description)
 
         no_stop_word_desc = [
             word for word in word_tokens if not word in stop_words
