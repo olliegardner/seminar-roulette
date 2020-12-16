@@ -8,11 +8,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.postgres',
     'rest_framework',
     'backend',
     'frontend',
     'shibboleth',
-    'watson',
 ]
 
 MIDDLEWARE = [
@@ -24,7 +24,6 @@ MIDDLEWARE = [
     'shibboleth.middleware.ShibbolethRemoteUserMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'watson.middleware.SearchContextMiddleware',
 ]
 
 TEMPLATES = [
