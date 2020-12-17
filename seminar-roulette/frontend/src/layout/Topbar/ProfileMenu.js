@@ -1,13 +1,6 @@
 import React, { useState, useContext, Fragment } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import {
-  Box,
-  Button,
-  MenuItem,
-  Popover,
-  Typography,
-  makeStyles,
-} from "@material-ui/core";
+import { Box, Button, MenuItem, Popover, makeStyles } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
 
@@ -31,9 +24,7 @@ const ProfileMenu = () => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const isOpen = Boolean(anchorEl);
-
   const handleClose = () => setAnchorEl(null);
-
   const handleOpen = (event) => setAnchorEl(event.currentTarget);
 
   return (
