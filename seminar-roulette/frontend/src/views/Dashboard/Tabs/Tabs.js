@@ -87,7 +87,7 @@ const TabsContainer = () => {
       <TabPanel value={value} index={1} dir={theme.direction}>
         <TabSeminars
           request={`api/user/recommendations.json?guid=${user.guid}`}
-          notFoundText="No seminar recommendations found."
+          notFoundText="No seminar recommendations found. Please rate some past seminars first!"
           showRatings={false}
         />
       </TabPanel>
