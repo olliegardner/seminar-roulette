@@ -48,8 +48,8 @@ const TabsContainer = () => {
   const user = useContext(UserContext);
 
   const [value, setValue] = useState(0);
-  const [showRated, setShowRated] = useState(true);
-  const [showDiscarded, setShowDiscarded] = useState(true);
+  const [showRated, setShowRated] = useState(false);
+  const [showDiscarded, setShowDiscarded] = useState(false);
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
