@@ -241,3 +241,12 @@ N/A - projects not released.
 - _0.5 hour_ Fixed permissions error on VM which was preventing nltk from downloading correctly.
 - _0.5 hour_ Seminar descriptions now render html tags on the frontend if they are found in the text.
 - _0.5 hour_ Changed logout URLs to use relative paths instead of absolute.
+
+### 17 Dec 2020
+
+- _4 hour_ Conducted more think aloud evaluations with different participants to last time.
+- _2 hour_ Started write up of semester 1 status report.
+
+### 18 Dec 2020
+
+- _1 hour_ Finished off semester 1 status report, submitted it on Moodle and emailed it to supervisor.

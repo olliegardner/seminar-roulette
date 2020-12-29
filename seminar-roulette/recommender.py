@@ -10,6 +10,7 @@ import os
 import random
 import pandas as pd
 import numpy as np
+import math
 
 from django.utils import timezone
 from scipy.sparse.linalg import svds
@@ -21,57 +22,41 @@ class Recommender:
     Credit goes to Nick Becker
     """
     def __init__(self, user):
-        #self.create_fake_ratings()
-        #fake_matrix = pd.read_csv('fake_ratings.csv', index_col=0)
+        ratings_list = []
 
-        matrix = pd.read_csv('ratings.csv', index_col=0)
-        guids, seminars, ratings_mean, ratings_demeaned = self.get_data(matrix)
+        for university_user in UniversityUser.objects.all().order_by('guid'):
+            for seminar in Seminar.objects.all().order_by('title'):
+                try:
+                    seminar_history = SeminarHistory.objects.get(
+                        user=university_user, seminar=seminar
+                    )
+
+                    if seminar_history.discarded:
+                        rating = math.nan
+                    else:
+                        rating = int(seminar_history.rating)
+                except SeminarHistory.DoesNotExist:
+                    rating = math.nan
+
+                ratings_list.append((university_user.guid, seminar.id, rating))
+
+        ratings_df = pd.DataFrame(
+            ratings_list, columns=['guid', 'seminar', 'rating']
+        )
+
+        combined_df = ratings_df.pivot(
+            index='guid', columns='seminar', values='rating'
+        ).fillna(0)
+
+        guids, seminars, ratings_mean, ratings_demeaned = self.get_data(
+            combined_df
+        )
 
         self.recommendations = self.recommend(
             guids, seminars, ratings_mean, ratings_demeaned, user.guid
         )
 
-    # unused function - only implemented for testing purposes
-    def create_fake_ratings(self):
-        print('Creating fake ratings csv. Please wait...')
-
-        with open('fake_ratings.csv', 'w', newline='') as ratings_file:
-            seminars = [seminar.title for seminar in Seminar.objects.all()]
-            seminars = list(
-                dict.fromkeys(seminars)
-            )  # removes duplicate seminar titles
-            seminars.insert(0, 'users')
-
-            writer = csv.writer(ratings_file)
-            writer.writerow(seminars)
-
-            for i in range(1, 101):
-                guid = 'user' + str(i)
-
-                user, user_created = UniversityUser.objects.get_or_create(
-                    guid=guid, name=guid
-                )
-
-                ratings = [user.guid]
-
-                for seminar in seminars[1:]:
-                    random_number = random.randint(1, 100)
-
-                    if random_number <= 75:
-                        ratings.append(None)  # set rating to none
-                    else:
-                        rating_options = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]
-                        ratings.append(
-                            random.choice(rating_options)
-                        )  # set rating 1-5
-
-                writer.writerow(ratings)
-
-        print('Fake ratings csv created!')
-
     def get_data(self, ratings):
-        ratings.fillna(0, inplace=True)  # fill empty values
-
         guids = ratings.index.tolist()
         seminars = ratings.columns.tolist()
         ratings = ratings.values
@@ -85,11 +70,11 @@ class Recommender:
         U, sigma, Vt = svds(ratings_demeaned, k=5)
         sigma = np.diag(sigma)
 
-        ratings_predicted = np.dot(np.dot(U, sigma),
+        predicted_ratings = np.dot(np.dot(U, sigma),
                                    Vt) + ratings_mean.reshape(-1, 1)
 
         predictions_df = pd.DataFrame(
-            ratings_predicted, index=guids, columns=seminars
+            predicted_ratings, index=guids, columns=seminars
         )
 
         df_sorted = predictions_df.loc[[
@@ -106,7 +91,7 @@ def recommendation_engine(user):
     for recommendation in recommendations:
         # get upcoming seminar if it is recurring
         upcoming_seminar = Seminar.objects.filter(
-            title=recommendation
+            id=recommendation
         ).order_by('start_time').first()
 
         recommendation_seminars.append(upcoming_seminar)
@@ -115,6 +100,7 @@ def recommendation_engine(user):
     seminar_history = user.seminarhistory_set.filter(
         Q(attended=True) | Q(discarded=True)
     )
+
     seminars_attended_discarded = Seminar.objects.filter(id__in=seminar_history)
 
     seminars = []
