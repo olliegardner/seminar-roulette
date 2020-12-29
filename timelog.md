@@ -250,3 +250,9 @@ N/A - projects not released.
 ### 18 Dec 2020
 
 - _1 hour_ Finished off semester 1 status report, submitted it on Moodle and emailed it to supervisor.
+
+## Winter Break
+
+### 28 Dec 2020
+
+- _2 hour_ Changed recommender system so that it no longer uses a csv file to store the seminar ratings.
