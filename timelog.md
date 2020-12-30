@@ -7,7 +7,7 @@
 
 ## Week 1
 
-N/A - projects not released.
+- N/A - projects not released.
 
 ## Week 2
 
@@ -256,3 +256,4 @@ N/A - projects not released.
 ### 28 Dec 2020
 
 - _2 hour_ Changed recommender system so that it no longer uses a csv file to store the seminar ratings.
+- _1 hour_ Started consolidating data from the initial user survey in /data.
