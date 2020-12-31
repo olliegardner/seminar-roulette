@@ -257,3 +257,7 @@
 
 - _2 hour_ Changed recommender system so that it no longer uses a csv file to store the seminar ratings.
 - _1 hour_ Started consolidating data from the initial user survey in /data.
+
+### 30 Dec 2020
+
+- _1.5 hour_ Started typing up think aloud evaluation responses.
