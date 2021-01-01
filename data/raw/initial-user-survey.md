@@ -1,6 +1,6 @@
 # Initial User Survey
 
-Before the project commenced, an initial user survey was conducted with potential end users of the application. The survey was used to build a set of functional and non-functional requirements for the system. The survey was carried out using Google Forms and the questions/responses can be found below. All data was collected anonymously and in a way which complies with the university's ethics checklist.
+The initial user survey questions and responses can be found below.
 
 ## Questions
 

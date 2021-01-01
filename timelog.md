@@ -261,3 +261,12 @@
 ### 30 Dec 2020
 
 - _1.5 hour_ Started typing up think aloud evaluation responses.
+
+### 31 Dec 2020
+
+- _1 hour_ Continued typing up think aloud evaluation responses.
+
+### 1 Jan 2021
+
+- _0.5 hour_ Finished typing up think aloud evaluation responses.
+- _0.5 hour_ Wrote up README for the data folder which explains what data is stored and how it was captured.
