@@ -7,7 +7,7 @@
 
 ## Week 1
 
-N/A - projects not released.
+- N/A - projects not released.
 
 ## Week 2
 
@@ -250,3 +250,23 @@ N/A - projects not released.
 ### 18 Dec 2020
 
 - _1 hour_ Finished off semester 1 status report, submitted it on Moodle and emailed it to supervisor.
+
+## Winter Break
+
+### 28 Dec 2020
+
+- _2 hour_ Changed recommender system so that it no longer uses a csv file to store the seminar ratings.
+- _1 hour_ Started consolidating data from the initial user survey in /data.
+
+### 30 Dec 2020
+
+- _1.5 hour_ Started typing up think aloud evaluation responses.
+
+### 31 Dec 2020
+
+- _1 hour_ Continued typing up think aloud evaluation responses.
+
+### 1 Jan 2021
+
+- _0.5 hour_ Finished typing up think aloud evaluation responses.
+- _0.5 hour_ Wrote up README for the data folder which explains what data is stored and how it was captured.

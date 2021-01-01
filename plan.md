@@ -68,6 +68,9 @@ Week-by-week plan for the whole project.
 
 ## Winter break
 
+- Consolidate data gathered in think aloud evaluations and write up in a readable format.
+- Start acting on feedback gained from the think aloud evaluations.
+
 ## Spring Semester
 
 - **Week 13**
