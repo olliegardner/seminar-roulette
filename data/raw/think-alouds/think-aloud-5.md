@@ -23,3 +23,7 @@ Would like to be able to use the application without signing in.
 Serves food icon is not obvious that it can be clicked.
 
 Online seminar icon not obvious - maybe just use text instead of an icon.
+
+If a user hasn't rated any seminars, don't show any recommendations to them.
+
+Discard not a good word to use, perhaps change this to "unattended".
