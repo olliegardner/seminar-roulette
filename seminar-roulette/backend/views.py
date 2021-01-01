@@ -180,10 +180,17 @@ class UserRecommendations(APIView):
         guid = self.request.query_params.get('guid')
         user = get_user(guid)
 
-        recommendations = recommendation_engine(user)
+        user_seminar_history = SeminarHistory.objects.filter(
+            user=user, attended=True
+        )
 
-        serializer = SeminarSerializer(recommendations, many=True)
-        return Response(serializer.data)
+        if user_seminar_history:
+            recommendations = recommendation_engine(user)
+
+            serializer = SeminarSerializer(recommendations, many=True)
+            return Response(serializer.data)
+        else:
+            return Response([])
 
 
 class SeminarFromID(APIView):

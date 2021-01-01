@@ -48,8 +48,8 @@ const TabsContainer = () => {
   const user = useContext(UserContext);
 
   const [value, setValue] = useState(0);
-  const [showRated, setShowRated] = useState(true);
-  const [showDiscarded, setShowDiscarded] = useState(true);
+  const [showRated, setShowRated] = useState(false);
+  const [showDiscarded, setShowDiscarded] = useState(false);
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
@@ -87,7 +87,7 @@ const TabsContainer = () => {
       <TabPanel value={value} index={1} dir={theme.direction}>
         <TabSeminars
           request={`api/user/recommendations.json?guid=${user.guid}`}
-          notFoundText="No seminar recommendations found."
+          notFoundText="No seminar recommendations found. Please rate some past seminars first!"
           showRatings={false}
         />
       </TabPanel>

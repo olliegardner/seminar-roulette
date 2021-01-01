@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import moment from "moment";
 import axios from "axios";
 import Cookies from "js-cookie";
+import parse from "html-react-parser";
 import { Link as RouterLink } from "react-router-dom";
 import {
   Avatar,
@@ -148,7 +149,7 @@ const SeminarCard = (props) => {
 
         <CardContent>
           <Typography variant="body2" component="p">
-            {truncate(seminar.description)}
+            {parse(truncate(seminar.description))}
           </Typography>
         </CardContent>
 
@@ -157,7 +158,7 @@ const SeminarCard = (props) => {
             <Rating
               name={`rating-${seminar.id}`}
               defaultValue={currentRating}
-              precision={0.5}
+              precision={1}
               onMouseDown={(e) => e.stopPropagation()}
               onClick={(e) => e.stopPropagation()}
               onChange={(e) =>

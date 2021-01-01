@@ -7,7 +7,7 @@
 
 ## Week 1
 
-N/A - projects not released.
+- N/A - projects not released.
 
 ## Week 2
 
@@ -241,3 +241,32 @@ N/A - projects not released.
 - _0.5 hour_ Fixed permissions error on VM which was preventing nltk from downloading correctly.
 - _0.5 hour_ Seminar descriptions now render html tags on the frontend if they are found in the text.
 - _0.5 hour_ Changed logout URLs to use relative paths instead of absolute.
+
+### 17 Dec 2020
+
+- _4 hour_ Conducted more think aloud evaluations with different participants to last time.
+- _2 hour_ Started write up of semester 1 status report.
+
+### 18 Dec 2020
+
+- _1 hour_ Finished off semester 1 status report, submitted it on Moodle and emailed it to supervisor.
+
+## Winter Break
+
+### 28 Dec 2020
+
+- _2 hour_ Changed recommender system so that it no longer uses a csv file to store the seminar ratings.
+- _1 hour_ Started consolidating data from the initial user survey in /data.
+
+### 30 Dec 2020
+
+- _1.5 hour_ Started typing up think aloud evaluation responses.
+
+### 31 Dec 2020
+
+- _1 hour_ Continued typing up think aloud evaluation responses.
+
+### 1 Jan 2021
+
+- _0.5 hour_ Finished typing up think aloud evaluation responses.
+- _0.5 hour_ Wrote up README for the data folder which explains what data is stored and how it was captured.
