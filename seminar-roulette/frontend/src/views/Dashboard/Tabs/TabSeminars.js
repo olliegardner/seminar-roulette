@@ -33,8 +33,6 @@ const TabSeminars = (props) => {
                   item
                   key={showRatings ? seminar.seminar.id : seminar.id}
                   xs={12}
-                  sm={6}
-                  md={4}
                 >
                   <SeminarCard
                     seminar={showRatings ? seminar.seminar : seminar}

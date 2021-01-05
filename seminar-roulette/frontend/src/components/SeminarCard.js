@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
 import axios from "axios";
@@ -12,6 +12,7 @@ import {
   CardActions,
   CardContent,
   CardHeader,
+  Chip,
   IconButton,
   makeStyles,
   Tooltip,
@@ -27,15 +28,15 @@ import UserContext from "../context/UserContext";
 const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: theme.palette.primary.main,
-    width: theme.spacing(6),
-    height: theme.spacing(6),
+    width: theme.spacing(7),
+    height: theme.spacing(7),
   },
   fullHeight: {
     height: "100%",
   },
   date: {
     textAlign: "center",
-    fontSize: 10,
+    fontSize: 12,
   },
   flexGrow: {
     flexGrow: 1,
@@ -47,6 +48,12 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1),
   },
   food: {
+    marginRight: theme.spacing(1),
+  },
+  seminarDescription: {
+    marginTop: theme.spacing(-2),
+  },
+  keywordChip: {
     marginRight: theme.spacing(1),
   },
 }));
@@ -72,6 +79,19 @@ const SeminarCard = (props) => {
   const startDay = startTime.format("D");
   const startMonth = startTime.format("MMM").toUpperCase();
   const startYear = startTime.format("YY");
+
+  const [keywords, setKeywords] = useState([]);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get(`/api/seminar/keywords.json?id=${seminar.id}`)
+      .then((res) => {
+        setKeywords(res.data);
+        setLoaded(true);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   const setSeminarAttended = (seminarId, discarded, rating) => {
     axios
@@ -103,7 +123,7 @@ const SeminarCard = (props) => {
               className={classes.avatar}
             >
               <span className={classes.date}>
-                <b style={{ fontSize: 12 }}>{startDay}</b>
+                <b style={{ fontSize: 14 }}>{startDay}</b>
                 <br />
                 {startMonth}
                 <br />
@@ -139,7 +159,7 @@ const SeminarCard = (props) => {
               )}
             </>
           }
-          title={<b>{seminar.title}</b>}
+          title={<b style={{ fontSize: 16 }}>{seminar.title}</b>}
           subheader={
             startTime.format("H:mm") +
             " - " +
@@ -148,7 +168,11 @@ const SeminarCard = (props) => {
         />
 
         <CardContent>
-          <Typography variant="body2" component="p">
+          <Typography
+            variant="body2"
+            component="p"
+            className={classes.seminarDescription}
+          >
             {parse(truncate(seminar.description))}
           </Typography>
         </CardContent>
@@ -168,6 +192,26 @@ const SeminarCard = (props) => {
           )}
 
           <div className={classes.flexGrow} />
+
+          {loaded ? (
+            <>
+              {keywords.slice(0, 3).map((keyword) => (
+                <Chip
+                  label={keyword.text}
+                  variant="outlined"
+                  color="primary"
+                  className={classes.keywordChip}
+                />
+              ))}
+            </>
+          ) : (
+            <Chip
+              label="Loading"
+              variant="outlined"
+              color="primary"
+              className={classes.keywordChip}
+            />
+          )}
 
           {seminar.online && (
             <Tooltip
