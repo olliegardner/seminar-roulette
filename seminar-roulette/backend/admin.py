@@ -9,7 +9,7 @@ class UniversityUserAdmin(admin.ModelAdmin):
 
 
 class SeminarGroupAdmin(admin.ModelAdmin):
-    list_display = ['name', 'short_name']
+    list_display = ['name', 'short_name', 'url']
     readonly_fields = ('url', )
 
 

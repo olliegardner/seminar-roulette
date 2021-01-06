@@ -4,6 +4,7 @@ import moment from "moment";
 import axios from "axios";
 import Cookies from "js-cookie";
 import parse from "html-react-parser";
+import ReactWordcloud from "react-wordcloud";
 import {
   Accordion,
   AccordionActions,
@@ -11,15 +12,19 @@ import {
   AccordionDetails,
   Avatar,
   Chip,
+  Link,
   makeStyles,
   Tooltip,
   Typography,
 } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
 import { grey } from "@material-ui/core/colors";
-import ClearIcon from "@material-ui/icons/Clear";
 import FastfoodOutlinedIcon from "@material-ui/icons/FastfoodOutlined";
 import LanguageOutlinedIcon from "@material-ui/icons/LanguageOutlined";
+import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
+import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
+import SchoolOutlinedIcon from "@material-ui/icons/SchoolOutlined";
+import ClearIcon from "@material-ui/icons/Clear";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import UserContext from "../context/UserContext";
@@ -36,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
   accordionDetails: {
     marginTop: theme.spacing(-2),
+    flexDirection: "column",
   },
   avatarContainer: {
     display: "flex",
@@ -63,10 +69,11 @@ const useStyles = makeStyles((theme) => ({
   header: {
     display: "flex",
     alignItems: "center",
+    marginBottom: theme.spacing(1),
   },
-  truncatedDescription: {
-    marginTop: theme.spacing(1),
-  },
+  // truncatedDescription: {
+  //   marginTop: theme.spacing(1),
+  // },
   seminarActions: {
     display: "flex",
     alignItems: "center",
@@ -74,11 +81,16 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(-6),
     marginTop: theme.spacing(1),
   },
+  wrapIcon: {
+    verticalAlign: "middle",
+    display: "inline-flex",
+    marginBottom: theme.spacing(0.5),
+  },
+  icon: {
+    marginRight: theme.spacing(0.5),
+    color: theme.palette.primary.main,
+  },
 }));
-
-const truncate = (str) => {
-  return str.length > 180 ? str.substring(0, 180) + "..." : str;
-};
 
 const SeminarActions = (props) => {
   const {
@@ -172,6 +184,19 @@ const SeminarCard = (props) => {
   const [loaded, setLoaded] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
+  const options = {
+    colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b"],
+    enableTooltip: false,
+    deterministic: false,
+    fontSizes: [10, 60],
+    fontStyle: "normal",
+    fontWeight: "normal",
+    padding: 1,
+    scale: "sqrt",
+    spiral: "archimedean",
+    transitionDuration: 500,
+  };
+
   useEffect(() => {
     axios
       .get(`/api/seminar/keywords.json?id=${seminar.id}`)
@@ -244,26 +269,66 @@ const SeminarCard = (props) => {
 
           {/* {action && <div className={classes.action}>{action}</div>} */}
 
-          {!expanded && (
-            <>
-              <Typography
-                variant="body2"
-                component="p"
-                className={classes.truncatedDescription}
-              >
-                {parse(truncate(seminar.description))}
-              </Typography>
+          <Typography>
+            <span className={classes.wrapIcon}>
+              <PersonOutlineOutlinedIcon className={classes.icon} />
+              {seminar.speaker.url ? (
+                <Link
+                  target="_blank"
+                  rel="noopener"
+                  href={
+                    seminar.speaker.url.startsWith("http")
+                      ? seminar.speaker.url
+                      : "http://" + seminar.speaker.url
+                  }
+                  onMouseDown={(e) => e.stopPropagation()}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {seminar.speaker.speaker}
+                </Link>
+              ) : (
+                <>{seminar.speaker.speaker}</>
+              )}
+              &nbsp;- {seminar.speaker.affiliation}
+            </span>
+          </Typography>
 
-              <div className={classes.seminarActions}>
-                <SeminarActions
-                  seminar={seminar}
-                  loaded={loaded}
-                  keywords={keywords}
-                  currentlyDiscarded={currentlyDiscarded}
-                  currentRating={currentRating}
-                />
-              </div>
-            </>
+          <Typography>
+            <span className={classes.wrapIcon}>
+              <SchoolOutlinedIcon className={classes.icon} />
+              {seminar.seminar_group.url ? (
+                <Link
+                  target="_blank"
+                  rel="noopener"
+                  href={seminar.seminar_group.url}
+                  onMouseDown={(e) => e.stopPropagation()}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {seminar.seminar_group.name}
+                </Link>
+              ) : (
+                <>{seminar.seminar_group.name}</>
+              )}
+            </span>
+          </Typography>
+
+          <Typography>
+            <span className={classes.wrapIcon}>
+              <LocationOnOutlinedIcon className={classes.icon} />
+              {seminar.location.location}
+            </span>
+          </Typography>
+
+          {!expanded && (
+            <div className={classes.seminarActions}>
+              <SeminarActions
+                seminar={seminar}
+                loaded={loaded}
+                keywords={keywords}
+                currentlyDiscarded={currentlyDiscarded}
+                currentRating={currentRating}
+              />
+            </div>
           )}
         </div>
       </AccordionSummary>
@@ -272,6 +337,23 @@ const SeminarCard = (props) => {
         <Typography variant="body2" component="p">
           {parse(seminar.description)}
         </Typography>
+
+        {expanded && <ReactWordcloud words={keywords} options={options} />}
+
+        {seminar.registration_url && (
+          <Typography>
+            <b>Registration URL: </b>
+            <Link
+              target="_blank"
+              rel="noopener"
+              href={seminar.registration_url}
+              onMouseDown={(e) => e.stopPropagation()}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {seminar.registration_url}
+            </Link>
+          </Typography>
+        )}
       </AccordionDetails>
 
       <AccordionActions disableSpacing>
