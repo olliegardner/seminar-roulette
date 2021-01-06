@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, makeStyles, Typography } from "@material-ui/core";
+import Pagination from "@material-ui/lab/Pagination";
+
 import SeminarCard from "../../../components/SeminarCard";
 import LoadingSpinner from "../../../components/LoadingSpinner";
 
+const useStyles = makeStyles((theme) => ({
+  pagination: {
+    margin: theme.spacing(2, 0),
+  },
+}));
+
 const TabSeminars = (props) => {
   const { request, notFoundText, showRatings } = props;
+  const classes = useStyles();
 
   const [seminars, setSeminars] = useState([]);
   const [seminarsUpdated, setSeminarsUpdated] = useState(0);
@@ -27,7 +36,7 @@ const TabSeminars = (props) => {
       {loaded ? (
         <>
           {seminars.length > 0 ? (
-            <Grid container spacing={3}>
+            <Grid container spacing={3} alignItems="center" justify="center">
               {seminars.map((seminar) => (
                 <Grid
                   item
@@ -43,6 +52,15 @@ const TabSeminars = (props) => {
                   />
                 </Grid>
               ))}
+
+              <Pagination
+                count={10}
+                color="primary"
+                shape="rounded"
+                showFirstButton
+                showLastButton
+                className={classes.pagination}
+              />
             </Grid>
           ) : (
             <Typography>{notFoundText}</Typography>
