@@ -14,6 +14,14 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Switch>
+        {!onProduction && (
+          <Route
+            exact
+            path="/login"
+            render={() => (window.location = "/admin/login/")}
+          />
+        )}
+
         {onProduction ? (
           <Route
             exact
