@@ -1,4 +1,4 @@
-import React, { useState, useContext, Fragment } from "react";
+import React, { useState, useContext } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { Box, Button, MenuItem, Popover, makeStyles } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -18,25 +18,38 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProfileMenu = () => {
-  const user = useContext(UserContext);
   const classes = useStyles();
+  const user = useContext(UserContext);
+
+  const notAuthenticated = user.guid == "None";
 
   const [anchorEl, setAnchorEl] = useState(null);
 
   const isOpen = Boolean(anchorEl);
   const handleClose = () => setAnchorEl(null);
-  const handleOpen = (event) => setAnchorEl(event.currentTarget);
+  const handleOpen = (e) => setAnchorEl(e.currentTarget);
 
   return (
-    <Fragment>
+    <>
       <Box mx={1}>
-        <Button onClick={handleOpen} color="inherit">
-          <div className={classes.icon}>
-            <AccountCircleOutlinedIcon />
-          </div>
-          {user.name}
-          <ExpandMoreIcon />
-        </Button>
+        {notAuthenticated ? (
+          <Button
+            component={RouterLink}
+            to="/login"
+            color="inherit"
+            variant="outlined"
+          >
+            Login
+          </Button>
+        ) : (
+          <Button onClick={handleOpen} color="inherit">
+            <div className={classes.icon}>
+              <AccountCircleOutlinedIcon />
+            </div>
+            {user.name}
+            <ExpandMoreIcon />
+          </Button>
+        )}
       </Box>
 
       <Popover
@@ -63,7 +76,7 @@ const ProfileMenu = () => {
           </MenuItem>
         </Box>
       </Popover>
-    </Fragment>
+    </>
   );
 };
 

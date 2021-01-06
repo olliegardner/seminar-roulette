@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
   Button,
@@ -52,7 +52,7 @@ const RandomSeminarDialog = (props) => {
   };
 
   return (
-    <Fragment>
+    <>
       <Dialog
         open={open}
         onClose={onClose}
@@ -113,7 +113,7 @@ const RandomSeminarDialog = (props) => {
         </form>
       </Dialog>
       <SeminarWheel spin={spin} setSpin={setSpin} time={time} food={food} />
-    </Fragment>
+    </>
   );
 };
 
