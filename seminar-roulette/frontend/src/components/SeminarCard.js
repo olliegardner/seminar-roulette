@@ -289,7 +289,10 @@ const SeminarCard = (props) => {
               ) : (
                 <>{seminar.speaker.speaker}</>
               )}
-              &nbsp;- {seminar.speaker.affiliation}
+
+              {seminar.speaker.affiliation && (
+                <>&nbsp;- {seminar.speaker.affiliation}</>
+              )}
             </span>
           </Typography>
 
