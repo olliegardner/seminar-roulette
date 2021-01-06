@@ -279,3 +279,4 @@
 ### 6 Jan 2021
 
 - _3 hour_ Finished off changing the grid view to a list view and added more seminar details to the card such as seminar group and registration URL.
+- _1.5 hour_ Implemented pagination throughout the application.
