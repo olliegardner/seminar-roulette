@@ -29,7 +29,7 @@ const Seminar = () => {
   const classes = useStyles();
 
   const [seminar, setSeminar] = useState({});
-  const [keywords, setKeywords] = useState({});
+  const [keywords, setKeywords] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [notFound, setNotFound] = useState(false);
 
