@@ -12,6 +12,7 @@ import {
   AccordionDetails,
   Avatar,
   Chip,
+  IconButton,
   Link,
   makeStyles,
   Tooltip,
@@ -71,9 +72,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     marginBottom: theme.spacing(1),
   },
-  // truncatedDescription: {
-  //   marginTop: theme.spacing(1),
-  // },
   seminarActions: {
     display: "flex",
     alignItems: "center",
@@ -99,8 +97,28 @@ const SeminarActions = (props) => {
     keywords,
     currentlyDiscarded,
     currentRating,
+    seminarsUpdated,
+    setSeminarsUpdated,
   } = props;
+
   const classes = useStyles();
+  const user = useContext(UserContext);
+  const csrftoken = Cookies.get("csrftoken");
+
+  const setSeminarAttended = (seminarId, discarded, rating) => {
+    axios
+      .put(
+        `/api/seminar/attendance.json?guid=${user.guid}`,
+        { seminar: seminarId, rating: rating, discarded: discarded },
+        {
+          headers: {
+            "X-CSRFToken": csrftoken,
+          },
+        }
+      )
+      .then(() => setSeminarsUpdated(seminarsUpdated + 1))
+      .catch((err) => console.log(err));
+  };
 
   return (
     <>
@@ -115,6 +133,31 @@ const SeminarActions = (props) => {
             setSeminarAttended(seminar.id, false, e.target.value)
           }
         />
+      )}
+
+      {!seminar.is_future && (
+        <IconButton
+          aria-label="clear"
+          color="secondary"
+          onMouseDown={(e) => e.stopPropagation()}
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            setSeminarAttended(seminar.id, true);
+          }}
+          disabled={currentlyDiscarded}
+        >
+          <Tooltip
+            title={
+              currentlyDiscarded
+                ? "Seminar already discarded"
+                : "Discard seminar"
+            }
+            placement="top"
+          >
+            <ClearIcon />
+          </Tooltip>
+        </IconButton>
       )}
 
       <div className={classes.flexGrow} />
@@ -172,8 +215,6 @@ const SeminarCard = (props) => {
   } = props;
 
   const classes = useStyles();
-  const user = useContext(UserContext);
-  const csrftoken = Cookies.get("csrftoken");
 
   const startTime = moment(seminar.start_time);
   const startDay = startTime.format("D");
@@ -206,21 +247,6 @@ const SeminarCard = (props) => {
       })
       .catch((err) => console.log(err));
   }, []);
-
-  const setSeminarAttended = (seminarId, discarded, rating) => {
-    axios
-      .put(
-        `/api/seminar/attendance.json?guid=${user.guid}`,
-        { seminar: seminarId, rating: rating, discarded: discarded },
-        {
-          headers: {
-            "X-CSRFToken": csrftoken,
-          },
-        }
-      )
-      .then(() => setSeminarsUpdated(seminarsUpdated + 1))
-      .catch((err) => console.log(err));
-  };
 
   return (
     <Accordion
@@ -266,8 +292,6 @@ const SeminarCard = (props) => {
               </Typography>
             </div>
           </div>
-
-          {/* {action && <div className={classes.action}>{action}</div>} */}
 
           <Typography>
             <span className={classes.wrapIcon}>
@@ -330,6 +354,8 @@ const SeminarCard = (props) => {
                 keywords={keywords}
                 currentlyDiscarded={currentlyDiscarded}
                 currentRating={currentRating}
+                seminarsUpdated={seminarsUpdated}
+                setSeminarsUpdated={setSeminarsUpdated}
               />
             </div>
           )}
@@ -341,7 +367,9 @@ const SeminarCard = (props) => {
           {parse(seminar.description)}
         </Typography>
 
-        {expanded && <ReactWordcloud words={keywords} options={options} />}
+        {expanded && loaded && (
+          <ReactWordcloud words={keywords} options={options} />
+        )}
 
         {seminar.registration_url && (
           <Typography>
@@ -366,6 +394,8 @@ const SeminarCard = (props) => {
           keywords={keywords}
           currentlyDiscarded={currentlyDiscarded}
           currentRating={currentRating}
+          seminarsUpdated={seminarsUpdated}
+          setSeminarsUpdated={setSeminarsUpdated}
         />
       </AccordionActions>
     </Accordion>
