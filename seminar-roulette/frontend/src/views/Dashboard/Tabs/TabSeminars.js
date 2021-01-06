@@ -21,15 +21,27 @@ const TabSeminars = (props) => {
   const [seminarsUpdated, setSeminarsUpdated] = useState(0);
   const [loaded, setLoaded] = useState(false);
 
+  const [page, setPage] = useState(1);
+  const [maxPage, setMaxPage] = useState(1);
+
   useEffect(() => {
+    let pageRequest;
+
+    if (request.includes(".json?")) {
+      pageRequest = `${request}&page=${page}`;
+    } else {
+      pageRequest = `${request}?page=${page}`;
+    }
+
     axios
-      .get(request)
+      .get(pageRequest)
       .then((res) => {
-        setSeminars(res.data);
+        setSeminars(res.data.results);
+        setMaxPage(Math.ceil(res.data.count / 10));
         setLoaded(true);
       })
       .catch((err) => console.log(err));
-  }, [request, seminarsUpdated]);
+  }, [request, seminarsUpdated, page]);
 
   return (
     <>
@@ -54,12 +66,14 @@ const TabSeminars = (props) => {
               ))}
 
               <Pagination
-                count={10}
+                count={maxPage}
                 color="primary"
                 shape="rounded"
                 showFirstButton
                 showLastButton
                 className={classes.pagination}
+                page={page}
+                onChange={(e, newPage) => setPage(newPage)}
               />
             </Grid>
           ) : (

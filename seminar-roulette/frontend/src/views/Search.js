@@ -20,15 +20,19 @@ const Search = () => {
   const [seminars, setSeminars] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
+  const [page, setPage] = useState(1);
+  const [maxPage, setMaxPage] = useState(1);
+
   useEffect(() => {
     axios
-      .get(`/api/search/?q=${search}`)
+      .get(`/api/search/?q=${search}&page=${page}`)
       .then((res) => {
-        setSeminars(res.data);
+        setSeminars(res.data.results);
+        setMaxPage(Math.ceil(res.data.count / 10));
         setLoaded(true);
       })
       .catch((err) => console.log(err));
-  }, [search]);
+  }, [search, page]);
 
   return (
     <>
@@ -52,12 +56,14 @@ const Search = () => {
                 ))}
 
                 <Pagination
-                  count={10}
+                  count={maxPage}
                   color="primary"
                   shape="rounded"
                   showFirstButton
                   showLastButton
                   className={classes.pagination}
+                  page={page}
+                  onChange={(e, newPage) => setPage(newPage)}
                 />
               </Grid>
             ) : (

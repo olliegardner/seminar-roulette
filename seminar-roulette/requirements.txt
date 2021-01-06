@@ -5,6 +5,7 @@ chardet==3.0.4
 click==7.1.2
 Django==3.1.2
 django-environ==0.4.5
+django-filter==2.4.0
 django-watson==1.5.5
 djangorestframework==3.12.1
 eventbrite==3.3.5
