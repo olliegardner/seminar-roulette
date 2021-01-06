@@ -162,7 +162,7 @@ const SeminarActions = (props) => {
 
       <div className={classes.flexGrow} />
 
-      {loaded ? (
+      {loaded && (
         <>
           {keywords.slice(0, 3).map((keyword) => (
             <Chip
@@ -173,13 +173,6 @@ const SeminarActions = (props) => {
             />
           ))}
         </>
-      ) : (
-        <Chip
-          label="Loading"
-          variant="outlined"
-          color="primary"
-          className={classes.spaceRight}
-        />
       )}
 
       {seminar.online && (
