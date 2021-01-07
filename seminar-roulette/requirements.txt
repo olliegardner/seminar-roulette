@@ -1,3 +1,4 @@
+arrow==0.14.7
 asgiref==3.2.10
 astroid==2.4.2
 certifi==2020.6.20
@@ -9,6 +10,7 @@ django-filter==2.4.0
 django-watson==1.5.5
 djangorestframework==3.12.1
 eventbrite==3.3.5
+ics==0.7
 idna==2.10
 isort==5.6.4
 joblib==1.0.0
@@ -27,6 +29,7 @@ requests==2.24.0
 scipy==1.5.4
 six==1.15.0
 sqlparse==0.4.1
+TatSu==4.4.0
 toml==0.10.1
 tqdm==4.54.1
 typed-ast==1.4.1
