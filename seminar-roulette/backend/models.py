@@ -50,6 +50,7 @@ class SeminarGroup(models.Model):
     description = models.TextField(null=True, blank=True)
     url = models.URLField(max_length=1000, null=True, blank=True)
     location = models.ManyToManyField(Location, blank=True)
+    samoa_group_id = models.IntegerField(null=True, blank=True, unique=True)
 
     class Meta:
         unique_together = ['name', 'short_name']
@@ -86,6 +87,7 @@ class Seminar(models.Model):
     location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True)
     samoa_id = models.IntegerField(null=True, blank=True, unique=True)
     eventbrite_id = models.BigIntegerField(null=True, blank=True, unique=True)
+    icalendar = models.TextField(null=True, blank=True)
 
     class Meta:
         unique_together = ['title', 'start_time', 'end_time', 'speaker']

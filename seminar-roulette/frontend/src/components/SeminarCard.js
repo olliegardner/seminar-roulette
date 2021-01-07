@@ -7,7 +7,6 @@ import parse from "html-react-parser";
 import ReactWordcloud from "react-wordcloud";
 import {
   Accordion,
-  AccordionActions,
   AccordionSummary,
   AccordionDetails,
   Avatar,
@@ -17,6 +16,7 @@ import {
   makeStyles,
   Tooltip,
   Typography,
+  Button,
 } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
 import { grey } from "@material-ui/core/colors";
@@ -25,6 +25,7 @@ import LanguageOutlinedIcon from "@material-ui/icons/LanguageOutlined";
 import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import SchoolOutlinedIcon from "@material-ui/icons/SchoolOutlined";
+import EventOutlinedIcon from "@material-ui/icons/EventOutlined";
 import ClearIcon from "@material-ui/icons/Clear";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
@@ -88,6 +89,11 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(0.5),
     color: theme.palette.primary.main,
   },
+  addToCalendar: {
+    "&:hover": {
+      textDecoration: "none",
+    },
+  },
 }));
 
 const SeminarActions = (props) => {
@@ -103,7 +109,9 @@ const SeminarActions = (props) => {
 
   const classes = useStyles();
   const user = useContext(UserContext);
+
   const csrftoken = Cookies.get("csrftoken");
+  const [downloadLink, setDownloadLink] = useState("");
 
   const setSeminarAttended = (seminarId, discarded, rating) => {
     axios
@@ -120,8 +128,33 @@ const SeminarActions = (props) => {
       .catch((err) => console.log(err));
   };
 
+  const icsFile = () => {
+    const data = new Blob([seminar.icalendar], { type: "text/plain" });
+    if (downloadLink !== "") window.URL.revokeObjectURL(downloadLink);
+    setDownloadLink(window.URL.createObjectURL(data));
+  };
+
   return (
     <>
+      {seminar.is_future && (
+        <Button
+          variant="text"
+          color="primary"
+          startIcon={<EventOutlinedIcon />}
+          component={Link}
+          download="seminar.ics"
+          href={downloadLink}
+          onMouseDown={(e) => e.stopPropagation()}
+          onClick={(e) => {
+            icsFile();
+            e.stopPropagation();
+          }}
+          className={classes.addToCalendar}
+        >
+          Add to Calendar
+        </Button>
+      )}
+
       {!seminar.is_future && !currentlyDiscarded && (
         <Rating
           name={`rating-${seminar.id}`}
@@ -339,19 +372,17 @@ const SeminarCard = (props) => {
             </span>
           </Typography>
 
-          {!expanded && (
-            <div className={classes.seminarActions}>
-              <SeminarActions
-                seminar={seminar}
-                loaded={loaded}
-                keywords={keywords}
-                currentlyDiscarded={currentlyDiscarded}
-                currentRating={currentRating}
-                seminarsUpdated={seminarsUpdated}
-                setSeminarsUpdated={setSeminarsUpdated}
-              />
-            </div>
-          )}
+          <div className={classes.seminarActions}>
+            <SeminarActions
+              seminar={seminar}
+              loaded={loaded}
+              keywords={keywords}
+              currentlyDiscarded={currentlyDiscarded}
+              currentRating={currentRating}
+              seminarsUpdated={seminarsUpdated}
+              setSeminarsUpdated={setSeminarsUpdated}
+            />
+          </div>
         </div>
       </AccordionSummary>
 
@@ -379,18 +410,6 @@ const SeminarCard = (props) => {
           </Typography>
         )}
       </AccordionDetails>
-
-      <AccordionActions disableSpacing>
-        <SeminarActions
-          seminar={seminar}
-          loaded={loaded}
-          keywords={keywords}
-          currentlyDiscarded={currentlyDiscarded}
-          currentRating={currentRating}
-          seminarsUpdated={seminarsUpdated}
-          setSeminarsUpdated={setSeminarsUpdated}
-        />
-      </AccordionActions>
     </Accordion>
   );
 };

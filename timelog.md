@@ -281,3 +281,7 @@
 - _3 hour_ Finished off changing the grid view to a list view and added more seminar details to the card such as seminar group and registration URL.
 - _1.5 hour_ Implemented pagination throughout the application.
 - _1.5 hour_ Disabled certain features when the user is not authenticated so that the application can be used anonymously.
+
+### 7 Jan 2021
+
+- _2 hour_ Created an add to calendar button which allows a user to download an icalendar ics file.
