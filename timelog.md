@@ -270,3 +270,18 @@
 
 - _0.5 hour_ Finished typing up think aloud evaluation responses.
 - _0.5 hour_ Wrote up README for the data folder which explains what data is stored and how it was captured.
+
+### 5 Jan 2021
+
+- _0.5 hour_ Added the top 3 seminar keywords to the seminar card.
+- _1.5 hour_ Started changing the layout of the seminars from a grid to a list.
+
+### 6 Jan 2021
+
+- _3 hour_ Finished off changing the grid view to a list view and added more seminar details to the card such as seminar group and registration URL.
+- _1.5 hour_ Implemented pagination throughout the application.
+- _1.5 hour_ Disabled certain features when the user is not authenticated so that the application can be used anonymously.
+
+### 7 Jan 2021
+
+- _2 hour_ Created an add to calendar button which allows a user to download an icalendar ics file.

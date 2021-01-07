@@ -38,7 +38,7 @@ class SeminarSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'title', 'description', 'registration_url', 'start_time',
             'end_time', 'online', 'speaker', 'seminar_group', 'location',
-            'samoa_id', 'eventbrite_id', 'is_future', 'serves_food'
+            'samoa_id', 'eventbrite_id', 'is_future', 'serves_food', 'icalendar'
         )
 
 

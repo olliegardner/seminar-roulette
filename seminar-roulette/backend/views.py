@@ -2,6 +2,8 @@ from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import render
 from django.utils import timezone
+from rest_framework.generics import ListAPIView
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from watson import search as watson
@@ -36,6 +38,18 @@ def get_seminar(seminar_id):
         return Seminar.objects.get(id=seminar_id)
     except Seminar.DoesNotExist:
         raise Http404
+
+
+class SeminarPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+
+
+class RecommenderPagination(PageNumberPagination):
+    page_size = 5
+    page_size_query_param = 'page_size'
+    max_page_size = 5
 
 
 class CurrentUser(APIView):
@@ -172,11 +186,15 @@ class SeminarAttendance(APIView):
         return Response('success')
 
 
-class UserRecommendations(APIView):
+class UserRecommendations(ListAPIView):
     """
     Get seminar recommendations for a user.
     """
-    def get(self, request, format=None):
+
+    serializer_class = SeminarSerializer
+    pagination_class = RecommenderPagination
+
+    def get_queryset(self):
         guid = self.request.query_params.get('guid')
         user = get_user(guid)
 
@@ -187,10 +205,11 @@ class UserRecommendations(APIView):
         if user_seminar_history:
             recommendations = recommendation_engine(user)
 
-            serializer = SeminarSerializer(recommendations, many=True)
-            return Response(serializer.data)
+            # serializer = SeminarSerializer(recommendations, many=True)
+            # return Response(serializer.data)
+            return recommendations
         else:
-            return Response([])
+            return []
 
 
 class SeminarFromID(APIView):
@@ -247,26 +266,33 @@ class SeminarKeywords(APIView):
         return Response(seminar_keywords)
 
 
-class AllSeminars(APIView):
+class AllSeminars(ListAPIView):
     """
-    Get all the seminars in the database.
+    Get all the upcoming seminars in the database.
     """
-    def get(self, request, format=None):
+
+    serializer_class = SeminarSerializer
+    pagination_class = SeminarPagination
+
+    def get_queryset(self):
         now = timezone.now()
 
         seminars = Seminar.objects.filter(
             start_time__gte=now, end_time__gte=now
         ).order_by('start_time')
 
-        serializer = SeminarSerializer(seminars, many=True)
-        return Response(serializer.data)
+        return seminars
 
 
-class SeminarsByTime(APIView):
+class SeminarsByTime(ListAPIView):
     """
     Find seminars within a timeframe.
     """
-    def get(self, request, format=None):
+
+    serializer_class = SeminarSerializer
+    pagination_class = SeminarPagination
+
+    def get_queryset(self):
         time = self.request.query_params.get('time')
 
         now = timezone.now()
@@ -305,8 +331,7 @@ class SeminarsByTime(APIView):
 
         seminars = seminars.order_by('start_time')
 
-        serializer = SeminarSerializer(seminars, many=True)
-        return Response(serializer.data)
+        return seminars
 
 
 class PastSeminars(APIView):
@@ -368,13 +393,22 @@ class PastSeminars(APIView):
                 }
             )
 
-        return Response(data)
+        paginator = PageNumberPagination()
+        paginator.page_size = 10
+        page_results = paginator.paginate_queryset(data, request)
+        response = paginator.get_paginated_response(page_results)
+
+        return response
 
 
-class Search(APIView):
+class Search(ListAPIView):
     """
     Retrieve search results from models.
     """
+
+    serializer_class = SeminarSerializer
+    pagination_class = SeminarPagination
+
     def handle_search(self, query, model):
         search_results = watson.search(query, models=(model, ))
         search_results = map(lambda x: x.object, search_results)
@@ -387,14 +421,10 @@ class Search(APIView):
 
         return search_results
 
-    def get(self, request, format=None):
-        query = request.GET.get('q')
+    def get_queryset(self):
+        query = self.request.GET.get('q')
 
         if query:  # if a search has taken place
-            seminar_serializer = SeminarSerializer(
-                self.handle_search(query, Seminar), many=True
-            )
+            return self.handle_search(query, Seminar)
 
-            return Response(seminar_serializer.data)
-
-        return Response('No search results found.')
+        return []

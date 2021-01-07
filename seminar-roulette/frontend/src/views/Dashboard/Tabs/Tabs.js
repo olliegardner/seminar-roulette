@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import {
   makeStyles,
@@ -10,6 +11,8 @@ import {
   FormControlLabel,
   Checkbox,
   FormGroup,
+  Typography,
+  Link,
 } from "@material-ui/core";
 
 import UserContext from "../../../context/UserContext";
@@ -46,6 +49,8 @@ const TabsContainer = () => {
   const classes = useStyles();
   const theme = useTheme();
   const user = useContext(UserContext);
+
+  const notAuthenticated = user.guid == "None";
 
   const [value, setValue] = useState(0);
   const [showRated, setShowRated] = useState(false);
@@ -85,11 +90,21 @@ const TabsContainer = () => {
       </TabPanel>
 
       <TabPanel value={value} index={1} dir={theme.direction}>
-        <TabSeminars
-          request={`api/user/recommendations.json?guid=${user.guid}`}
-          notFoundText="No seminar recommendations found. Please rate some past seminars first!"
-          showRatings={false}
-        />
+        {notAuthenticated ? (
+          <Typography>
+            Please{" "}
+            <Link component={RouterLink} to="/login">
+              login
+            </Link>{" "}
+            to view seminars recommended to you.
+          </Typography>
+        ) : (
+          <TabSeminars
+            request={`api/user/recommendations.json?guid=${user.guid}`}
+            notFoundText="No seminar recommendations found. Please rate some past seminars first!"
+            showRatings={false}
+          />
+        )}
       </TabPanel>
 
       <TabPanel value={value} index={2} dir={theme.direction}>
@@ -133,36 +148,48 @@ const TabsContainer = () => {
       </TabPanel>
 
       <TabPanel value={value} index={7} dir={theme.direction}>
-        <FormGroup row>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={showRated}
-                onChange={(e) => setShowRated(e.target.checked)}
-                name="rated"
+        {notAuthenticated ? (
+          <Typography>
+            Please{" "}
+            <Link component={RouterLink} to="/login">
+              login
+            </Link>{" "}
+            to view and rate seminars in the past.
+          </Typography>
+        ) : (
+          <>
+            <FormGroup row>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={showRated}
+                    onChange={(e) => setShowRated(e.target.checked)}
+                    name="rated"
+                  />
+                }
+                label="Show previously rated seminars"
               />
-            }
-            label="Show previously rated seminars"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={showDiscarded}
-                onChange={(e) => setShowDiscarded(e.target.checked)}
-                name="discarded"
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={showDiscarded}
+                    onChange={(e) => setShowDiscarded(e.target.checked)}
+                    name="discarded"
+                  />
+                }
+                label="Show discarded seminars"
               />
-            }
-            label="Show discarded seminars"
-          />
-        </FormGroup>
+            </FormGroup>
 
-        <TabSeminars
-          request={`api/seminars/past.json?guid=${
-            user.guid
-          }&rated=${showRated.toString()}&discarded=${showDiscarded.toString()}`}
-          notFoundText="No past seminars found."
-          showRatings={true}
-        />
+            <TabSeminars
+              request={`api/seminars/past.json?guid=${
+                user.guid
+              }&rated=${showRated.toString()}&discarded=${showDiscarded.toString()}`}
+              notFoundText="No past seminars found."
+              showRatings={true}
+            />
+          </>
+        )}
       </TabPanel>
     </div>
   );

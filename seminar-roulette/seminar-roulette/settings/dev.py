@@ -12,6 +12,7 @@ INSTALLED_APPS = [
     'backend',
     'frontend',
     'watson',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

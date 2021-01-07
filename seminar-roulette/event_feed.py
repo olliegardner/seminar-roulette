@@ -6,6 +6,7 @@ django.setup()
 
 from backend.models import *
 from eventbrite import Eventbrite
+from ics import Calendar, Event
 
 import requests
 import json
@@ -13,6 +14,7 @@ import sys
 import environ
 import datetime
 import yaml
+import re
 
 
 class EventFeeds():
@@ -23,17 +25,7 @@ class EventFeeds():
 
         self.samoa_feed()
         self.eventbrite_feed(env('EVENTBRITE_KEY'))
-
-    # deletes all data in the database
-    # def delete_data(self):
-    #     print('Deleting all data. Please wait...')
-
-    #     SeminarGroup.objects.all().delete()
-    #     Location.objects.all().delete()
-    #     Speaker.objects.all().delete()
-    #     Seminar.objects.all().delete()
-
-    #     print('Data deleted!')
+        self.generate_ical_events()
 
     # gets event feed from Samoa
     def samoa_feed(self):
@@ -71,6 +63,7 @@ class EventFeeds():
             seminar_group.location.add(location)
             seminar_group.description = group['description']
             seminar_group.url = group['url']
+            seminar_group.samoa_group_id = group['id']
             seminar_group.save()
 
             speaker, speaker_created = Speaker.objects.get_or_create(
@@ -159,6 +152,31 @@ class EventFeeds():
                     seminar_group.save()
 
         print('EventBrite event feed retrieved!')
+
+    # gets iCal-format calendar feed for events
+    def generate_ical_events(self):
+        print('Generating iCal calendar events. Please wait...')
+
+        pattern = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
+
+        for seminar in Seminar.objects.all():
+            calendar = Calendar()
+
+            event = Event(
+                name=seminar.title,
+                begin=seminar.start_time,
+                end=seminar.end_time,
+                description=pattern.sub('', seminar.description),
+                location=seminar.location.location,
+                url=seminar.registration_url
+            )
+
+            calendar.events.add(event)
+
+            seminar.icalendar = str(calendar)
+            seminar.save()
+
+        print('iCal calendar events generated!')
 
 
 if __name__ == '__main__':
