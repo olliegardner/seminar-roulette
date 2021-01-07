@@ -339,19 +339,17 @@ const SeminarCard = (props) => {
             </span>
           </Typography>
 
-          {!expanded && (
-            <div className={classes.seminarActions}>
-              <SeminarActions
-                seminar={seminar}
-                loaded={loaded}
-                keywords={keywords}
-                currentlyDiscarded={currentlyDiscarded}
-                currentRating={currentRating}
-                seminarsUpdated={seminarsUpdated}
-                setSeminarsUpdated={setSeminarsUpdated}
-              />
-            </div>
-          )}
+          <div className={classes.seminarActions}>
+            <SeminarActions
+              seminar={seminar}
+              loaded={loaded}
+              keywords={keywords}
+              currentlyDiscarded={currentlyDiscarded}
+              currentRating={currentRating}
+              seminarsUpdated={seminarsUpdated}
+              setSeminarsUpdated={setSeminarsUpdated}
+            />
+          </div>
         </div>
       </AccordionSummary>
 
@@ -379,18 +377,6 @@ const SeminarCard = (props) => {
           </Typography>
         )}
       </AccordionDetails>
-
-      <AccordionActions disableSpacing>
-        <SeminarActions
-          seminar={seminar}
-          loaded={loaded}
-          keywords={keywords}
-          currentlyDiscarded={currentlyDiscarded}
-          currentRating={currentRating}
-          seminarsUpdated={seminarsUpdated}
-          setSeminarsUpdated={setSeminarsUpdated}
-        />
-      </AccordionActions>
     </Accordion>
   );
 };

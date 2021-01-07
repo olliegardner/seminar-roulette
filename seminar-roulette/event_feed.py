@@ -24,17 +24,6 @@ class EventFeeds():
         self.samoa_feed()
         self.eventbrite_feed(env('EVENTBRITE_KEY'))
 
-    # deletes all data in the database
-    # def delete_data(self):
-    #     print('Deleting all data. Please wait...')
-
-    #     SeminarGroup.objects.all().delete()
-    #     Location.objects.all().delete()
-    #     Speaker.objects.all().delete()
-    #     Seminar.objects.all().delete()
-
-    #     print('Data deleted!')
-
     # gets event feed from Samoa
     def samoa_feed(self):
         print('Retrieving event feed from Samoa. Please wait...')
