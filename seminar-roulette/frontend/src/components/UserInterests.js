@@ -1,34 +1,20 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { Chip, makeStyles, Paper, TextField } from "@material-ui/core";
+import { Chip, TextField } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import UserContext from "../context/UserContext";
 
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     display: "flex",
-//     // justifyContent: "center",
-//     flexWrap: "wrap",
-//     listStyle: "none",
-//     padding: theme.spacing(0.5),
-//     margin: 0,
-//   },
-//   chip: {
-//     margin: theme.spacing(0.5),
-//   },
-// }));
-
 const UserInterests = () => {
-  // const classes = useStyles();
   const user = useContext(UserContext);
 
   const interests = user.interests;
   const csrftoken = Cookies.get("csrftoken");
 
   const [interestSuggestions, setInterestSuggestions] = useState([]);
-  const [newInterests, setNewInterests] = useState([]);
+  const [newInterests, setNewInterests] = useState(interests);
+  const [disableInput, setDisableInput] = useState(newInterests.length >= 5);
 
   useEffect(() => {
     axios
@@ -51,15 +37,20 @@ const UserInterests = () => {
 
   return (
     <Autocomplete
+      disabled={disableInput}
       multiple
       id="user-interests"
-      // limitTags={5}
       options={interestSuggestions}
       defaultValue={interests}
       freeSolo
       renderTags={(value, getTagProps) =>
         value.map((option, index) => (
-          <Chip variant="outlined" label={option} {...getTagProps({ index })} />
+          <Chip
+            variant="outlined"
+            label={option}
+            {...getTagProps({ index })}
+            disabled={false}
+          />
         ))
       }
       renderInput={(params) => (
@@ -70,7 +61,10 @@ const UserInterests = () => {
           placeholder="Your interests"
         />
       )}
-      onChange={(e, newValue) => setNewInterests(newValue)}
+      onChange={(e, newValue) => {
+        setNewInterests(newValue);
+        setDisableInput(newValue.length >= 5);
+      }}
     />
   );
 };
