@@ -74,6 +74,10 @@ Week-by-week plan for the whole project.
 ## Spring Semester
 
 - **Week 13**
+  - Implement recommendation system based on a user's personal interests.
+  - Remove some of the tabs along the tab so that the system is easier to navigate.
+  - Add the ability to add a seminar to your calendar.
+  - Change to a list structure instead of a grid.
 - **Week 14**
 - **Week 15**
 - **Week 16**
