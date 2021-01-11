@@ -297,11 +297,14 @@ class SeminarKeywords(APIView):
         return Response(keywords)
 
 
-class SeminarSimilarities(APIView):
+class SeminarSimilarities(ListAPIView):
     """
     Get seminars which are similar to a user's interests.
     """
     def get(self, request, format=None):
+        paginator = PageNumberPagination()
+        paginator.page_size = 3
+
         guid = self.request.query_params.get('guid')
         user = get_user(guid)
 
@@ -315,6 +318,10 @@ class SeminarSimilarities(APIView):
         for seminar in seminars:
             keywords = get_seminar_keywords(seminar)
             percentages = []
+
+            if not user.interests:
+                page_results = paginator.paginate_queryset([], request)
+                return paginator.get_paginated_response([])
 
             for interest in user.interests:
                 syn_interest = wordnet.synsets(interest)
@@ -336,7 +343,7 @@ class SeminarSimilarities(APIView):
 
             similarities.append(
                 {
-                    'seminar_id': seminar.id,
+                    'seminar': SeminarSerializer(seminar).data,
                     'similarity': round(sum(percentages) / len(percentages), 1)
                 }
             )
@@ -345,7 +352,10 @@ class SeminarSimilarities(APIView):
             similarities, key=lambda x: x['similarity'], reverse=True
         )
 
-        return Response(sorted_similarities)
+        page_results = paginator.paginate_queryset(
+            sorted_similarities[0:3], request
+        )
+        return paginator.get_paginated_response(page_results)
 
 
 class AllSeminars(ListAPIView):
