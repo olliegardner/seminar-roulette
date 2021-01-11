@@ -6,11 +6,14 @@ urlpatterns = [
     # user api calls
     path('current-user/', CurrentUser.as_view()),
     path('user/recommendations/', UserRecommendations.as_view()),
+    path('user/interests/', AllUserInterests.as_view()),
+    path('user/interests/amend/', AmendUserInterests.as_view()),
 
     # seminar api calls
     path('seminar/', SeminarFromID.as_view()),
     path('seminar/attendance/', SeminarAttendance.as_view()),
     path('seminar/keywords/', SeminarKeywords.as_view()),
+    path('seminar/similarities/', SeminarSimilarities.as_view()),
     path('seminars/', AllSeminars.as_view()),
     path('seminars/random/', RandomSeminar.as_view()),
     # path('seminars/history/', UserSeminarHistory.as_view()),
