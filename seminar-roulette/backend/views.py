@@ -203,13 +203,39 @@ class UserRecommendations(ListAPIView):
         )
 
         if user_seminar_history:
-            recommendations = recommendation_engine(user)
-
-            # serializer = SeminarSerializer(recommendations, many=True)
-            # return Response(serializer.data)
-            return recommendations
+            return recommendation_engine(user)
         else:
             return []
+
+
+class AllUserInterests(APIView):
+    """
+    Get all user interests from all users to act as suggestions.
+    """
+    def get(self, request, format=None):
+        users = UniversityUser.objects.all()
+        interests = []
+
+        for user in users:
+            for interest in user.interests:
+                if not interest in interests:
+                    interests.append(interest)
+
+        return Response(interests)
+
+
+class AmendUserInterests(APIView):
+    """
+    Amends a user's interests.
+    """
+    def put(self, request, format=None):
+        new_interests = request.data['interests']
+
+        user = request.user
+        user.interests = new_interests
+        user.save()
+
+        return Response(user.interests)
 
 
 class SeminarFromID(APIView):

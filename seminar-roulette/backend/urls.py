@@ -6,6 +6,8 @@ urlpatterns = [
     # user api calls
     path('current-user/', CurrentUser.as_view()),
     path('user/recommendations/', UserRecommendations.as_view()),
+    path('user/interests/', AllUserInterests.as_view()),
+    path('user/interests/amend/', AmendUserInterests.as_view()),
 
     # seminar api calls
     path('seminar/', SeminarFromID.as_view()),

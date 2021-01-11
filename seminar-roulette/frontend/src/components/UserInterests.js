@@ -1,51 +1,77 @@
-import React, { useState } from "react";
-import { Chip, makeStyles, Paper } from "@material-ui/core";
+import React, { useEffect, useState, useContext } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { Chip, makeStyles, Paper, TextField } from "@material-ui/core";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    justifyContent: "center",
-    flexWrap: "wrap",
-    listStyle: "none",
-    padding: theme.spacing(0.5),
-    margin: 0,
-  },
-  chip: {
-    margin: theme.spacing(0.5),
-  },
-}));
+import UserContext from "../context/UserContext";
+
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     display: "flex",
+//     // justifyContent: "center",
+//     flexWrap: "wrap",
+//     listStyle: "none",
+//     padding: theme.spacing(0.5),
+//     margin: 0,
+//   },
+//   chip: {
+//     margin: theme.spacing(0.5),
+//   },
+// }));
 
 const UserInterests = () => {
-  const classes = useStyles();
+  // const classes = useStyles();
+  const user = useContext(UserContext);
 
-  const [chipData, setChipData] = useState([
-    { key: 0, label: "Angular" },
-    { key: 1, label: "jQuery" },
-    { key: 2, label: "Polymer" },
-    { key: 3, label: "React" },
-    { key: 4, label: "Vue.js" },
-  ]);
+  const interests = user.interests;
+  const csrftoken = Cookies.get("csrftoken");
 
-  const handleDelete = (chipToDelete) => () => {
-    setChipData((chips) =>
-      chips.filter((chip) => chip.key !== chipToDelete.key)
-    );
-  };
+  const [interestSuggestions, setInterestSuggestions] = useState([]);
+  const [newInterests, setNewInterests] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`/api/user/interests.json`)
+      .then((res) => setInterestSuggestions(res.data))
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    axios
+      .put(
+        `/api/user/interests/amend.json`,
+        {
+          interests: newInterests,
+        },
+        { headers: { "X-CSRFToken": csrftoken } }
+      )
+      .catch((err) => console.log(err));
+  }, [newInterests]);
 
   return (
-    <Paper component="ul" className={classes.root}>
-      {chipData.map((data) => {
-        return (
-          <li key={data.key}>
-            <Chip
-              label={data.label}
-              onDelete={handleDelete(data)}
-              className={classes.chip}
-            />
-          </li>
-        );
-      })}
-    </Paper>
+    <Autocomplete
+      multiple
+      id="user-interests"
+      // limitTags={5}
+      options={interestSuggestions}
+      defaultValue={interests}
+      freeSolo
+      renderTags={(value, getTagProps) =>
+        value.map((option, index) => (
+          <Chip variant="outlined" label={option} {...getTagProps({ index })} />
+        ))
+      }
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          variant="outlined"
+          label="Your interests"
+          placeholder="Your interests"
+        />
+      )}
+      onChange={(e, newValue) => setNewInterests(newValue)}
+    />
   );
 };
 
