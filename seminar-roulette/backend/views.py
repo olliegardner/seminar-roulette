@@ -19,11 +19,13 @@ import string
 import re
 
 import nltk
-from nltk.corpus import stopwords
+from nltk.corpus import stopwords, wordnet
 from nltk.tokenize import word_tokenize
+from itertools import product
 
 nltk.download('stopwords')
 nltk.download('punkt')
+nltk.download('wordnet')
 
 
 def get_user(guid):
@@ -38,6 +40,39 @@ def get_seminar(seminar_id):
         return Seminar.objects.get(id=seminar_id)
     except Seminar.DoesNotExist:
         raise Http404
+
+
+def get_seminar_keywords(seminar):
+    # remove html tags from text
+    pattern = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
+
+    word_tokens = word_tokenize(
+        seminar.title.lower() + ' ' +
+        re.sub(pattern, '', seminar.description.lower())
+    )
+
+    stop_words = set(stopwords.words('english'))
+
+    no_stop_word_desc = [word for word in word_tokens if not word in stop_words]
+
+    no_punctuation_desc = list(
+        filter(
+            lambda token: token not in string.punctuation, no_stop_word_desc
+        )
+    )
+
+    word_occurrences = Counter(no_punctuation_desc)
+    seminar_keywords = []
+
+    for occurrence in word_occurrences:
+        seminar_keywords.append(
+            {
+                'text': occurrence,
+                'value': word_occurrences[occurrence]
+            }
+        )
+
+    return sorted(seminar_keywords, key=lambda x: x['value'], reverse=True)
 
 
 class SeminarPagination(PageNumberPagination):
@@ -257,39 +292,60 @@ class SeminarKeywords(APIView):
     def get(self, request, format=None):
         seminar_id = self.request.query_params.get('id')
         seminar = get_seminar(seminar_id)
+        keywords = get_seminar_keywords(seminar)
 
-        # remove html tags from description
-        pattern = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
+        return Response(keywords)
 
-        word_tokens = word_tokenize(
-            seminar.title.lower() + ' ' +
-            re.sub(pattern, '', seminar.description.lower())
-        )
 
-        stop_words = set(stopwords.words('english'))
+class SeminarSimilarities(APIView):
+    """
+    Get seminars which are similar to a user's interests.
+    """
+    def get(self, request, format=None):
+        guid = self.request.query_params.get('guid')
+        user = get_user(guid)
 
-        no_stop_word_desc = [
-            word for word in word_tokens if not word in stop_words
-        ]
+        similarities = []
+        now = timezone.now()
 
-        no_punctuation_desc = list(
-            filter(
-                lambda token: token not in string.punctuation, no_stop_word_desc
-            )
-        )
+        seminars = Seminar.objects.filter(
+            start_time__gte=now, end_time__gte=now
+        ).order_by('start_time')
 
-        word_occurrences = Counter(no_punctuation_desc)
-        seminar_keywords = []
+        for seminar in seminars:
+            keywords = get_seminar_keywords(seminar)
+            percentages = []
 
-        for occurrence in word_occurrences:
-            seminar_keywords.append(
+            for interest in user.interests:
+                syn_interest = wordnet.synsets(interest)
+                scores = []
+
+                for keyword in keywords[0:3]:
+                    syn_keyword = wordnet.synsets(keyword['text'])
+                    max_score = 0
+
+                    for i, j in list(product(*[syn_interest, syn_keyword])):
+                        score = i.wup_similarity(j)
+
+                        if score:
+                            max_score = score if max_score < score else max_score
+
+                    scores.append(max_score)
+
+                percentages.append(round((sum(scores) / len(scores)) * 100, 1))
+
+            similarities.append(
                 {
-                    'text': occurrence,
-                    'value': word_occurrences[occurrence]
+                    'seminar_id': seminar.id,
+                    'similarity': round(sum(percentages) / len(percentages), 1)
                 }
             )
 
-        return Response(seminar_keywords)
+        sorted_similarities = sorted(
+            similarities, key=lambda x: x['similarity'], reverse=True
+        )
+
+        return Response(sorted_similarities)
 
 
 class AllSeminars(ListAPIView):
