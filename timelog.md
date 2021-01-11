@@ -285,3 +285,7 @@
 ### 7 Jan 2021
 
 - _2 hour_ Created an add to calendar button which allows a user to download an icalendar ics file.
+
+### 11 Jan 2021
+
+- _5.5 hour_ Implemented a seminar recommendation algorithm based on a user's personal interests. The algorithm uses WuPalmer similarity to match a user's interests with keywords within the seminar's description.

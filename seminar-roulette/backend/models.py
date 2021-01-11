@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import Q
@@ -14,6 +15,13 @@ class UniversityUser(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=255, null=True, blank=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    interests = ArrayField(
+        models.CharField(max_length=100),
+        size=5,
+        default=list,
+        null=True,
+        blank=True
+    )
 
     USERNAME_FIELD = 'guid'
     REQUIRED_FIELDS = []
