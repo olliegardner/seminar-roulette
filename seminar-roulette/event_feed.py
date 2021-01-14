@@ -29,9 +29,9 @@ class EventFeeds():
         env_file = os.path.join(os.getcwd(), ".env")
         environ.Env.read_env(env_file)
 
-        # self.samoa_feed()
-        # self.eventbrite_feed(env('EVENTBRITE_KEY'))
-        # self.generate_ical_events()
+        self.samoa_feed()
+        self.eventbrite_feed(env('EVENTBRITE_KEY'))
+        self.generate_ical_events()
         self.generate_keywords()
 
     # gets event feed from Samoa

@@ -269,7 +269,6 @@ class SeminarSimilarities(ListAPIView):
         ).order_by('start_time')
 
         for seminar in seminars:
-            # keywords = get_seminar_keywords(seminar)
             keywords = json.loads(seminar.keywords)
             percentages = []
 

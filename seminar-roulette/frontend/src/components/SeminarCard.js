@@ -375,7 +375,7 @@ const SeminarCard = (props) => {
           {parse(seminar.description)}
         </Typography>
 
-        {keywords.length > 5 && expanded && (
+        {keywords.length > 5 && (
           <ReactWordcloud words={keywords} options={options} />
         )}
 
