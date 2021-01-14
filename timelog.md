@@ -286,6 +286,16 @@
 
 - _2 hour_ Created an add to calendar button which allows a user to download an icalendar ics file.
 
+## Week 13
+
 ### 11 Jan 2021
 
 - _5.5 hour_ Implemented a seminar recommendation algorithm based on a user's personal interests. The algorithm uses WuPalmer similarity to match a user's interests with keywords within the seminar's description.
+
+### 12 Jan 2021
+
+- _1.5 hour_ Started planning and writing chapter 1 of the dissertation on Overleaf.
+
+### 13 Jan 2021
+
+- _2 hour_ Continued the writing of chapter of the dissertation. Also started planning chapter 2 and 3.
