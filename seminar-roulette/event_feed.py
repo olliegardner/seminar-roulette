@@ -7,6 +7,7 @@ django.setup()
 from backend.models import *
 from eventbrite import Eventbrite
 from ics import Calendar, Event
+from collections import Counter
 
 import requests
 import json
@@ -15,6 +16,11 @@ import environ
 import datetime
 import yaml
 import re
+import string
+
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
 
 
 class EventFeeds():
@@ -23,9 +29,10 @@ class EventFeeds():
         env_file = os.path.join(os.getcwd(), ".env")
         environ.Env.read_env(env_file)
 
-        self.samoa_feed()
-        self.eventbrite_feed(env('EVENTBRITE_KEY'))
-        self.generate_ical_events()
+        # self.samoa_feed()
+        # self.eventbrite_feed(env('EVENTBRITE_KEY'))
+        # self.generate_ical_events()
+        self.generate_keywords()
 
     # gets event feed from Samoa
     def samoa_feed(self):
@@ -177,6 +184,51 @@ class EventFeeds():
             seminar.save()
 
         print('iCal calendar events generated!')
+
+    # generates list of keywords from seminar title and description
+    def generate_keywords(self):
+        print('Generating seminar keywords. Please wait...')
+
+        pattern = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
+
+        for seminar in Seminar.objects.all():
+            word_tokens = word_tokenize(
+                seminar.title.lower() + ' ' +
+                re.sub(pattern, '', seminar.description.lower())
+            )
+
+            stop_words = set(stopwords.words('english'))
+
+            no_stop_word_desc = [
+                word for word in word_tokens if not word in stop_words
+            ]
+
+            no_punctuation_desc = list(
+                filter(
+                    lambda token: token not in string.punctuation,
+                    no_stop_word_desc
+                )
+            )
+
+            word_occurrences = Counter(no_punctuation_desc)
+            seminar_keywords = []
+
+            for occurrence in word_occurrences:
+                seminar_keywords.append(
+                    {
+                        'text': occurrence,
+                        'value': word_occurrences[occurrence]
+                    }
+                )
+
+            sorted_keywords = sorted(
+                seminar_keywords, key=lambda x: x['value'], reverse=True
+            )
+
+            seminar.keywords = json.dumps(sorted_keywords)
+            seminar.save()
+
+        print('Seminar keywords generated!')
 
 
 if __name__ == '__main__':

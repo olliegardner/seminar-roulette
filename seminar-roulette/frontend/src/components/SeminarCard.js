@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
 import axios from "axios";
@@ -99,7 +99,6 @@ const useStyles = makeStyles((theme) => ({
 const SeminarActions = (props) => {
   const {
     seminar,
-    loaded,
     keywords,
     currentlyDiscarded,
     currentRating,
@@ -195,18 +194,14 @@ const SeminarActions = (props) => {
 
       <div className={classes.flexGrow} />
 
-      {loaded && (
-        <>
-          {keywords.slice(0, 3).map((keyword) => (
-            <Chip
-              label={keyword.text}
-              variant="outlined"
-              color="primary"
-              className={classes.spaceRight}
-            />
-          ))}
-        </>
-      )}
+      {keywords.slice(0, 3).map((keyword) => (
+        <Chip
+          label={keyword.text}
+          variant="outlined"
+          color="primary"
+          className={classes.spaceRight}
+        />
+      ))}
 
       {seminar.online && (
         <Tooltip
@@ -247,8 +242,8 @@ const SeminarCard = (props) => {
   const startMonth = startTime.format("MMM").toUpperCase();
   const startYear = startTime.format("YY");
 
-  const [keywords, setKeywords] = useState([]);
-  const [loaded, setLoaded] = useState(false);
+  const keywords = JSON.parse(seminar.keywords);
+
   const [expanded, setExpanded] = useState(false);
 
   const options = {
@@ -263,16 +258,6 @@ const SeminarCard = (props) => {
     spiral: "archimedean",
     transitionDuration: 500,
   };
-
-  useEffect(() => {
-    axios
-      .get(`/api/seminar/keywords.json?id=${seminar.id}`)
-      .then((res) => {
-        setKeywords(res.data);
-        setLoaded(true);
-      })
-      .catch((err) => console.log(err));
-  }, []);
 
   return (
     <Accordion
@@ -375,7 +360,6 @@ const SeminarCard = (props) => {
           <div className={classes.seminarActions}>
             <SeminarActions
               seminar={seminar}
-              loaded={loaded}
               keywords={keywords}
               currentlyDiscarded={currentlyDiscarded}
               currentRating={currentRating}
@@ -391,9 +375,7 @@ const SeminarCard = (props) => {
           {parse(seminar.description)}
         </Typography>
 
-        {expanded && loaded && (
-          <ReactWordcloud words={keywords} options={options} />
-        )}
+        {expanded && <ReactWordcloud words={keywords} options={options} />}
 
         {seminar.registration_url && (
           <Typography>

@@ -7,21 +7,19 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from watson import search as watson
-from collections import Counter
 
 from .models import *
 from .serializers import *
 from recommender import recommendation_engine
+from itertools import product
 
 import datetime
 import calendar
-import string
+import json
 import re
 
 import nltk
-from nltk.corpus import stopwords, wordnet
-from nltk.tokenize import word_tokenize
-from itertools import product
+from nltk.corpus import wordnet
 
 nltk.download('stopwords')
 nltk.download('punkt')
@@ -40,39 +38,6 @@ def get_seminar(seminar_id):
         return Seminar.objects.get(id=seminar_id)
     except Seminar.DoesNotExist:
         raise Http404
-
-
-def get_seminar_keywords(seminar):
-    # remove html tags from text
-    pattern = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
-
-    word_tokens = word_tokenize(
-        seminar.title.lower() + ' ' +
-        re.sub(pattern, '', seminar.description.lower())
-    )
-
-    stop_words = set(stopwords.words('english'))
-
-    no_stop_word_desc = [word for word in word_tokens if not word in stop_words]
-
-    no_punctuation_desc = list(
-        filter(
-            lambda token: token not in string.punctuation, no_stop_word_desc
-        )
-    )
-
-    word_occurrences = Counter(no_punctuation_desc)
-    seminar_keywords = []
-
-    for occurrence in word_occurrences:
-        seminar_keywords.append(
-            {
-                'text': occurrence,
-                'value': word_occurrences[occurrence]
-            }
-        )
-
-    return sorted(seminar_keywords, key=lambda x: x['value'], reverse=True)
 
 
 class SeminarPagination(PageNumberPagination):
@@ -285,18 +250,6 @@ class SeminarFromID(APIView):
         return Response(serializer.data)
 
 
-class SeminarKeywords(APIView):
-    """
-    Get keywords from a seminar's description.
-    """
-    def get(self, request, format=None):
-        seminar_id = self.request.query_params.get('id')
-        seminar = get_seminar(seminar_id)
-        keywords = get_seminar_keywords(seminar)
-
-        return Response(keywords)
-
-
 class SeminarSimilarities(ListAPIView):
     """
     Get seminars which are similar to a user's interests.
@@ -316,7 +269,8 @@ class SeminarSimilarities(ListAPIView):
         ).order_by('start_time')
 
         for seminar in seminars:
-            keywords = get_seminar_keywords(seminar)
+            # keywords = get_seminar_keywords(seminar)
+            keywords = json.loads(seminar.keywords)
             percentages = []
 
             if not user.interests:
