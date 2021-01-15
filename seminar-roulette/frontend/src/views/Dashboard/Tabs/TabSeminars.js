@@ -20,6 +20,8 @@ const TabSeminars = (props) => {
   const classes = useStyles();
   const user = useContext(UserContext);
 
+  const notAuthenticated = user.guid == "None";
+
   const [seminars, setSeminars] = useState([]);
   const [seminarsUpdated, setSeminarsUpdated] = useState(0);
   const [similarities, setSimilarities] = useState({});
@@ -40,13 +42,17 @@ const TabSeminars = (props) => {
     axios
       .all([
         axios.get(pageRequest),
-        axios.get(`api/user/similarities/?guid=${user.guid}`),
+
+        !notAuthenticated &&
+          axios.get(`api/user/similarities/?guid=${user.guid}`),
       ])
       .then(
         axios.spread((...res) => {
           setSeminars(res[0].data.results);
           setMaxPage(Math.ceil(res[0].data.count / 10));
-          setSimilarities(res[1].data);
+
+          !notAuthenticated && setSimilarities(res[1].data);
+
           setLoaded(true);
         })
       )
@@ -72,9 +78,11 @@ const TabSeminars = (props) => {
                     seminarsUpdated={seminarsUpdated}
                     setSeminarsUpdated={setSeminarsUpdated}
                     similarity={
-                      similarities[
-                        showRatings ? seminar.seminar.id : seminar.id
-                      ]
+                      notAuthenticated
+                        ? 0
+                        : similarities[
+                            showRatings ? seminar.seminar.id : seminar.id
+                          ]
                     }
                   />
                 </Grid>
