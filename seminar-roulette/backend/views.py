@@ -7,21 +7,19 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from watson import search as watson
-from collections import Counter
 
 from .models import *
 from .serializers import *
 from recommender import recommendation_engine
+from itertools import product
 
 import datetime
 import calendar
-import string
+import json
 import re
 
 import nltk
-from nltk.corpus import stopwords, wordnet
-from nltk.tokenize import word_tokenize
-from itertools import product
+from nltk.corpus import wordnet
 
 nltk.download('stopwords')
 nltk.download('punkt')
@@ -40,39 +38,6 @@ def get_seminar(seminar_id):
         return Seminar.objects.get(id=seminar_id)
     except Seminar.DoesNotExist:
         raise Http404
-
-
-def get_seminar_keywords(seminar):
-    # remove html tags from text
-    pattern = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
-
-    word_tokens = word_tokenize(
-        seminar.title.lower() + ' ' +
-        re.sub(pattern, '', seminar.description.lower())
-    )
-
-    stop_words = set(stopwords.words('english'))
-
-    no_stop_word_desc = [word for word in word_tokens if not word in stop_words]
-
-    no_punctuation_desc = list(
-        filter(
-            lambda token: token not in string.punctuation, no_stop_word_desc
-        )
-    )
-
-    word_occurrences = Counter(no_punctuation_desc)
-    seminar_keywords = []
-
-    for occurrence in word_occurrences:
-        seminar_keywords.append(
-            {
-                'text': occurrence,
-                'value': word_occurrences[occurrence]
-            }
-        )
-
-    return sorted(seminar_keywords, key=lambda x: x['value'], reverse=True)
 
 
 class SeminarPagination(PageNumberPagination):
@@ -99,49 +64,18 @@ class CurrentUser(APIView):
             return Response({'guid': 'None'})
 
 
-class RandomSeminar(APIView):
+class RandomSeminar(ListAPIView):
     """
-    Chooses a random upcoming seminar.
+    Chooses a random upcoming seminar which a user has not rated/discarded before.
     """
-    def get(self, request, format=None):
-        time = self.request.query_params.get('time')
+    serializer_class = SeminarSerializer
+    pagination_class = SeminarPagination
+
+    def get_queryset(self):
         guid = self.request.query_params.get('guid')
-        food = self.request.query_params.get('food')
-
         user = get_user(guid)
+
         now = timezone.now()
-
-        if time == "hour":
-            then = now + timezone.timedelta(hours=1)
-
-            seminars = Seminar.objects.filter(
-                start_time__gte=now, start_time__lte=then
-            )
-        elif time == "today":
-            seminars = Seminar.objects.filter(
-                start_time__gte=now, start_time__date=now.date()
-            )
-        elif time == "tomorrow":
-            tomorrow = now + timezone.timedelta(days=1)
-
-            seminars = Seminar.objects.filter(start_time__date=tomorrow)
-        elif time == "week":
-            end_of_week = now + timezone.timedelta(days=6 - now.weekday())
-
-            seminars = Seminar.objects.filter(
-                start_time__gte=now,
-                start_time__date__range=(now.date(), end_of_week)
-            )
-        elif time == "month":
-            end_of_month = datetime.date(
-                now.year, now.month,
-                calendar.monthrange(now.year, now.month)[-1]
-            )
-
-            seminars = Seminar.objects.filter(
-                start_time__gte=now,
-                start_time__date__range=(now.date(), end_of_month)
-            )
 
         # get seminars which user has attended OR discarded
         seminar_history = user.seminarhistory_set.filter(
@@ -151,50 +85,21 @@ class RandomSeminar(APIView):
             id__in=seminar_history
         )
 
+        upcoming_seminars = Seminar.objects.filter(
+            start_time__gte=now, end_time__gte=now
+        )
+
         # get seminars in a time frame which a user hasn't been to or been recommended
-        available_seminars = seminars.exclude(
+        available_seminars = upcoming_seminars.exclude(
             id__in=seminars_attended_discarded
         )
 
-        # if food == 'true':
-        #     food_seminars = []
-        #     food_words = [
-        #         'refreshment', 'breakfast', 'lunch', 'dinner', 'snack'
-        #     ]
-
-        #     # get seminars which serve food
-        #     for food_word in food_words:
-        #         seminars = available_seminars.filter(
-        #             description__icontains=food_word
-        #         )
-        #         for seminar in seminars:
-        #             if seminar not in food_seminars:
-        #                 food_seminars.append(seminar.id)
-
-        #     random_seminar = Seminar.objects.filter(id__in=food_seminars
-        #                                            ).order_by('?').first()
-        # else:
-        #     random_seminar = available_seminars.order_by('?').first()
-
-        # random_seminar = available_seminars.filter(
-        #     serves_food=(food == 'true')
-        # ).order_by('?').first()
-
-        food_seminars = [
-            seminar.id for seminar in available_seminars if seminar.serves_food
-        ]
-
-        if food == 'true':
-            random_seminar = available_seminars.filter(id__in=food_seminars
-                                                      ).order_by('?').first()
-        else:
-            random_seminar = available_seminars.order_by('?').first()
+        random_seminar = available_seminars.order_by('?').first()
 
         if random_seminar:
-            serializer = SeminarSerializer(random_seminar)
-            return Response(serializer.data)
+            return Seminar.objects.filter(id=random_seminar.id)
         else:
-            return Response('No seminar found')
+            return []
 
 
 class SeminarAttendance(APIView):
@@ -285,77 +190,47 @@ class SeminarFromID(APIView):
         return Response(serializer.data)
 
 
-class SeminarKeywords(APIView):
+class UserSimilarities(APIView):
     """
-    Get keywords from a seminar's description.
-    """
-    def get(self, request, format=None):
-        seminar_id = self.request.query_params.get('id')
-        seminar = get_seminar(seminar_id)
-        keywords = get_seminar_keywords(seminar)
-
-        return Response(keywords)
-
-
-class SeminarSimilarities(ListAPIView):
-    """
-    Get seminars which are similar to a user's interests.
+    Get a user's seminar similarities.
     """
     def get(self, request, format=None):
-        paginator = PageNumberPagination()
-        paginator.page_size = 3
+        wordnet.ensure_loaded()
 
         guid = self.request.query_params.get('guid')
         user = get_user(guid)
 
-        similarities = []
-        now = timezone.now()
+        similarities = {}
 
-        seminars = Seminar.objects.filter(
-            start_time__gte=now, end_time__gte=now
-        ).order_by('start_time')
+        for seminar in Seminar.objects.all():
+            keywords = json.loads(seminar.keywords)
 
-        for seminar in seminars:
-            keywords = get_seminar_keywords(seminar)
-            percentages = []
+            if not user.interests or not keywords:
+                similarities[seminar.id] = 0
+                continue
 
-            if not user.interests:
-                page_results = paginator.paginate_queryset([], request)
-                return paginator.get_paginated_response([])
-
-            for interest in user.interests:
-                syn_interest = wordnet.synsets(interest)
-                scores = []
-
-                for keyword in keywords[0:3]:
-                    syn_keyword = wordnet.synsets(keyword['text'])
-                    max_score = 0
-
-                    for i, j in list(product(*[syn_interest, syn_keyword])):
-                        score = i.wup_similarity(j)
-
-                        if score:
-                            max_score = score if max_score < score else max_score
-
-                    scores.append(max_score)
-
-                percentages.append(round((sum(scores) / len(scores)) * 100, 1))
-
-            similarities.append(
-                {
-                    'seminar': SeminarSerializer(seminar).data,
-                    'similarity': round(sum(percentages) / len(percentages), 1)
-                }
+            interest_syns = set(
+                synset for interest in user.interests
+                for synset in wordnet.synsets(interest)
             )
 
-        sorted_similarities = sorted(
-            similarities, key=lambda x: x['similarity'], reverse=True
-        )
+            keyword_syns = set(
+                synset for keyword in keywords[0:3]
+                for synset in wordnet.synsets(keyword['text'])
+            )
 
-        page_results = paginator.paginate_queryset(
-            sorted_similarities[0:3], request
-        )
-        return paginator.get_paginated_response(page_results)
+            if not interest_syns or not keyword_syns:
+                similarities[seminar.id] = 0
+                continue
+
+            best = max(
+                wordnet.wup_similarity(i, j) or 0
+                for i, j in product(interest_syns, keyword_syns)
+            )
+
+            similarities[seminar.id] = round(best * 100, 1)
+
+        return Response(similarities)
 
 
 class AllSeminars(ListAPIView):

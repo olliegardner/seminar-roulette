@@ -86,8 +86,10 @@ class SeminarTests(TestCase):
 
     def test_random_seminar(self):
         response = self.client.get(
-            '/api/seminars/random.json?time=tomorrow&guid=' + self.user.guid
+            '/api/seminars/random.json?guid=' + self.user.guid
         )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['title'], self.seminar.title)
+        self.assertEqual(
+            response.data['results'][0]['title'], self.seminar.title
+        )

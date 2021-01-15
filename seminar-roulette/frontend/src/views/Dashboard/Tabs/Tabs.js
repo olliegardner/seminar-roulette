@@ -73,27 +73,23 @@ const TabsContainer = () => {
           textColor="primary"
           variant="scrollable"
         >
-          <Tab label="All" />
+          {/* <Tab label="All" />
           <Tab label="Recommendations" />
           <Tab label="In an hour" />
           <Tab label="Today" />
           <Tab label="Tomorrow" />
           <Tab label="This week" />
           <Tab label="This month" />
+          <Tab label="Past" /> */}
+
+          <Tab label="Recommendations" />
+          <Tab label="Upcoming" />
           <Tab label="Past" />
+          <Tab label="Random" />
         </Tabs>
       </AppBar>
 
       <TabPanel value={value} index={0} dir={theme.direction}>
-        <TabSeminars
-          request="api/seminars.json"
-          notFoundText="No seminars found."
-          showRatings={false}
-          showPagination={true}
-        />
-      </TabPanel>
-
-      <TabPanel value={value} index={1} dir={theme.direction}>
         {notAuthenticated ? (
           <Typography>
             Please{" "}
@@ -103,38 +99,27 @@ const TabsContainer = () => {
             to view seminars recommended to you.
           </Typography>
         ) : (
-          <>
-            <Typography variant="h6">
-              Recommendations based on how you have rated past seminars
-            </Typography>
-
-            <TabSeminars
-              request={`api/user/recommendations.json?guid=${user.guid}`}
-              notFoundText="No seminar recommendations found based on your ratings. Please rate some past seminars first!"
-              showRatings={false}
-              showPagination={false}
-            />
-
-            <Typography variant="h6" className={classes.recommendationText}>
-              Recommendations based your personal interests
-            </Typography>
-
-            <TabSeminars
-              request={`api/seminar/similarities.json?guid=${user.guid}`}
-              notFoundText="No seminar recommendations found based on your interests. Please enter your personal interests."
-              showRatings={true}
-              showPagination={true}
-            />
-          </>
+          <TabSeminars
+            request={`api/user/recommendations.json?guid=${user.guid}`}
+            notFoundText="No seminar recommendations found based on your ratings. Please rate some past seminars first!"
+            showRatings={false}
+          />
         )}
       </TabPanel>
 
-      <TabPanel value={value} index={2} dir={theme.direction}>
+      <TabPanel value={value} index={1} dir={theme.direction}>
+        <TabSeminars
+          request="api/seminars.json"
+          notFoundText="No seminars found."
+          showRatings={false}
+        />
+      </TabPanel>
+
+      {/* <TabPanel value={value} index={2} dir={theme.direction}>
         <TabSeminars
           request="api/seminars/time.json?time=hour"
           notFoundText="No seminars happening in an hour."
           showRatings={false}
-          showPagination={true}
         />
       </TabPanel>
 
@@ -143,7 +128,6 @@ const TabsContainer = () => {
           request="api/seminars/time.json?time=today"
           notFoundText="No seminars happening today."
           showRatings={false}
-          showPagination={true}
         />
       </TabPanel>
 
@@ -152,7 +136,6 @@ const TabsContainer = () => {
           request="api/seminars/time.json?time=tomorrow"
           notFoundText="No seminars happening tomorrow."
           showRatings={false}
-          showPagination={true}
         />
       </TabPanel>
 
@@ -161,7 +144,6 @@ const TabsContainer = () => {
           request="api/seminars/time.json?time=week"
           notFoundText="No seminars happening this week."
           showRatings={false}
-          showPagination={true}
         />
       </TabPanel>
 
@@ -170,11 +152,10 @@ const TabsContainer = () => {
           request="api/seminars/time.json?time=month"
           notFoundText="No seminars happening this month."
           showRatings={false}
-          showPagination={true}
         />
-      </TabPanel>
+      </TabPanel> */}
 
-      <TabPanel value={value} index={7} dir={theme.direction}>
+      <TabPanel value={value} index={2} dir={theme.direction}>
         {notAuthenticated ? (
           <Typography>
             Please{" "}
@@ -214,10 +195,17 @@ const TabsContainer = () => {
               }&rated=${showRated.toString()}&discarded=${showDiscarded.toString()}`}
               notFoundText="No past seminars found."
               showRatings={true}
-              showPagination={true}
             />
           </>
         )}
+      </TabPanel>
+
+      <TabPanel value={value} index={3} dir={theme.direction}>
+        <TabSeminars
+          request={`api/seminars/random.json?guid=${user.guid}`}
+          notFoundText="No seminars found."
+          showRatings={false}
+        />
       </TabPanel>
     </div>
   );

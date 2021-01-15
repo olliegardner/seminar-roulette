@@ -96,6 +96,7 @@ class Seminar(models.Model):
     samoa_id = models.IntegerField(null=True, blank=True, unique=True)
     eventbrite_id = models.BigIntegerField(null=True, blank=True, unique=True)
     icalendar = models.TextField(null=True, blank=True)
+    keywords = models.JSONField(null=True, blank=True)
 
     class Meta:
         unique_together = ['title', 'start_time', 'end_time', 'speaker']
