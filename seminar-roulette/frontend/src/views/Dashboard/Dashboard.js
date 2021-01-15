@@ -22,12 +22,17 @@ const Landing = () => {
       <Typography variant="h5">
         Seminars taking place at the University of Glasgow
       </Typography>
-      <Typography>Enter up to 5 of your personal interests below</Typography>
 
       {!notAuthenticated && (
-        <Box my={3}>
-          <UserInterests />
-        </Box>
+        <>
+          <Typography>
+            Enter up to 5 of your personal interests below
+          </Typography>
+
+          <Box my={3}>
+            <UserInterests />
+          </Box>
+        </>
       )}
 
       <Tabs />
