@@ -1,11 +1,8 @@
-import React, { useState, useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { Container, Fab, makeStyles } from "@material-ui/core";
-import CasinoOutlinedIcon from "@material-ui/icons/CasinoOutlined";
+import { Container, makeStyles } from "@material-ui/core";
 
 import Topbar from "./Topbar/Topbar";
-import RandomSeminarDialog from "../components/RandomSeminarDialog";
-import UserContext from "../context/UserContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,14 +23,6 @@ const useStyles = makeStyles((theme) => ({
     flex: "1 1 auto",
     backgroundColor: theme.palette.common.white,
   },
-  fab: {
-    position: "fixed",
-    bottom: theme.spacing(2),
-    right: theme.spacing(2),
-  },
-  fabIcon: {
-    marginRight: theme.spacing(1),
-  },
   container: {
     paddingTop: theme.spacing(2),
   },
@@ -42,19 +31,6 @@ const useStyles = makeStyles((theme) => ({
 const Layout = (props) => {
   const { children } = props;
   const classes = useStyles();
-  const user = useContext(UserContext);
-
-  const notAuthenticated = user.guid == "None";
-
-  const [fabOpen, setFabOpen] = useState(false);
-
-  const handleFabOpen = () => {
-    setFabOpen(true);
-  };
-
-  const handleFabClose = () => {
-    setFabOpen(false);
-  };
 
   return (
     <div className={classes.root}>
@@ -65,21 +41,6 @@ const Layout = (props) => {
           {children}
         </Container>
       </main>
-
-      {!notAuthenticated && (
-        <>
-          <Fab
-            color="primary"
-            variant="extended"
-            className={classes.fab}
-            onClick={handleFabOpen}
-          >
-            <CasinoOutlinedIcon className={classes.fabIcon} />
-            Random Seminar
-          </Fab>
-          <RandomSeminarDialog open={fabOpen} onClose={handleFabClose} />
-        </>
-      )}
     </div>
   );
 };

@@ -5,7 +5,6 @@ import Layout from "./layout/Layout";
 import Dashboard from "./views/Dashboard/Dashboard";
 import Seminar from "./views/Seminar";
 import FourZeroFour from "./views/FourZeroFour";
-import SeminarNotFound from "./views/SeminarNotFound";
 import Search from "./views/Search";
 
 const Router = () => {
@@ -37,12 +36,6 @@ const Router = () => {
         )}
 
         <RouteWithLayout component={Dashboard} layout={Layout} exact path="/" />
-        <RouteWithLayout
-          component={SeminarNotFound}
-          layout={Layout}
-          exact
-          path="/seminar/not-found"
-        />
         <RouteWithLayout
           component={Seminar}
           layout={Layout}

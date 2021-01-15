@@ -1,7 +1,9 @@
-import React from "react";
-import { makeStyles, Typography } from "@material-ui/core";
+import React, { useContext } from "react";
+import { Box, makeStyles, Typography } from "@material-ui/core";
 import Tabs from "./Tabs/Tabs";
+
 import UserInterests from "../../components/UserInterests";
+import UserContext from "../../context/UserContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -11,14 +13,28 @@ const useStyles = makeStyles((theme) => ({
 
 const Landing = () => {
   const classes = useStyles();
+  const user = useContext(UserContext);
+
+  const notAuthenticated = user.guid == "None";
 
   return (
     <div className={classes.root}>
-      <Typography variant="h5" gutterBottom>
-        Seminars at the University of Glasgow
+      <Typography variant="h5">
+        Seminars taking place at the University of Glasgow
       </Typography>
 
-      <UserInterests />
+      {!notAuthenticated && (
+        <>
+          <Typography>
+            Enter up to 5 of your personal interests below
+          </Typography>
+
+          <Box my={3}>
+            <UserInterests />
+          </Box>
+        </>
+      )}
+
       <Tabs />
     </div>
   );
