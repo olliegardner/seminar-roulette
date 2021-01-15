@@ -73,26 +73,22 @@ const TabsContainer = () => {
           textColor="primary"
           variant="scrollable"
         >
-          <Tab label="All" />
+          {/* <Tab label="All" />
           <Tab label="Recommendations" />
           <Tab label="In an hour" />
           <Tab label="Today" />
           <Tab label="Tomorrow" />
           <Tab label="This week" />
           <Tab label="This month" />
+          <Tab label="Past" /> */}
+
+          <Tab label="Recommendations" />
+          <Tab label="Upcoming" />
           <Tab label="Past" />
         </Tabs>
       </AppBar>
 
       <TabPanel value={value} index={0} dir={theme.direction}>
-        <TabSeminars
-          request="api/seminars.json"
-          notFoundText="No seminars found."
-          showRatings={false}
-        />
-      </TabPanel>
-
-      <TabPanel value={value} index={1} dir={theme.direction}>
         {notAuthenticated ? (
           <Typography>
             Please{" "}
@@ -110,7 +106,15 @@ const TabsContainer = () => {
         )}
       </TabPanel>
 
-      <TabPanel value={value} index={2} dir={theme.direction}>
+      <TabPanel value={value} index={1} dir={theme.direction}>
+        <TabSeminars
+          request="api/seminars.json"
+          notFoundText="No seminars found."
+          showRatings={false}
+        />
+      </TabPanel>
+
+      {/* <TabPanel value={value} index={2} dir={theme.direction}>
         <TabSeminars
           request="api/seminars/time.json?time=hour"
           notFoundText="No seminars happening in an hour."
@@ -148,9 +152,9 @@ const TabsContainer = () => {
           notFoundText="No seminars happening this month."
           showRatings={false}
         />
-      </TabPanel>
+      </TabPanel> */}
 
-      <TabPanel value={value} index={7} dir={theme.direction}>
+      <TabPanel value={value} index={2} dir={theme.direction}>
         {notAuthenticated ? (
           <Typography>
             Please{" "}
