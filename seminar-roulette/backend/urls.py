@@ -13,7 +13,6 @@ urlpatterns = [
     # seminar api calls
     path('seminar/', SeminarFromID.as_view()),
     path('seminar/attendance/', SeminarAttendance.as_view()),
-    path('seminar/similarities/', SeminarSimilarities.as_view()),
     path('seminars/', AllSeminars.as_view()),
     path('seminars/random/', RandomSeminar.as_view()),
     # path('seminars/history/', UserSeminarHistory.as_view()),

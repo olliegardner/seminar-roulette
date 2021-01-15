@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TabSeminars = (props) => {
-  const { request, notFoundText, showRatings, showPagination } = props;
+  const { request, notFoundText, showRatings } = props;
 
   const classes = useStyles();
   const user = useContext(UserContext);
@@ -80,18 +80,16 @@ const TabSeminars = (props) => {
                 </Grid>
               ))}
 
-              {showPagination && (
-                <Pagination
-                  count={maxPage}
-                  color="primary"
-                  shape="rounded"
-                  showFirstButton
-                  showLastButton
-                  className={classes.pagination}
-                  page={page}
-                  onChange={(e, newPage) => setPage(newPage)}
-                />
-              )}
+              <Pagination
+                count={maxPage}
+                color="primary"
+                shape="rounded"
+                showFirstButton
+                showLastButton
+                className={classes.pagination}
+                page={page}
+                onChange={(e, newPage) => setPage(newPage)}
+              />
             </Grid>
           ) : (
             <Typography>{notFoundText}</Typography>

@@ -293,67 +293,6 @@ class UserSimilarities(APIView):
         return Response(similarities)
 
 
-class SeminarSimilarities(ListAPIView):
-    """
-    Get seminars which are similar to a user's interests.
-    """
-    def get(self, request, format=None):
-        paginator = PageNumberPagination()
-        paginator.page_size = 3
-
-        guid = self.request.query_params.get('guid')
-        user = get_user(guid)
-
-        similarities = []
-        now = timezone.now()
-
-        seminars = Seminar.objects.filter(
-            start_time__gte=now, end_time__gte=now
-        ).order_by('start_time')
-
-        for seminar in seminars:
-            keywords = json.loads(seminar.keywords)
-            percentages = []
-
-            if not user.interests:
-                page_results = paginator.paginate_queryset([], request)
-                return paginator.get_paginated_response([])
-
-            for interest in user.interests:
-                syn_interest = wordnet.synsets(interest)
-                scores = []
-
-                for keyword in keywords[0:3]:
-                    syn_keyword = wordnet.synsets(keyword['text'])
-                    max_score = 0
-
-                    for i, j in list(product(*[syn_interest, syn_keyword])):
-                        score = i.wup_similarity(j)
-
-                        if score:
-                            max_score = score if max_score < score else max_score
-
-                    scores.append(max_score)
-
-                percentages.append(round((sum(scores) / len(scores)) * 100, 1))
-
-            similarities.append(
-                {
-                    'seminar': SeminarSerializer(seminar).data,
-                    'similarity': round(sum(percentages) / len(percentages), 1)
-                }
-            )
-
-        sorted_similarities = sorted(
-            similarities, key=lambda x: x['similarity'], reverse=True
-        )
-
-        page_results = paginator.paginate_queryset(
-            sorted_similarities[0:3], request
-        )
-        return paginator.get_paginated_response(page_results)
-
-
 class AllSeminars(ListAPIView):
     """
     Get all the upcoming seminars in the database.
