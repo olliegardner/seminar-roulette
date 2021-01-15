@@ -64,49 +64,18 @@ class CurrentUser(APIView):
             return Response({'guid': 'None'})
 
 
-class RandomSeminar(APIView):
+class RandomSeminar(ListAPIView):
     """
-    Chooses a random upcoming seminar.
+    Chooses a random upcoming seminar which a user has not rated/discarded before.
     """
-    def get(self, request, format=None):
-        time = self.request.query_params.get('time')
+    serializer_class = SeminarSerializer
+    pagination_class = SeminarPagination
+
+    def get_queryset(self):
         guid = self.request.query_params.get('guid')
-        food = self.request.query_params.get('food')
-
         user = get_user(guid)
+
         now = timezone.now()
-
-        if time == "hour":
-            then = now + timezone.timedelta(hours=1)
-
-            seminars = Seminar.objects.filter(
-                start_time__gte=now, start_time__lte=then
-            )
-        elif time == "today":
-            seminars = Seminar.objects.filter(
-                start_time__gte=now, start_time__date=now.date()
-            )
-        elif time == "tomorrow":
-            tomorrow = now + timezone.timedelta(days=1)
-
-            seminars = Seminar.objects.filter(start_time__date=tomorrow)
-        elif time == "week":
-            end_of_week = now + timezone.timedelta(days=6 - now.weekday())
-
-            seminars = Seminar.objects.filter(
-                start_time__gte=now,
-                start_time__date__range=(now.date(), end_of_week)
-            )
-        elif time == "month":
-            end_of_month = datetime.date(
-                now.year, now.month,
-                calendar.monthrange(now.year, now.month)[-1]
-            )
-
-            seminars = Seminar.objects.filter(
-                start_time__gte=now,
-                start_time__date__range=(now.date(), end_of_month)
-            )
 
         # get seminars which user has attended OR discarded
         seminar_history = user.seminarhistory_set.filter(
@@ -116,50 +85,21 @@ class RandomSeminar(APIView):
             id__in=seminar_history
         )
 
+        upcoming_seminars = Seminar.objects.filter(
+            start_time__gte=now, end_time__gte=now
+        )
+
         # get seminars in a time frame which a user hasn't been to or been recommended
-        available_seminars = seminars.exclude(
+        available_seminars = upcoming_seminars.exclude(
             id__in=seminars_attended_discarded
         )
 
-        # if food == 'true':
-        #     food_seminars = []
-        #     food_words = [
-        #         'refreshment', 'breakfast', 'lunch', 'dinner', 'snack'
-        #     ]
-
-        #     # get seminars which serve food
-        #     for food_word in food_words:
-        #         seminars = available_seminars.filter(
-        #             description__icontains=food_word
-        #         )
-        #         for seminar in seminars:
-        #             if seminar not in food_seminars:
-        #                 food_seminars.append(seminar.id)
-
-        #     random_seminar = Seminar.objects.filter(id__in=food_seminars
-        #                                            ).order_by('?').first()
-        # else:
-        #     random_seminar = available_seminars.order_by('?').first()
-
-        # random_seminar = available_seminars.filter(
-        #     serves_food=(food == 'true')
-        # ).order_by('?').first()
-
-        food_seminars = [
-            seminar.id for seminar in available_seminars if seminar.serves_food
-        ]
-
-        if food == 'true':
-            random_seminar = available_seminars.filter(id__in=food_seminars
-                                                      ).order_by('?').first()
-        else:
-            random_seminar = available_seminars.order_by('?').first()
+        random_seminar = available_seminars.order_by('?').first()
 
         if random_seminar:
-            serializer = SeminarSerializer(random_seminar)
-            return Response(serializer.data)
+            return Seminar.objects.filter(id=random_seminar.id)
         else:
-            return Response('No seminar found')
+            return []
 
 
 class SeminarAttendance(APIView):

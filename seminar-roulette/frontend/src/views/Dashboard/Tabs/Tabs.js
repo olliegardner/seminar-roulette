@@ -85,6 +85,7 @@ const TabsContainer = () => {
           <Tab label="Recommendations" />
           <Tab label="Upcoming" />
           <Tab label="Past" />
+          <Tab label="Random" />
         </Tabs>
       </AppBar>
 
@@ -197,6 +198,14 @@ const TabsContainer = () => {
             />
           </>
         )}
+      </TabPanel>
+
+      <TabPanel value={value} index={3} dir={theme.direction}>
+        <TabSeminars
+          request={`api/seminars/random.json?guid=${user.guid}`}
+          notFoundText="No seminars found."
+          showRatings={false}
+        />
       </TabPanel>
     </div>
   );
