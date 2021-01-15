@@ -76,6 +76,7 @@
 - _0.5 hour_ Sent my weekly status report to Jeremy.
 - _1 hour_ Re-visited my user stories and updated them to fit my requirements.
 - _0.5 hour_ Drew up version 1 of system architecture diagram.
+- _0.5 hour_ Wrote up status report for this week and sent to supervisor.
 
 ### 16 Oct 2020
 
@@ -101,6 +102,7 @@
 
 - _4 hour_ Setup feed from Samoa events and implemented a random seminar button which displays a random seminar from Samoa on the frontend.
 - _1 hour_ Researched different CSS frameworks for React. I am going to use Material-UI from Google.
+- _0.5 hour_ Wrote up status report for this week and sent to supervisor.
 
 ### 23 Oct 2020
 
@@ -118,6 +120,7 @@
 
 - _2 hour_ Continued on the frontend of the project. Added an animation so that the chosen seminar flys on to the page.
 - _3 hour_ Implemented user seminar history which is added to whenever a seminar is recommended to a user. Users have the ability to say whether they have attended the seminar or not and what they would rate it if they did attend.
+- _0.5 hour_ Wrote up status report for this week and sent to supervisor.
 
 ### 30 Oct 2020
 
@@ -142,6 +145,7 @@
 
 - _1 hour_ Conducted research into different types of recommender systems.
 - _3 hour_ Implemented a recommender system using fake ratings data.
+- _0.5 hour_ Wrote up status report for this week and sent to supervisor.
 
 ### 6 Nov 2020
 
@@ -157,6 +161,7 @@
 
 - _2 hour_ Conducted research into natural language processing and specifically the nltk Python package.
 - _2 hour_ Implemented I'm Feeling Hungry feature.
+- _0.5 hour_ Wrote up status report for this week and sent to supervisor.
 
 ### 13 Nov 2020
 
@@ -175,6 +180,7 @@
 
 - _1 hour_ Continued working on getting the system deployed to the VM
 - _2 hour_ Created a dashboard and improved the look and feel of the system.
+- _0.5 hour_ Wrote up status report for this week and sent to supervisor.
 
 ### 20 Nov 2020
 
@@ -187,6 +193,7 @@
 ### 26 Nov 2020
 
 - _1.5 hour_ Continued setting up Shibboleth on the VM.
+- _0.5 hour_ Wrote up status report for this week and sent to supervisor.
 
 ### 27 Nov 2020
 
@@ -216,6 +223,10 @@
 
 - _4 hour_ Attended dissertation guidance lectures.
 - _2 hour_ Finished implementation of the search bar - allows users to search for seminars.
+
+### 10 Dec 2020
+
+- _0.5 hour_ Wrote up status report for this week and sent to supervisor.
 
 ### 11 Dec 2020
 
@@ -302,6 +313,11 @@
 
 ### 14 Jan 2021
 
+- _2.5 hour_ Added a keywords JSONField to seminar model to make it more efficient to retrieve seminar keywords.
+- _0.5 hour_ Wrote up status report for this week and sent to supervisor.
+
 ### 15 Jan 2021
 
+- _1.5 hour_ Added text which shows how similar a seminar is to your personal interests.
+- _1 hour_ Removed random seminar floating action button and replaced it with a tab at the top. Also removed roulette wheel as per think aloud evaluation feedback.
 - _1 hour_ Weekly meeting with supervisor and wrote up meeting minutes.

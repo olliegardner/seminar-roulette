@@ -79,6 +79,10 @@ Week-by-week plan for the whole project.
   - Add the ability to add a seminar to your calendar.
   - Change to a list structure instead of a grid.
 - **Week 14**
+  - Add more filters and the ability to sort.
+  - Add counter bubbles to tabs.
+  - Implement more unit tests.
+  - Write chapter 1 of dissertation.
 - **Week 15**
 - **Week 16**
 - **Week 17**
