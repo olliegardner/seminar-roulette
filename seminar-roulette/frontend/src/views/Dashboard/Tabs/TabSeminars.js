@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 import { Grid, makeStyles, Typography } from "@material-ui/core";
@@ -6,6 +6,7 @@ import Pagination from "@material-ui/lab/Pagination";
 
 import SeminarCard from "../../../components/SeminarCard";
 import LoadingSpinner from "../../../components/LoadingSpinner";
+import UserContext from "../../../context/UserContext";
 
 const useStyles = makeStyles((theme) => ({
   pagination: {
@@ -15,10 +16,13 @@ const useStyles = makeStyles((theme) => ({
 
 const TabSeminars = (props) => {
   const { request, notFoundText, showRatings, showPagination } = props;
+
   const classes = useStyles();
+  const user = useContext(UserContext);
 
   const [seminars, setSeminars] = useState([]);
   const [seminarsUpdated, setSeminarsUpdated] = useState(0);
+  const [similarities, setSimilarities] = useState({});
   const [loaded, setLoaded] = useState(false);
 
   const [page, setPage] = useState(1);
@@ -34,12 +38,18 @@ const TabSeminars = (props) => {
     }
 
     axios
-      .get(pageRequest)
-      .then((res) => {
-        setSeminars(res.data.results);
-        setMaxPage(Math.ceil(res.data.count / 10));
-        setLoaded(true);
-      })
+      .all([
+        axios.get(pageRequest),
+        axios.get(`api/user/similarities/?guid=${user.guid}`),
+      ])
+      .then(
+        axios.spread((...res) => {
+          setSeminars(res[0].data.results);
+          setMaxPage(Math.ceil(res[0].data.count / 10));
+          setSimilarities(res[1].data);
+          setLoaded(true);
+        })
+      )
       .catch((err) => console.log(err));
   }, [request, seminarsUpdated, page]);
 
@@ -61,6 +71,11 @@ const TabSeminars = (props) => {
                     currentlyDiscarded={showRatings ? seminar.discarded : false}
                     seminarsUpdated={seminarsUpdated}
                     setSeminarsUpdated={setSeminarsUpdated}
+                    similarity={
+                      similarities[
+                        showRatings ? seminar.seminar.id : seminar.id
+                      ]
+                    }
                   />
                 </Grid>
               ))}

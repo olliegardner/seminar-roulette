@@ -299,3 +299,9 @@
 ### 13 Jan 2021
 
 - _2 hour_ Continued the writing of chapter of the dissertation. Also started planning chapter 2 and 3.
+
+### 14 Jan 2021
+
+### 15 Jan 2021
+
+- _1 hour_ Weekly meeting with supervisor and wrote up meeting minutes.

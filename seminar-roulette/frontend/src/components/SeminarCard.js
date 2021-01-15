@@ -233,6 +233,7 @@ const SeminarCard = (props) => {
     currentlyDiscarded,
     seminarsUpdated,
     setSeminarsUpdated,
+    similarity,
   } = props;
 
   const classes = useStyles();
@@ -357,6 +358,8 @@ const SeminarCard = (props) => {
             </span>
           </Typography>
 
+          {similarity != 0 && <Typography>{similarity}% match</Typography>}
+
           <div className={classes.seminarActions}>
             <SeminarActions
               seminar={seminar}
@@ -404,6 +407,7 @@ SeminarCard.propTypes = {
   currentlyDiscarded: PropTypes.bool,
   seminarsUpdated: PropTypes.number,
   setSeminarsUpdated: PropTypes.func,
+  similarity: PropTypes.number,
 };
 
 export default SeminarCard;

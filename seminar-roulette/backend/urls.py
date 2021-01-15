@@ -8,6 +8,7 @@ urlpatterns = [
     path('user/recommendations/', UserRecommendations.as_view()),
     path('user/interests/', AllUserInterests.as_view()),
     path('user/interests/amend/', AmendUserInterests.as_view()),
+    path('user/similarities/', UserSimilarities.as_view()),
 
     # seminar api calls
     path('seminar/', SeminarFromID.as_view()),
