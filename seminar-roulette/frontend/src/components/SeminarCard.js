@@ -205,7 +205,7 @@ const SeminarActions = (props) => {
 
       {similarity != 0 && (
         <Typography
-          variant="caption"
+          variant="subtitle2"
           className={clsx(classes.spaceRight, {
             [classes.red]: similarity >= 1 && similarity <= 40,
             [classes.orange]: similarity > 40 && similarity <= 70,

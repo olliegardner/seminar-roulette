@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { makeStyles, Typography } from "@material-ui/core";
+import { Box, makeStyles, Typography } from "@material-ui/core";
 import Tabs from "./Tabs/Tabs";
 
 import UserInterests from "../../components/UserInterests";
@@ -19,11 +19,16 @@ const Landing = () => {
 
   return (
     <div className={classes.root}>
-      <Typography variant="h5" gutterBottom>
-        Seminars at the University of Glasgow
+      <Typography variant="h5">
+        Seminars taking place at the University of Glasgow
       </Typography>
+      <Typography>Enter up to 5 of your personal interests below</Typography>
 
-      {!notAuthenticated && <UserInterests />}
+      {!notAuthenticated && (
+        <Box my={3}>
+          <UserInterests />
+        </Box>
+      )}
 
       <Tabs />
     </div>
