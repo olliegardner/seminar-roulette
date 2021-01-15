@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
+import clsx from "clsx";
 import moment from "moment";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -19,9 +20,7 @@ import {
   Button,
 } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
-import { grey } from "@material-ui/core/colors";
-import FastfoodOutlinedIcon from "@material-ui/icons/FastfoodOutlined";
-import LanguageOutlinedIcon from "@material-ui/icons/LanguageOutlined";
+import { grey, red, orange, green } from "@material-ui/core/colors";
 import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import SchoolOutlinedIcon from "@material-ui/icons/SchoolOutlined";
@@ -94,6 +93,15 @@ const useStyles = makeStyles((theme) => ({
       textDecoration: "none",
     },
   },
+  red: {
+    color: red[500],
+  },
+  orange: {
+    color: orange[500],
+  },
+  green: {
+    color: green[500],
+  },
 }));
 
 const SeminarActions = (props) => {
@@ -104,6 +112,7 @@ const SeminarActions = (props) => {
     currentRating,
     seminarsUpdated,
     setSeminarsUpdated,
+    similarity,
   } = props;
 
   const classes = useStyles();
@@ -194,6 +203,19 @@ const SeminarActions = (props) => {
 
       <div className={classes.flexGrow} />
 
+      {similarity != 0 && (
+        <Typography
+          variant="caption"
+          className={clsx(classes.spaceRight, {
+            [classes.red]: similarity >= 1 && similarity <= 40,
+            [classes.orange]: similarity > 40 && similarity <= 70,
+            [classes.green]: similarity > 70 && similarity <= 100,
+          })}
+        >
+          {similarity}% match
+        </Typography>
+      )}
+
       {keywords.slice(0, 3).map((keyword) => (
         <Chip
           label={keyword.text}
@@ -202,26 +224,6 @@ const SeminarActions = (props) => {
           className={classes.spaceRight}
         />
       ))}
-
-      {seminar.online && (
-        <Tooltip
-          title="Online seminar"
-          placement="top"
-          className={classes.spaceRight}
-        >
-          <LanguageOutlinedIcon color="secondary" />
-        </Tooltip>
-      )}
-
-      {seminar.serves_food && (
-        <Tooltip
-          title="This seminar serves food!"
-          placement="top"
-          className={classes.spaceRight}
-        >
-          <FastfoodOutlinedIcon color="secondary" />
-        </Tooltip>
-      )}
     </>
   );
 };
@@ -358,8 +360,6 @@ const SeminarCard = (props) => {
             </span>
           </Typography>
 
-          {similarity != 0 && <Typography>{similarity}% match</Typography>}
-
           <div className={classes.seminarActions}>
             <SeminarActions
               seminar={seminar}
@@ -368,6 +368,7 @@ const SeminarCard = (props) => {
               currentRating={currentRating}
               seminarsUpdated={seminarsUpdated}
               setSeminarsUpdated={setSeminarsUpdated}
+              similarity={similarity}
             />
           </div>
         </div>

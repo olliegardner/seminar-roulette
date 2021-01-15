@@ -50,9 +50,7 @@ const TabSeminars = (props) => {
         axios.spread((...res) => {
           setSeminars(res[0].data.results);
           setMaxPage(Math.ceil(res[0].data.count / 10));
-
           !notAuthenticated && setSimilarities(res[1].data);
-
           setLoaded(true);
         })
       )
