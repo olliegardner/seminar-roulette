@@ -29,8 +29,11 @@ const TabSeminars = (props) => {
   const [ordering, setOrdering] = useState(null);
   const [loaded, setLoaded] = useState(false);
 
+  // filters
   const [online, setOnline] = useState(false);
   const [servesFood, setServesFood] = useState(false);
+  const [showRated, setShowRated] = useState(false);
+  const [showDiscarded, setShowDiscarded] = useState(false);
 
   const [page, setPage] = useState(1);
   const [maxPage, setMaxPage] = useState(1);
@@ -47,6 +50,8 @@ const TabSeminars = (props) => {
     if (ordering != null) pageRequest += `&ordering=${ordering}`;
     if (online) pageRequest += `&online=${online}`;
     if (servesFood) pageRequest += `&serves_food=${servesFood}`;
+    if (showRated) pageRequest += `&rated=${showRated.toString()}`;
+    if (showDiscarded) pageRequest += `&discarded=${showDiscarded.toString()}`;
 
     axios
       .all([
@@ -64,7 +69,16 @@ const TabSeminars = (props) => {
         })
       )
       .catch((err) => console.log(err));
-  }, [request, seminarsUpdated, page, ordering, online, servesFood]);
+  }, [
+    request,
+    seminarsUpdated,
+    page,
+    ordering,
+    online,
+    servesFood,
+    showRated,
+    showDiscarded,
+  ]);
 
   return (
     <>
@@ -73,11 +87,16 @@ const TabSeminars = (props) => {
           {label != "random" && (
             <Grid container spacing={3} alignItems="center" justify="center">
               <Filters
+                label={label}
                 setOrdering={setOrdering}
                 online={online}
                 setOnline={setOnline}
                 servesFood={servesFood}
                 setServesFood={setServesFood}
+                showRated={showRated}
+                setShowRated={setShowRated}
+                showDiscarded={showDiscarded}
+                setShowDiscarded={setShowDiscarded}
               />
             </Grid>
           )}

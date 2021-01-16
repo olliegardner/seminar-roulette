@@ -28,7 +28,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Filters = (props) => {
-  const { setOrdering, online, setOnline, servesFood, setServesFood } = props;
+  const {
+    label,
+    setOrdering,
+    online,
+    setOnline,
+    servesFood,
+    setServesFood,
+    showRated,
+    setShowRated,
+    showDiscarded,
+    setShowDiscarded,
+  } = props;
 
   const classes = useStyles();
 
@@ -73,7 +84,6 @@ const Filters = (props) => {
           }
           label="Serves food"
         />
-
         <FormControlLabel
           control={
             <Checkbox
@@ -84,6 +94,31 @@ const Filters = (props) => {
           }
           label="Online only"
         />
+
+        {label == "past" && (
+          <>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={showRated}
+                  onChange={(e) => setShowRated(e.target.checked)}
+                  name="rated"
+                />
+              }
+              label="Show previously rated seminars"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={showDiscarded}
+                  onChange={(e) => setShowDiscarded(e.target.checked)}
+                  name="discarded"
+                />
+              }
+              label="Show discarded seminars"
+            />
+          </>
+        )}
       </FormGroup>
 
       <div className={classes.flexGrow} />
@@ -130,11 +165,16 @@ const Filters = (props) => {
 };
 
 Filters.propTypes = {
+  label: PropTypes.string,
   setOrdering: PropTypes.func,
   online: PropTypes.bool,
   setOnline: PropTypes.func,
   servesFood: PropTypes.bool,
   setServesFood: PropTypes.func,
+  showRated: PropTypes.bool,
+  setShowRated: PropTypes.func,
+  showDiscarded: PropTypes.bool,
+  setShowDiscarded: PropTypes.func,
 };
 
 export default Filters;
