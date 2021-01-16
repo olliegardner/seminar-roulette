@@ -1,18 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {
-  Button,
   Checkbox,
   FormGroup,
-  FormControl,
   FormControlLabel,
-  InputLabel,
   makeStyles,
-  MenuItem,
-  Popover,
-  Select,
 } from "@material-ui/core";
-import SortOutlinedIcon from "@material-ui/icons/SortOutlined";
+
+import SortByButton from "../../../components/SortByButton";
 
 const useStyles = makeStyles((theme) => ({
   filters: {
@@ -21,9 +16,6 @@ const useStyles = makeStyles((theme) => ({
   },
   flexGrow: {
     flexGrow: 1,
-  },
-  sort: {
-    marginRight: theme.spacing(1.5),
   },
 }));
 
@@ -42,17 +34,6 @@ const Filters = (props) => {
   } = props;
 
   const classes = useStyles();
-
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const isOpen = Boolean(anchorEl);
-  const handleClose = () => setAnchorEl(null);
-  const handleOpen = (e) => setAnchorEl(e.currentTarget);
-
-  const handleSort = (field) => {
-    setOrdering(field);
-    handleClose();
-  };
 
   return (
     <>
@@ -123,43 +104,7 @@ const Filters = (props) => {
 
       <div className={classes.flexGrow} />
 
-      <Button
-        variant="contained"
-        startIcon={<SortOutlinedIcon />}
-        disableElevation
-        onClick={handleOpen}
-        className={classes.sort}
-      >
-        Sort by
-      </Button>
-
-      <Popover
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        anchorEl={anchorEl}
-        open={isOpen}
-        onClose={handleClose}
-        elevation={1}
-      >
-        <MenuItem color="inherit" onClick={() => handleSort("title")}>
-          Seminar title A-Z
-        </MenuItem>
-        <MenuItem color="inherit" onClick={() => handleSort("-title")}>
-          Seminar title Z-A
-        </MenuItem>
-        <MenuItem color="inherit" onClick={() => handleSort("start_time")}>
-          Date closest to now
-        </MenuItem>
-        <MenuItem color="inherit" onClick={() => handleSort("-start_time")}>
-          Date farthest from now
-        </MenuItem>
-      </Popover>
+      <SortByButton setOrdering={setOrdering} />
     </>
   );
 };
