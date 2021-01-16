@@ -13,6 +13,7 @@ import {
   FormGroup,
   Typography,
   Link,
+  Chip,
 } from "@material-ui/core";
 
 import UserContext from "../../../context/UserContext";
@@ -28,7 +29,7 @@ const TabPanel = (props) => {
       id={`full-width-tabpanel-${index}`}
       {...other}
     >
-      {value === index && <Box p={3}>{children}</Box>}
+      {value === index && <Box py={3}>{children}</Box>}
     </div>
   );
 };
@@ -45,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
   },
   recommendationText: {
     marginTop: theme.spacing(4),
+  },
+  tabChip: {
+    verticalAlign: "middle",
   },
 }));
 
@@ -73,15 +77,6 @@ const TabsContainer = () => {
           textColor="primary"
           variant="scrollable"
         >
-          {/* <Tab label="All" />
-          <Tab label="Recommendations" />
-          <Tab label="In an hour" />
-          <Tab label="Today" />
-          <Tab label="Tomorrow" />
-          <Tab label="This week" />
-          <Tab label="This month" />
-          <Tab label="Past" /> */}
-
           <Tab label="Recommendations" />
           <Tab label="Upcoming" />
           <Tab label="Past" />
@@ -114,46 +109,6 @@ const TabsContainer = () => {
           showRatings={false}
         />
       </TabPanel>
-
-      {/* <TabPanel value={value} index={2} dir={theme.direction}>
-        <TabSeminars
-          request="api/seminars/time.json?time=hour"
-          notFoundText="No seminars happening in an hour."
-          showRatings={false}
-        />
-      </TabPanel>
-
-      <TabPanel value={value} index={3} dir={theme.direction}>
-        <TabSeminars
-          request="api/seminars/time.json?time=today"
-          notFoundText="No seminars happening today."
-          showRatings={false}
-        />
-      </TabPanel>
-
-      <TabPanel value={value} index={4} dir={theme.direction}>
-        <TabSeminars
-          request="api/seminars/time.json?time=tomorrow"
-          notFoundText="No seminars happening tomorrow."
-          showRatings={false}
-        />
-      </TabPanel>
-
-      <TabPanel value={value} index={5} dir={theme.direction}>
-        <TabSeminars
-          request="api/seminars/time.json?time=week"
-          notFoundText="No seminars happening this week."
-          showRatings={false}
-        />
-      </TabPanel>
-
-      <TabPanel value={value} index={6} dir={theme.direction}>
-        <TabSeminars
-          request="api/seminars/time.json?time=month"
-          notFoundText="No seminars happening this month."
-          showRatings={false}
-        />
-      </TabPanel> */}
 
       <TabPanel value={value} index={2} dir={theme.direction}>
         {notAuthenticated ? (

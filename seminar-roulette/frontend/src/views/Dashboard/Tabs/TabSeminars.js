@@ -7,6 +7,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import SeminarCard from "../../../components/SeminarCard";
 import LoadingSpinner from "../../../components/LoadingSpinner";
 import UserContext from "../../../context/UserContext";
+import Filters from "./Filters";
 
 const useStyles = makeStyles((theme) => ({
   pagination: {
@@ -63,6 +64,8 @@ const TabSeminars = (props) => {
         <>
           {seminars.length > 0 ? (
             <Grid container spacing={3} alignItems="center" justify="center">
+              <Filters />
+
               {seminars.map((seminar) => (
                 <Grid
                   item
