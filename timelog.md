@@ -321,3 +321,8 @@
 - _1.5 hour_ Added text which shows how similar a seminar is to your personal interests.
 - _1 hour_ Removed random seminar floating action button and replaced it with a tab at the top. Also removed roulette wheel as per think aloud evaluation feedback.
 - _1 hour_ Weekly meeting with supervisor and wrote up meeting minutes.
+
+### 16 Jan 2021
+
+- _0.5 hour_ Removed seminar page component as it is now redundant.
+- _2 hour_ Added sort by button so that seminars can be ordered by specific fields.

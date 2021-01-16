@@ -7,6 +7,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import SeminarCard from "../../../components/SeminarCard";
 import LoadingSpinner from "../../../components/LoadingSpinner";
 import UserContext from "../../../context/UserContext";
+import Filters from "./Filters";
 
 const useStyles = makeStyles((theme) => ({
   pagination: {
@@ -15,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TabSeminars = (props) => {
-  const { request, notFoundText, showRatings } = props;
+  const { label, request, notFoundText, showRatings } = props;
 
   const classes = useStyles();
   const user = useContext(UserContext);
@@ -25,6 +26,7 @@ const TabSeminars = (props) => {
   const [seminars, setSeminars] = useState([]);
   const [seminarsUpdated, setSeminarsUpdated] = useState(0);
   const [similarities, setSimilarities] = useState({});
+  const [ordering, setOrdering] = useState(null);
   const [loaded, setLoaded] = useState(false);
 
   const [page, setPage] = useState(1);
@@ -38,6 +40,8 @@ const TabSeminars = (props) => {
     } else {
       pageRequest = `${request}?page=${page}`;
     }
+
+    if (ordering != null) pageRequest += `&ordering=${ordering}`;
 
     axios
       .all([
@@ -55,7 +59,7 @@ const TabSeminars = (props) => {
         })
       )
       .catch((err) => console.log(err));
-  }, [request, seminarsUpdated, page]);
+  }, [request, seminarsUpdated, page, ordering]);
 
   return (
     <>
@@ -63,6 +67,8 @@ const TabSeminars = (props) => {
         <>
           {seminars.length > 0 ? (
             <Grid container spacing={3} alignItems="center" justify="center">
+              {label != "random" && <Filters setOrdering={setOrdering} />}
+
               {seminars.map((seminar) => (
                 <Grid
                   item
@@ -109,6 +115,7 @@ const TabSeminars = (props) => {
 };
 
 TabSeminars.propTypes = {
+  label: PropTypes.string,
   request: PropTypes.string,
   notFoundText: PropTypes.string,
   showRatings: PropTypes.bool,

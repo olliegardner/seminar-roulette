@@ -146,8 +146,7 @@ const SeminarActions = (props) => {
     <>
       {seminar.is_future && (
         <Button
-          variant="text"
-          color="primary"
+          variant="contained"
           startIcon={<EventOutlinedIcon />}
           component={Link}
           download="seminar.ics"
