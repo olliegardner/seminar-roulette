@@ -95,6 +95,7 @@ const TabsContainer = () => {
           </Typography>
         ) : (
           <TabSeminars
+            label="recommendations"
             request={`api/user/recommendations.json?guid=${user.guid}`}
             notFoundText="No seminar recommendations found based on your ratings. Please rate some past seminars first!"
             showRatings={false}
@@ -104,6 +105,7 @@ const TabsContainer = () => {
 
       <TabPanel value={value} index={1} dir={theme.direction}>
         <TabSeminars
+          label="upcoming"
           request="api/seminars.json"
           notFoundText="No seminars found."
           showRatings={false}
@@ -145,6 +147,7 @@ const TabsContainer = () => {
             </FormGroup>
 
             <TabSeminars
+              label="past"
               request={`api/seminars/past.json?guid=${
                 user.guid
               }&rated=${showRated.toString()}&discarded=${showDiscarded.toString()}`}
@@ -157,6 +160,7 @@ const TabsContainer = () => {
 
       <TabPanel value={value} index={3} dir={theme.direction}>
         <TabSeminars
+          label="random"
           request={`api/seminars/random.json?guid=${user.guid}`}
           notFoundText="No seminars found."
           showRatings={false}
@@ -164,11 +168,6 @@ const TabsContainer = () => {
       </TabPanel>
     </div>
   );
-};
-
-TabsContainer.propTypes = {
-  selectedYear: PropTypes.number,
-  data: PropTypes.object,
 };
 
 export default TabsContainer;

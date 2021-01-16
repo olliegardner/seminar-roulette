@@ -2,6 +2,7 @@ from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import render
 from django.utils import timezone
+from rest_framework.filters import OrderingFilter
 from rest_framework.generics import ListAPIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
@@ -133,6 +134,8 @@ class UserRecommendations(ListAPIView):
 
     serializer_class = SeminarSerializer
     pagination_class = RecommenderPagination
+    filter_backends = [OrderingFilter]
+    ordering_fields = ['title', 'start_time']
 
     def get_queryset(self):
         guid = self.request.query_params.get('guid')
@@ -143,7 +146,12 @@ class UserRecommendations(ListAPIView):
         )
 
         if user_seminar_history:
-            return recommendation_engine(user)
+            seminar_ids = [
+                seminar.id for seminar in recommendation_engine(user)
+            ]
+
+            return Seminar.objects.filter(id__in=seminar_ids
+                                         ).order_by('start_time')
         else:
             return []
 
@@ -240,6 +248,8 @@ class AllSeminars(ListAPIView):
 
     serializer_class = SeminarSerializer
     pagination_class = SeminarPagination
+    filter_backends = [OrderingFilter]
+    ordering_fields = ['title', 'start_time']
 
     def get_queryset(self):
         now = timezone.now()
@@ -309,6 +319,7 @@ class PastSeminars(APIView):
         guid = self.request.query_params.get('guid')
         rated = self.request.query_params.get('rated')
         discarded = self.request.query_params.get('discarded')
+        ordering = self.request.query_params.get('ordering')
 
         user = get_user(guid)
         show_rated = rated == 'true'
@@ -316,9 +327,12 @@ class PastSeminars(APIView):
 
         now = timezone.now()
 
+        if not ordering:
+            ordering = '-start_time'
+
         past_seminars = Seminar.objects.filter(
             start_time__lt=now, end_time__lt=now
-        ).order_by('-start_time')
+        ).order_by(ordering)
 
         attended_seminars = SeminarHistory.objects.filter(
             user=user, attended=True

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Box, Button, makeStyles, MenuItem, Popover } from "@material-ui/core";
+import PropTypes from "prop-types";
+import { Button, makeStyles, MenuItem, Popover } from "@material-ui/core";
 import SortOutlinedIcon from "@material-ui/icons/SortOutlined";
 
 const useStyles = makeStyles((theme) => ({
@@ -11,7 +12,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Filters = () => {
+const Filters = (props) => {
+  const { setOrdering } = props;
+
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -19,6 +22,11 @@ const Filters = () => {
   const isOpen = Boolean(anchorEl);
   const handleClose = () => setAnchorEl(null);
   const handleOpen = (e) => setAnchorEl(e.currentTarget);
+
+  const handleSort = (field) => {
+    setOrdering(field);
+    handleClose();
+  };
 
   return (
     <>
@@ -48,15 +56,25 @@ const Filters = () => {
         onClose={handleClose}
         elevation={1}
       >
-        <Box py={1}>
-          <MenuItem color="inherit">Seminar title A-Z</MenuItem>
-          <MenuItem color="inherit">Seminar title Z-A</MenuItem>
-          <MenuItem color="inherit">Date closest to now</MenuItem>
-          <MenuItem color="inherit">Date farthest from now</MenuItem>
-        </Box>
+        <MenuItem color="inherit" onClick={() => handleSort("title")}>
+          Seminar title A-Z
+        </MenuItem>
+        <MenuItem color="inherit" onClick={() => handleSort("-title")}>
+          Seminar title Z-A
+        </MenuItem>
+        <MenuItem color="inherit" onClick={() => handleSort("start_time")}>
+          Date closest to now
+        </MenuItem>
+        <MenuItem color="inherit" onClick={() => handleSort("-start_time")}>
+          Date farthest from now
+        </MenuItem>
       </Popover>
     </>
   );
+};
+
+Filters.propTypes = {
+  setOrdering: PropTypes.func,
 };
 
 export default Filters;
