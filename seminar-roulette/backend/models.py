@@ -88,6 +88,7 @@ class Seminar(models.Model):
     start_time = models.DateTimeField(null=True, blank=True)
     end_time = models.DateTimeField(null=True, blank=True)
     online = models.BooleanField(default=False)
+    serves_food = models.BooleanField(default=False)
     speaker = models.ForeignKey(Speaker, on_delete=models.CASCADE, null=True)
     seminar_group = models.ForeignKey(
         SeminarGroup, on_delete=models.CASCADE, null=True
@@ -104,12 +105,6 @@ class Seminar(models.Model):
     @property
     def is_future(self):
         return self.start_time >= timezone.now()
-
-    @property
-    def serves_food(self):
-        food_words = ['refreshment', 'breakfast', 'lunch', 'dinner', 'snack']
-        result = [food for food in food_words if (food in self.description)]
-        return bool(result)
 
     def __str__(self):
         return self.title

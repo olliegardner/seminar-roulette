@@ -2,6 +2,7 @@ from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import render
 from django.utils import timezone
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
 from rest_framework.generics import ListAPIView
 from rest_framework.pagination import PageNumberPagination
@@ -134,7 +135,8 @@ class UserRecommendations(ListAPIView):
 
     serializer_class = SeminarSerializer
     pagination_class = RecommenderPagination
-    filter_backends = [OrderingFilter]
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    filterset_fields = ['online', 'serves_food']
     ordering_fields = ['title', 'start_time']
 
     def get_queryset(self):
@@ -249,6 +251,8 @@ class AllSeminars(ListAPIView):
     serializer_class = SeminarSerializer
     pagination_class = SeminarPagination
     filter_backends = [OrderingFilter]
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    filterset_fields = ['online', 'serves_food']
     ordering_fields = ['title', 'start_time']
 
     def get_queryset(self):
@@ -320,6 +324,8 @@ class PastSeminars(APIView):
         rated = self.request.query_params.get('rated')
         discarded = self.request.query_params.get('discarded')
         ordering = self.request.query_params.get('ordering')
+        online = self.request.query_params.get('online')
+        serves_food = self.request.query_params.get('serves_food')
 
         user = get_user(guid)
         show_rated = rated == 'true'
@@ -333,6 +339,12 @@ class PastSeminars(APIView):
         past_seminars = Seminar.objects.filter(
             start_time__lt=now, end_time__lt=now
         ).order_by(ordering)
+
+        if online:
+            past_seminars = past_seminars.filter(online=True)
+
+        if serves_food:
+            past_seminars = past_seminars.filter(serves_food=True)
 
         attended_seminars = SeminarHistory.objects.filter(
             user=user, attended=True

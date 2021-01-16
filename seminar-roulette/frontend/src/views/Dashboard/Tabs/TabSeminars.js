@@ -29,6 +29,9 @@ const TabSeminars = (props) => {
   const [ordering, setOrdering] = useState(null);
   const [loaded, setLoaded] = useState(false);
 
+  const [online, setOnline] = useState(false);
+  const [servesFood, setServesFood] = useState(false);
+
   const [page, setPage] = useState(1);
   const [maxPage, setMaxPage] = useState(1);
 
@@ -42,6 +45,8 @@ const TabSeminars = (props) => {
     }
 
     if (ordering != null) pageRequest += `&ordering=${ordering}`;
+    if (online) pageRequest += `&online=${online}`;
+    if (servesFood) pageRequest += `&serves_food=${servesFood}`;
 
     axios
       .all([
@@ -59,16 +64,26 @@ const TabSeminars = (props) => {
         })
       )
       .catch((err) => console.log(err));
-  }, [request, seminarsUpdated, page, ordering]);
+  }, [request, seminarsUpdated, page, ordering, online, servesFood]);
 
   return (
     <>
       {loaded ? (
         <>
+          {label != "random" && (
+            <Grid container spacing={3} alignItems="center" justify="center">
+              <Filters
+                setOrdering={setOrdering}
+                online={online}
+                setOnline={setOnline}
+                servesFood={servesFood}
+                setServesFood={setServesFood}
+              />
+            </Grid>
+          )}
+
           {seminars.length > 0 ? (
             <Grid container spacing={3} alignItems="center" justify="center">
-              {label != "random" && <Filters setOrdering={setOrdering} />}
-
               {seminars.map((seminar) => (
                 <Grid
                   item

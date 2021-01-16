@@ -1,19 +1,34 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button, makeStyles, MenuItem, Popover } from "@material-ui/core";
+import {
+  Button,
+  Checkbox,
+  FormGroup,
+  FormControl,
+  FormControlLabel,
+  InputLabel,
+  makeStyles,
+  MenuItem,
+  Popover,
+  Select,
+} from "@material-ui/core";
 import SortOutlinedIcon from "@material-ui/icons/SortOutlined";
 
 const useStyles = makeStyles((theme) => ({
-  sort: {
-    marginRight: theme.spacing(1.5),
+  filters: {
+    marginLeft: theme.spacing(1.5),
+    marginBottom: theme.spacing(2),
   },
   flexGrow: {
     flexGrow: 1,
   },
+  sort: {
+    marginRight: theme.spacing(1.5),
+  },
 }));
 
 const Filters = (props) => {
-  const { setOrdering } = props;
+  const { setOrdering, online, setOnline, servesFood, setServesFood } = props;
 
   const classes = useStyles();
 
@@ -30,6 +45,47 @@ const Filters = (props) => {
 
   return (
     <>
+      <FormGroup row className={classes.filters}>
+        {/* <FormControl variant="outlined">
+          <InputLabel id="time-select-label">Time</InputLabel>
+          <Select
+            labelId="time-select-label"
+            id="time-select"
+            value={time}
+            onChange={(e) => setTime()}
+            label="Time"
+          >
+            <MenuItem value="hour">In an hour</MenuItem>
+            <MenuItem value="today">Today</MenuItem>
+            <MenuItem value="tomorrow">Tomorrow</MenuItem>
+            <MenuItem value="week">This week</MenuItem>
+            <MenuItem value="month">This month</MenuItem>
+          </Select>
+        </FormControl> */}
+
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={servesFood}
+              onChange={(e) => setServesFood(e.target.checked)}
+              name="food"
+            />
+          }
+          label="Serves food"
+        />
+
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={online}
+              onChange={(e) => setOnline(e.target.checked)}
+              name="online"
+            />
+          }
+          label="Online only"
+        />
+      </FormGroup>
+
       <div className={classes.flexGrow} />
 
       <Button
@@ -75,6 +131,10 @@ const Filters = (props) => {
 
 Filters.propTypes = {
   setOrdering: PropTypes.func,
+  online: PropTypes.bool,
+  setOnline: PropTypes.func,
+  servesFood: PropTypes.bool,
+  setServesFood: PropTypes.func,
 };
 
 export default Filters;

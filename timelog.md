@@ -326,3 +326,4 @@
 
 - _0.5 hour_ Removed seminar page component as it is now redundant.
 - _2 hour_ Added sort by button so that seminars can be ordered by specific fields.
+- _1 hour_ Implemented serves food and online filters.
