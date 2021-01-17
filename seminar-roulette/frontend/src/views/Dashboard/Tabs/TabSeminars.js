@@ -36,6 +36,7 @@ const TabSeminars = (props) => {
   const [showRated, setShowRated] = useState(false);
   const [showDiscarded, setShowDiscarded] = useState(false);
 
+  const [count, setCount] = useState(0);
   const [page, setPage] = useState(1);
   const [maxPage, setMaxPage] = useState(1);
 
@@ -67,6 +68,7 @@ const TabSeminars = (props) => {
       .then(
         axios.spread((...res) => {
           setSeminars(res[0].data.results);
+          setCount(res[0].data.count);
           setMaxPage(Math.ceil(res[0].data.count / 10));
           !notAuthenticated && setSimilarities(res[1].data);
           setLoaded(true);
@@ -109,41 +111,49 @@ const TabSeminars = (props) => {
           )}
 
           {seminars.length > 0 ? (
-            <Grid container spacing={3} alignItems="center" justify="center">
-              {seminars.map((seminar) => (
-                <Grid
-                  item
-                  key={showRatings ? seminar.seminar.id : seminar.id}
-                  xs={12}
-                >
-                  <SeminarCard
-                    seminar={showRatings ? seminar.seminar : seminar}
-                    currentRating={showRatings ? seminar.rating : null}
-                    currentlyDiscarded={showRatings ? seminar.discarded : false}
-                    seminarsUpdated={seminarsUpdated}
-                    setSeminarsUpdated={setSeminarsUpdated}
-                    similarity={
-                      notAuthenticated
-                        ? 0
-                        : similarities[
-                            showRatings ? seminar.seminar.id : seminar.id
-                          ]
-                    }
-                  />
-                </Grid>
-              ))}
+            <>
+              <Typography variant="overline">
+                <b>{count}</b> seminars found...
+              </Typography>
 
-              <Pagination
-                count={maxPage}
-                color="primary"
-                shape="rounded"
-                showFirstButton
-                showLastButton
-                className={classes.pagination}
-                page={page}
-                onChange={(e, newPage) => setPage(newPage)}
-              />
-            </Grid>
+              <Grid container spacing={3} alignItems="center" justify="center">
+                {seminars.map((seminar) => (
+                  <Grid
+                    item
+                    key={showRatings ? seminar.seminar.id : seminar.id}
+                    xs={12}
+                  >
+                    <SeminarCard
+                      seminar={showRatings ? seminar.seminar : seminar}
+                      currentRating={showRatings ? seminar.rating : null}
+                      currentlyDiscarded={
+                        showRatings ? seminar.discarded : false
+                      }
+                      seminarsUpdated={seminarsUpdated}
+                      setSeminarsUpdated={setSeminarsUpdated}
+                      similarity={
+                        notAuthenticated
+                          ? 0
+                          : similarities[
+                              showRatings ? seminar.seminar.id : seminar.id
+                            ]
+                      }
+                    />
+                  </Grid>
+                ))}
+
+                <Pagination
+                  count={maxPage}
+                  color="primary"
+                  shape="rounded"
+                  showFirstButton
+                  showLastButton
+                  className={classes.pagination}
+                  page={page}
+                  onChange={(e, newPage) => setPage(newPage)}
+                />
+              </Grid>
+            </>
           ) : (
             <Typography>{notFoundText}</Typography>
           )}
