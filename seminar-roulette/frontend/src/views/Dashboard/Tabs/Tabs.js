@@ -8,12 +8,8 @@ import {
   Tab,
   AppBar,
   Box,
-  FormControlLabel,
-  Checkbox,
-  FormGroup,
   Typography,
   Link,
-  Chip,
 } from "@material-ui/core";
 
 import UserContext from "../../../context/UserContext";
@@ -60,8 +56,6 @@ const TabsContainer = () => {
   const notAuthenticated = user.guid == "None";
 
   const [value, setValue] = useState(0);
-  const [showRated, setShowRated] = useState(false);
-  const [showDiscarded, setShowDiscarded] = useState(false);
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
@@ -122,39 +116,12 @@ const TabsContainer = () => {
             to view and rate seminars in the past.
           </Typography>
         ) : (
-          <>
-            <FormGroup row>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={showRated}
-                    onChange={(e) => setShowRated(e.target.checked)}
-                    name="rated"
-                  />
-                }
-                label="Show previously rated seminars"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={showDiscarded}
-                    onChange={(e) => setShowDiscarded(e.target.checked)}
-                    name="discarded"
-                  />
-                }
-                label="Show discarded seminars"
-              />
-            </FormGroup>
-
-            <TabSeminars
-              label="past"
-              request={`api/seminars/past.json?guid=${
-                user.guid
-              }&rated=${showRated.toString()}&discarded=${showDiscarded.toString()}`}
-              notFoundText="No past seminars found."
-              showRatings={true}
-            />
-          </>
+          <TabSeminars
+            label="past"
+            request={`api/seminars/past.json?guid=${user.guid}`}
+            notFoundText="No past seminars found."
+            showRatings={true}
+          />
         )}
       </TabPanel>
 

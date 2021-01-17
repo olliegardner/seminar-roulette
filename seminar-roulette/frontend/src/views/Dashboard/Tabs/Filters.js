@@ -1,80 +1,144 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { Button, makeStyles, MenuItem, Popover } from "@material-ui/core";
-import SortOutlinedIcon from "@material-ui/icons/SortOutlined";
+import {
+  Checkbox,
+  FormGroup,
+  FormControl,
+  FormControlLabel,
+  InputLabel,
+  makeStyles,
+  MenuItem,
+  Select,
+} from "@material-ui/core";
+
+import SortByButton from "../../../components/SortByButton";
 
 const useStyles = makeStyles((theme) => ({
-  sort: {
-    marginRight: theme.spacing(1.5),
+  filters: {
+    marginLeft: theme.spacing(1.5),
+    marginBottom: theme.spacing(4),
+    marginTop: theme.spacing(2),
+    flex: 1,
   },
   flexGrow: {
     flexGrow: 1,
   },
+  timeDropdown: {
+    marginRight: theme.spacing(2),
+    minWidth: "16ch",
+    height: "5ch",
+  },
 }));
 
 const Filters = (props) => {
-  const { setOrdering } = props;
+  const {
+    label,
+    setOrdering,
+    time,
+    setTime,
+    online,
+    setOnline,
+    servesFood,
+    setServesFood,
+    showRated,
+    setShowRated,
+    showDiscarded,
+    setShowDiscarded,
+  } = props;
 
   const classes = useStyles();
 
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const isOpen = Boolean(anchorEl);
-  const handleClose = () => setAnchorEl(null);
-  const handleOpen = (e) => setAnchorEl(e.currentTarget);
-
-  const handleSort = (field) => {
-    setOrdering(field);
-    handleClose();
-  };
-
   return (
     <>
-      <div className={classes.flexGrow} />
+      <FormGroup row className={classes.filters}>
+        {(label == "recommendations" || label == "upcoming") && (
+          <FormControl variant="outlined">
+            <InputLabel id="time-select-label">Time frame</InputLabel>
+            <Select
+              labelId="time-select-label"
+              id="time-select"
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              label="Time frame"
+              className={classes.timeDropdown}
+            >
+              <MenuItem value="all">All</MenuItem>
+              <MenuItem value="hour">In an hour</MenuItem>
+              <MenuItem value="today">Today</MenuItem>
+              <MenuItem value="tomorrow">Tomorrow</MenuItem>
+              <MenuItem value="week">This week</MenuItem>
+              <MenuItem value="month">This month</MenuItem>
+            </Select>
+          </FormControl>
+        )}
 
-      <Button
-        variant="contained"
-        startIcon={<SortOutlinedIcon />}
-        disableElevation
-        onClick={handleOpen}
-        className={classes.sort}
-      >
-        Sort by
-      </Button>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={servesFood}
+              onChange={(e) => setServesFood(e.target.checked)}
+              name="food"
+            />
+          }
+          label="Serves food"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={online}
+              onChange={(e) => setOnline(e.target.checked)}
+              name="online"
+            />
+          }
+          label="Online only"
+        />
 
-      <Popover
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        anchorEl={anchorEl}
-        open={isOpen}
-        onClose={handleClose}
-        elevation={1}
-      >
-        <MenuItem color="inherit" onClick={() => handleSort("title")}>
-          Seminar title A-Z
-        </MenuItem>
-        <MenuItem color="inherit" onClick={() => handleSort("-title")}>
-          Seminar title Z-A
-        </MenuItem>
-        <MenuItem color="inherit" onClick={() => handleSort("start_time")}>
-          Date closest to now
-        </MenuItem>
-        <MenuItem color="inherit" onClick={() => handleSort("-start_time")}>
-          Date farthest from now
-        </MenuItem>
-      </Popover>
+        {label == "past" && (
+          <>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={showRated}
+                  onChange={(e) => setShowRated(e.target.checked)}
+                  name="rated"
+                />
+              }
+              label="Show previously rated seminars"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={showDiscarded}
+                  onChange={(e) => setShowDiscarded(e.target.checked)}
+                  name="discarded"
+                />
+              }
+              label="Show discarded seminars"
+            />
+          </>
+        )}
+
+        <div className={classes.flexGrow} />
+
+        <SortByButton setOrdering={setOrdering} />
+      </FormGroup>
     </>
   );
 };
 
 Filters.propTypes = {
+  label: PropTypes.string,
   setOrdering: PropTypes.func,
+  time: PropTypes.string,
+  setTime: PropTypes.func,
+  online: PropTypes.bool,
+  setOnline: PropTypes.func,
+  servesFood: PropTypes.bool,
+  setServesFood: PropTypes.func,
+  showRated: PropTypes.bool,
+  setShowRated: PropTypes.func,
+  showDiscarded: PropTypes.bool,
+  setShowDiscarded: PropTypes.func,
 };
 
 export default Filters;
