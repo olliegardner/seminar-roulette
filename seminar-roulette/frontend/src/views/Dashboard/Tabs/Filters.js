@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   timeDropdown: {
     marginRight: theme.spacing(2),
-    minWidth: "15ch",
+    minWidth: "16ch",
     height: "5ch",
   },
 }));
@@ -52,13 +52,13 @@ const Filters = (props) => {
       <FormGroup row className={classes.filters}>
         {(label == "recommendations" || label == "upcoming") && (
           <FormControl variant="outlined">
-            <InputLabel id="time-select-label">Time</InputLabel>
+            <InputLabel id="time-select-label">Time frame</InputLabel>
             <Select
               labelId="time-select-label"
               id="time-select"
               value={time}
               onChange={(e) => setTime(e.target.value)}
-              label="Time"
+              label="Time frame"
               className={classes.timeDropdown}
             >
               <MenuItem value="all">All</MenuItem>

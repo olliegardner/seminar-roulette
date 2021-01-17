@@ -319,56 +319,6 @@ class AllSeminars(ListAPIView):
         return seminars
 
 
-class SeminarsByTime(ListAPIView):
-    """
-    Find seminars within a timeframe.
-    """
-
-    serializer_class = SeminarSerializer
-    pagination_class = SeminarPagination
-
-    def get_queryset(self):
-        time = self.request.query_params.get('time')
-
-        now = timezone.now()
-
-        if time == "hour":
-            then = now + timezone.timedelta(hours=1)
-
-            seminars = Seminar.objects.filter(
-                start_time__gte=now, start_time__lte=then
-            )
-        elif time == "today":
-            seminars = Seminar.objects.filter(
-                start_time__gte=now, start_time__date=now.date()
-            )
-        elif time == "tomorrow":
-            tomorrow = now + timezone.timedelta(days=1)
-
-            seminars = Seminar.objects.filter(start_time__date=tomorrow)
-        elif time == "week":
-            end_of_week = now + timezone.timedelta(days=6 - now.weekday())
-
-            seminars = Seminar.objects.filter(
-                start_time__gte=now,
-                start_time__date__range=(now.date(), end_of_week)
-            )
-        elif time == "month":
-            end_of_month = datetime.date(
-                now.year, now.month,
-                calendar.monthrange(now.year, now.month)[-1]
-            )
-
-            seminars = Seminar.objects.filter(
-                start_time__gte=now,
-                start_time__date__range=(now.date(), end_of_month)
-            )
-
-        seminars = seminars.order_by('start_time')
-
-        return seminars
-
-
 class PastSeminars(APIView):
     """
     Get seminars which are now in the past.
