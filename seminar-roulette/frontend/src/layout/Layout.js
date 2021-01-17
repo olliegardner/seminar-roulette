@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     paddingTop: theme.spacing(2),
+    marginBottom: theme.spacing(1),
   },
 }));
 

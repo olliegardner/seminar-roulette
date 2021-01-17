@@ -8,9 +8,6 @@ import {
   Tab,
   AppBar,
   Box,
-  FormControlLabel,
-  Checkbox,
-  FormGroup,
   Typography,
   Link,
 } from "@material-ui/core";
@@ -28,7 +25,7 @@ const TabPanel = (props) => {
       id={`full-width-tabpanel-${index}`}
       {...other}
     >
-      {value === index && <Box p={3}>{children}</Box>}
+      {value === index && <Box py={3}>{children}</Box>}
     </div>
   );
 };
@@ -46,6 +43,9 @@ const useStyles = makeStyles((theme) => ({
   recommendationText: {
     marginTop: theme.spacing(4),
   },
+  tabChip: {
+    verticalAlign: "middle",
+  },
 }));
 
 const TabsContainer = () => {
@@ -56,8 +56,6 @@ const TabsContainer = () => {
   const notAuthenticated = user.guid == "None";
 
   const [value, setValue] = useState(0);
-  const [showRated, setShowRated] = useState(false);
-  const [showDiscarded, setShowDiscarded] = useState(false);
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
@@ -73,15 +71,6 @@ const TabsContainer = () => {
           textColor="primary"
           variant="scrollable"
         >
-          {/* <Tab label="All" />
-          <Tab label="Recommendations" />
-          <Tab label="In an hour" />
-          <Tab label="Today" />
-          <Tab label="Tomorrow" />
-          <Tab label="This week" />
-          <Tab label="This month" />
-          <Tab label="Past" /> */}
-
           <Tab label="Recommendations" />
           <Tab label="Upcoming" />
           <Tab label="Past" />
@@ -100,6 +89,7 @@ const TabsContainer = () => {
           </Typography>
         ) : (
           <TabSeminars
+            label="recommendations"
             request={`api/user/recommendations.json?guid=${user.guid}`}
             notFoundText="No seminar recommendations found based on your ratings. Please rate some past seminars first!"
             showRatings={false}
@@ -109,51 +99,12 @@ const TabsContainer = () => {
 
       <TabPanel value={value} index={1} dir={theme.direction}>
         <TabSeminars
+          label="upcoming"
           request="api/seminars.json"
           notFoundText="No seminars found."
           showRatings={false}
         />
       </TabPanel>
-
-      {/* <TabPanel value={value} index={2} dir={theme.direction}>
-        <TabSeminars
-          request="api/seminars/time.json?time=hour"
-          notFoundText="No seminars happening in an hour."
-          showRatings={false}
-        />
-      </TabPanel>
-
-      <TabPanel value={value} index={3} dir={theme.direction}>
-        <TabSeminars
-          request="api/seminars/time.json?time=today"
-          notFoundText="No seminars happening today."
-          showRatings={false}
-        />
-      </TabPanel>
-
-      <TabPanel value={value} index={4} dir={theme.direction}>
-        <TabSeminars
-          request="api/seminars/time.json?time=tomorrow"
-          notFoundText="No seminars happening tomorrow."
-          showRatings={false}
-        />
-      </TabPanel>
-
-      <TabPanel value={value} index={5} dir={theme.direction}>
-        <TabSeminars
-          request="api/seminars/time.json?time=week"
-          notFoundText="No seminars happening this week."
-          showRatings={false}
-        />
-      </TabPanel>
-
-      <TabPanel value={value} index={6} dir={theme.direction}>
-        <TabSeminars
-          request="api/seminars/time.json?time=month"
-          notFoundText="No seminars happening this month."
-          showRatings={false}
-        />
-      </TabPanel> */}
 
       <TabPanel value={value} index={2} dir={theme.direction}>
         {notAuthenticated ? (
@@ -165,43 +116,18 @@ const TabsContainer = () => {
             to view and rate seminars in the past.
           </Typography>
         ) : (
-          <>
-            <FormGroup row>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={showRated}
-                    onChange={(e) => setShowRated(e.target.checked)}
-                    name="rated"
-                  />
-                }
-                label="Show previously rated seminars"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={showDiscarded}
-                    onChange={(e) => setShowDiscarded(e.target.checked)}
-                    name="discarded"
-                  />
-                }
-                label="Show discarded seminars"
-              />
-            </FormGroup>
-
-            <TabSeminars
-              request={`api/seminars/past.json?guid=${
-                user.guid
-              }&rated=${showRated.toString()}&discarded=${showDiscarded.toString()}`}
-              notFoundText="No past seminars found."
-              showRatings={true}
-            />
-          </>
+          <TabSeminars
+            label="past"
+            request={`api/seminars/past.json?guid=${user.guid}`}
+            notFoundText="No past seminars found."
+            showRatings={true}
+          />
         )}
       </TabPanel>
 
       <TabPanel value={value} index={3} dir={theme.direction}>
         <TabSeminars
+          label="random"
           request={`api/seminars/random.json?guid=${user.guid}`}
           notFoundText="No seminars found."
           showRatings={false}
@@ -209,11 +135,6 @@ const TabsContainer = () => {
       </TabPanel>
     </div>
   );
-};
-
-TabsContainer.propTypes = {
-  selectedYear: PropTypes.number,
-  data: PropTypes.object,
 };
 
 export default TabsContainer;

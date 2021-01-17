@@ -2,6 +2,8 @@ from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import render
 from django.utils import timezone
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import OrderingFilter
 from rest_framework.generics import ListAPIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
@@ -38,6 +40,44 @@ def get_seminar(seminar_id):
         return Seminar.objects.get(id=seminar_id)
     except Seminar.DoesNotExist:
         raise Http404
+
+
+def get_seminars_by_time(time):
+    now = timezone.now()
+
+    if time == "hour":
+        then = now + timezone.timedelta(hours=1)
+
+        seminars = Seminar.objects.filter(
+            start_time__gte=now, start_time__lte=then
+        )
+    elif time == "today":
+        seminars = Seminar.objects.filter(
+            start_time__gte=now, start_time__date=now.date()
+        )
+    elif time == "tomorrow":
+        tomorrow = now + timezone.timedelta(days=1)
+
+        seminars = Seminar.objects.filter(start_time__date=tomorrow)
+    elif time == "week":
+        end_of_week = now + timezone.timedelta(days=6 - now.weekday())
+
+        seminars = Seminar.objects.filter(
+            start_time__gte=now,
+            start_time__date__range=(now.date(), end_of_week)
+        )
+    elif time == "month":
+        end_of_month = datetime.date(
+            now.year, now.month,
+            calendar.monthrange(now.year, now.month)[-1]
+        )
+
+        seminars = Seminar.objects.filter(
+            start_time__gte=now,
+            start_time__date__range=(now.date(), end_of_month)
+        )
+
+    return seminars.order_by('start_time')
 
 
 class SeminarPagination(PageNumberPagination):
@@ -133,8 +173,12 @@ class UserRecommendations(ListAPIView):
 
     serializer_class = SeminarSerializer
     pagination_class = RecommenderPagination
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    filterset_fields = ['online', 'serves_food']
+    ordering_fields = ['title', 'start_time']
 
     def get_queryset(self):
+        time = self.request.query_params.get('time')
         guid = self.request.query_params.get('guid')
         user = get_user(guid)
 
@@ -143,7 +187,23 @@ class UserRecommendations(ListAPIView):
         )
 
         if user_seminar_history:
-            return recommendation_engine(user)
+            recommendation_ids = [
+                seminar.id for seminar in recommendation_engine(user)
+            ]
+
+            if time:
+                time_seminars = get_seminars_by_time(time)
+                time_seminar_ids = [seminar.id for seminar in time_seminars]
+
+                intersection_ids = list(
+                    set(recommendation_ids) & set(time_seminar_ids)
+                )  # takes intersection of both lists
+
+                return Seminar.objects.filter(id__in=intersection_ids
+                                             ).order_by('start_time')
+            else:
+                return Seminar.objects.filter(id__in=recommendation_ids
+                                             ).order_by('start_time')
         else:
             return []
 
@@ -240,63 +300,21 @@ class AllSeminars(ListAPIView):
 
     serializer_class = SeminarSerializer
     pagination_class = SeminarPagination
-
-    def get_queryset(self):
-        now = timezone.now()
-
-        seminars = Seminar.objects.filter(
-            start_time__gte=now, end_time__gte=now
-        ).order_by('start_time')
-
-        return seminars
-
-
-class SeminarsByTime(ListAPIView):
-    """
-    Find seminars within a timeframe.
-    """
-
-    serializer_class = SeminarSerializer
-    pagination_class = SeminarPagination
+    filter_backends = [OrderingFilter]
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    filterset_fields = ['online', 'serves_food']
+    ordering_fields = ['title', 'start_time']
 
     def get_queryset(self):
         time = self.request.query_params.get('time')
-
         now = timezone.now()
 
-        if time == "hour":
-            then = now + timezone.timedelta(hours=1)
-
+        if time:
+            seminars = get_seminars_by_time(time)
+        else:
             seminars = Seminar.objects.filter(
-                start_time__gte=now, start_time__lte=then
-            )
-        elif time == "today":
-            seminars = Seminar.objects.filter(
-                start_time__gte=now, start_time__date=now.date()
-            )
-        elif time == "tomorrow":
-            tomorrow = now + timezone.timedelta(days=1)
-
-            seminars = Seminar.objects.filter(start_time__date=tomorrow)
-        elif time == "week":
-            end_of_week = now + timezone.timedelta(days=6 - now.weekday())
-
-            seminars = Seminar.objects.filter(
-                start_time__gte=now,
-                start_time__date__range=(now.date(), end_of_week)
-            )
-        elif time == "month":
-            end_of_month = datetime.date(
-                now.year, now.month,
-                calendar.monthrange(now.year, now.month)[-1]
-            )
-
-            seminars = Seminar.objects.filter(
-                start_time__gte=now,
-                start_time__date__range=(now.date(), end_of_month)
-            )
-
-        seminars = seminars.order_by('start_time')
+                start_time__gte=now, end_time__gte=now
+            ).order_by('start_time')
 
         return seminars
 
@@ -309,6 +327,9 @@ class PastSeminars(APIView):
         guid = self.request.query_params.get('guid')
         rated = self.request.query_params.get('rated')
         discarded = self.request.query_params.get('discarded')
+        ordering = self.request.query_params.get('ordering')
+        online = self.request.query_params.get('online')
+        serves_food = self.request.query_params.get('serves_food')
 
         user = get_user(guid)
         show_rated = rated == 'true'
@@ -316,9 +337,18 @@ class PastSeminars(APIView):
 
         now = timezone.now()
 
+        if not ordering:
+            ordering = '-start_time'
+
         past_seminars = Seminar.objects.filter(
             start_time__lt=now, end_time__lt=now
-        ).order_by('-start_time')
+        ).order_by(ordering)
+
+        if online:
+            past_seminars = past_seminars.filter(online=True)
+
+        if serves_food:
+            past_seminars = past_seminars.filter(serves_food=True)
 
         attended_seminars = SeminarHistory.objects.filter(
             user=user, attended=True

@@ -146,8 +146,7 @@ const SeminarActions = (props) => {
     <>
       {seminar.is_future && (
         <Button
-          variant="text"
-          color="primary"
+          variant="contained"
           startIcon={<EventOutlinedIcon />}
           component={Link}
           download="seminar.ics"
@@ -212,7 +211,7 @@ const SeminarActions = (props) => {
             [classes.green]: similarity > 70 && similarity <= 100,
           })}
         >
-          {similarity}% match
+          {similarity}% match based on your interests
         </Typography>
       )}
 

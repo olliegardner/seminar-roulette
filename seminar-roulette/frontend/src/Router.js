@@ -3,7 +3,6 @@ import { Switch, Route, BrowserRouter } from "react-router-dom";
 import RouteWithLayout from "./components/RouteWithLayout";
 import Layout from "./layout/Layout";
 import Dashboard from "./views/Dashboard/Dashboard";
-import Seminar from "./views/Seminar";
 import FourZeroFour from "./views/FourZeroFour";
 import Search from "./views/Search";
 
@@ -36,12 +35,6 @@ const Router = () => {
         )}
 
         <RouteWithLayout component={Dashboard} layout={Layout} exact path="/" />
-        <RouteWithLayout
-          component={Seminar}
-          layout={Layout}
-          exact
-          path="/seminar/:seminarId"
-        />
         <RouteWithLayout
           component={Search}
           layout={Layout}

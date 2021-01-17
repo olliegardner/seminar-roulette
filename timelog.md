@@ -321,3 +321,14 @@
 - _1.5 hour_ Added text which shows how similar a seminar is to your personal interests.
 - _1 hour_ Removed random seminar floating action button and replaced it with a tab at the top. Also removed roulette wheel as per think aloud evaluation feedback.
 - _1 hour_ Weekly meeting with supervisor and wrote up meeting minutes.
+
+### 16 Jan 2021
+
+- _0.5 hour_ Removed seminar page component as it is now redundant.
+- _2 hour_ Added sort by button so that seminars can be ordered by specific fields.
+- _1 hour_ Implemented serves food and online filters.
+
+### 17 Jan 2021
+
+- _2.5 hour_ Added time frame dropdown filter which allows a user to find seminars within a specific time frame.
+- _0.5 hour_ Added some text which shows how many seminars are returned from the user's specified filters.

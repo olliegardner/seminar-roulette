@@ -7,6 +7,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import SeminarCard from "../../../components/SeminarCard";
 import LoadingSpinner from "../../../components/LoadingSpinner";
 import UserContext from "../../../context/UserContext";
+import Filters from "./Filters";
 
 const useStyles = makeStyles((theme) => ({
   pagination: {
@@ -15,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TabSeminars = (props) => {
-  const { request, notFoundText, showRatings } = props;
+  const { label, request, notFoundText, showRatings } = props;
 
   const classes = useStyles();
   const user = useContext(UserContext);
@@ -25,12 +26,23 @@ const TabSeminars = (props) => {
   const [seminars, setSeminars] = useState([]);
   const [seminarsUpdated, setSeminarsUpdated] = useState(0);
   const [similarities, setSimilarities] = useState({});
+  const [ordering, setOrdering] = useState(null);
   const [loaded, setLoaded] = useState(false);
 
+  // filters
+  const [time, setTime] = useState("all");
+  const [online, setOnline] = useState(false);
+  const [servesFood, setServesFood] = useState(false);
+  const [showRated, setShowRated] = useState(false);
+  const [showDiscarded, setShowDiscarded] = useState(false);
+
+  const [count, setCount] = useState(0);
   const [page, setPage] = useState(1);
   const [maxPage, setMaxPage] = useState(1);
 
   useEffect(() => {
+    setLoaded(false);
+
     let pageRequest;
 
     if (request.includes(".json?")) {
@@ -38,6 +50,13 @@ const TabSeminars = (props) => {
     } else {
       pageRequest = `${request}?page=${page}`;
     }
+
+    if (ordering != null) pageRequest += `&ordering=${ordering}`;
+    if (time != "all") pageRequest += `&time=${time}`;
+    if (online) pageRequest += `&online=${online}`;
+    if (servesFood) pageRequest += `&serves_food=${servesFood}`;
+    if (showRated) pageRequest += `&rated=${showRated.toString()}`;
+    if (showDiscarded) pageRequest += `&discarded=${showDiscarded.toString()}`;
 
     axios
       .all([
@@ -49,54 +68,92 @@ const TabSeminars = (props) => {
       .then(
         axios.spread((...res) => {
           setSeminars(res[0].data.results);
+          setCount(res[0].data.count);
           setMaxPage(Math.ceil(res[0].data.count / 10));
           !notAuthenticated && setSimilarities(res[1].data);
           setLoaded(true);
         })
       )
       .catch((err) => console.log(err));
-  }, [request, seminarsUpdated, page]);
+  }, [
+    request,
+    seminarsUpdated,
+    page,
+    ordering,
+    time,
+    online,
+    servesFood,
+    showRated,
+    showDiscarded,
+  ]);
 
   return (
     <>
+      {label != "random" && (
+        <Grid container spacing={3} alignItems="center" justify="center">
+          <Filters
+            label={label}
+            setOrdering={setOrdering}
+            time={time}
+            setTime={setTime}
+            online={online}
+            setOnline={setOnline}
+            servesFood={servesFood}
+            setServesFood={setServesFood}
+            showRated={showRated}
+            setShowRated={setShowRated}
+            showDiscarded={showDiscarded}
+            setShowDiscarded={setShowDiscarded}
+          />
+        </Grid>
+      )}
+
       {loaded ? (
         <>
           {seminars.length > 0 ? (
-            <Grid container spacing={3} alignItems="center" justify="center">
-              {seminars.map((seminar) => (
-                <Grid
-                  item
-                  key={showRatings ? seminar.seminar.id : seminar.id}
-                  xs={12}
-                >
-                  <SeminarCard
-                    seminar={showRatings ? seminar.seminar : seminar}
-                    currentRating={showRatings ? seminar.rating : null}
-                    currentlyDiscarded={showRatings ? seminar.discarded : false}
-                    seminarsUpdated={seminarsUpdated}
-                    setSeminarsUpdated={setSeminarsUpdated}
-                    similarity={
-                      notAuthenticated
-                        ? 0
-                        : similarities[
-                            showRatings ? seminar.seminar.id : seminar.id
-                          ]
-                    }
-                  />
-                </Grid>
-              ))}
+            <>
+              <Typography variant="overline">
+                <b>{count}</b> seminars found...
+              </Typography>
 
-              <Pagination
-                count={maxPage}
-                color="primary"
-                shape="rounded"
-                showFirstButton
-                showLastButton
-                className={classes.pagination}
-                page={page}
-                onChange={(e, newPage) => setPage(newPage)}
-              />
-            </Grid>
+              <Grid container spacing={3} alignItems="center" justify="center">
+                {seminars.map((seminar) => (
+                  <Grid
+                    item
+                    key={showRatings ? seminar.seminar.id : seminar.id}
+                    xs={12}
+                  >
+                    <SeminarCard
+                      seminar={showRatings ? seminar.seminar : seminar}
+                      currentRating={showRatings ? seminar.rating : null}
+                      currentlyDiscarded={
+                        showRatings ? seminar.discarded : false
+                      }
+                      seminarsUpdated={seminarsUpdated}
+                      setSeminarsUpdated={setSeminarsUpdated}
+                      similarity={
+                        notAuthenticated
+                          ? 0
+                          : similarities[
+                              showRatings ? seminar.seminar.id : seminar.id
+                            ]
+                      }
+                    />
+                  </Grid>
+                ))}
+
+                <Pagination
+                  count={maxPage}
+                  color="primary"
+                  shape="rounded"
+                  showFirstButton
+                  showLastButton
+                  className={classes.pagination}
+                  page={page}
+                  onChange={(e, newPage) => setPage(newPage)}
+                />
+              </Grid>
+            </>
           ) : (
             <Typography>{notFoundText}</Typography>
           )}
@@ -109,6 +166,7 @@ const TabSeminars = (props) => {
 };
 
 TabSeminars.propTypes = {
+  label: PropTypes.string,
   request: PropTypes.string,
   notFoundText: PropTypes.string,
   showRatings: PropTypes.bool,

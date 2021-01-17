@@ -33,6 +33,7 @@ class EventFeeds():
         self.eventbrite_feed(env('EVENTBRITE_KEY'))
         self.generate_ical_events()
         self.generate_keywords()
+        self.serves_food()
 
     # gets event feed from Samoa
     def samoa_feed(self):
@@ -229,6 +230,22 @@ class EventFeeds():
             seminar.save()
 
         print('Seminar keywords generated!')
+
+    # set whether the seminar serves food or not
+    def serves_food(self):
+        print('Populating serves food seminar field. Please wait...')
+
+        food_words = ['refreshment', 'breakfast', 'lunch', 'dinner', 'snack']
+
+        for seminar in Seminar.objects.all():
+            result = [
+                food for food in food_words if (food in seminar.description)
+            ]
+
+            seminar.serves_food = bool(result)
+            seminar.save()
+
+        print('Serves food field populated!')
 
 
 if __name__ == '__main__':
