@@ -30,6 +30,7 @@ const TabSeminars = (props) => {
   const [loaded, setLoaded] = useState(false);
 
   // filters
+  const [time, setTime] = useState("all");
   const [online, setOnline] = useState(false);
   const [servesFood, setServesFood] = useState(false);
   const [showRated, setShowRated] = useState(false);
@@ -39,6 +40,8 @@ const TabSeminars = (props) => {
   const [maxPage, setMaxPage] = useState(1);
 
   useEffect(() => {
+    setLoaded(false);
+
     let pageRequest;
 
     if (request.includes(".json?")) {
@@ -48,6 +51,7 @@ const TabSeminars = (props) => {
     }
 
     if (ordering != null) pageRequest += `&ordering=${ordering}`;
+    if (time != "all") pageRequest += `&time=${time}`;
     if (online) pageRequest += `&online=${online}`;
     if (servesFood) pageRequest += `&serves_food=${servesFood}`;
     if (showRated) pageRequest += `&rated=${showRated.toString()}`;
@@ -74,6 +78,7 @@ const TabSeminars = (props) => {
     seminarsUpdated,
     page,
     ordering,
+    time,
     online,
     servesFood,
     showRated,
@@ -89,6 +94,8 @@ const TabSeminars = (props) => {
               <Filters
                 label={label}
                 setOrdering={setOrdering}
+                time={time}
+                setTime={setTime}
                 online={online}
                 setOnline={setOnline}
                 servesFood={servesFood}

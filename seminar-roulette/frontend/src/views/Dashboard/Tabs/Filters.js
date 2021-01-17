@@ -3,8 +3,12 @@ import PropTypes from "prop-types";
 import {
   Checkbox,
   FormGroup,
+  FormControl,
   FormControlLabel,
+  InputLabel,
   makeStyles,
+  MenuItem,
+  Select,
 } from "@material-ui/core";
 
 import SortByButton from "../../../components/SortByButton";
@@ -13,9 +17,15 @@ const useStyles = makeStyles((theme) => ({
   filters: {
     marginLeft: theme.spacing(1.5),
     marginBottom: theme.spacing(2),
+    flex: 1,
   },
   flexGrow: {
     flexGrow: 1,
+  },
+  timeDropdown: {
+    marginRight: theme.spacing(2),
+    minWidth: "15ch",
+    height: "5ch",
   },
 }));
 
@@ -23,6 +33,8 @@ const Filters = (props) => {
   const {
     label,
     setOrdering,
+    time,
+    setTime,
     online,
     setOnline,
     servesFood,
@@ -38,22 +50,26 @@ const Filters = (props) => {
   return (
     <>
       <FormGroup row className={classes.filters}>
-        {/* <FormControl variant="outlined">
-          <InputLabel id="time-select-label">Time</InputLabel>
-          <Select
-            labelId="time-select-label"
-            id="time-select"
-            value={time}
-            onChange={(e) => setTime()}
-            label="Time"
-          >
-            <MenuItem value="hour">In an hour</MenuItem>
-            <MenuItem value="today">Today</MenuItem>
-            <MenuItem value="tomorrow">Tomorrow</MenuItem>
-            <MenuItem value="week">This week</MenuItem>
-            <MenuItem value="month">This month</MenuItem>
-          </Select>
-        </FormControl> */}
+        {(label == "recommendations" || label == "upcoming") && (
+          <FormControl variant="outlined">
+            <InputLabel id="time-select-label">Time</InputLabel>
+            <Select
+              labelId="time-select-label"
+              id="time-select"
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              label="Time"
+              className={classes.timeDropdown}
+            >
+              <MenuItem value="all">All</MenuItem>
+              <MenuItem value="hour">In an hour</MenuItem>
+              <MenuItem value="today">Today</MenuItem>
+              <MenuItem value="tomorrow">Tomorrow</MenuItem>
+              <MenuItem value="week">This week</MenuItem>
+              <MenuItem value="month">This month</MenuItem>
+            </Select>
+          </FormControl>
+        )}
 
         <FormControlLabel
           control={
@@ -100,11 +116,11 @@ const Filters = (props) => {
             />
           </>
         )}
+
+        <div className={classes.flexGrow} />
+
+        <SortByButton setOrdering={setOrdering} />
       </FormGroup>
-
-      <div className={classes.flexGrow} />
-
-      <SortByButton setOrdering={setOrdering} />
     </>
   );
 };
@@ -112,6 +128,8 @@ const Filters = (props) => {
 Filters.propTypes = {
   label: PropTypes.string,
   setOrdering: PropTypes.func,
+  time: PropTypes.string,
+  setTime: PropTypes.func,
   online: PropTypes.bool,
   setOnline: PropTypes.func,
   servesFood: PropTypes.bool,

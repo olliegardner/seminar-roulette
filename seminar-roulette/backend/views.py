@@ -42,6 +42,44 @@ def get_seminar(seminar_id):
         raise Http404
 
 
+def get_seminars_by_time(time):
+    now = timezone.now()
+
+    if time == "hour":
+        then = now + timezone.timedelta(hours=1)
+
+        seminars = Seminar.objects.filter(
+            start_time__gte=now, start_time__lte=then
+        )
+    elif time == "today":
+        seminars = Seminar.objects.filter(
+            start_time__gte=now, start_time__date=now.date()
+        )
+    elif time == "tomorrow":
+        tomorrow = now + timezone.timedelta(days=1)
+
+        seminars = Seminar.objects.filter(start_time__date=tomorrow)
+    elif time == "week":
+        end_of_week = now + timezone.timedelta(days=6 - now.weekday())
+
+        seminars = Seminar.objects.filter(
+            start_time__gte=now,
+            start_time__date__range=(now.date(), end_of_week)
+        )
+    elif time == "month":
+        end_of_month = datetime.date(
+            now.year, now.month,
+            calendar.monthrange(now.year, now.month)[-1]
+        )
+
+        seminars = Seminar.objects.filter(
+            start_time__gte=now,
+            start_time__date__range=(now.date(), end_of_month)
+        )
+
+    return seminars.order_by('start_time')
+
+
 class SeminarPagination(PageNumberPagination):
     page_size = 10
     page_size_query_param = 'page_size'
@@ -140,6 +178,7 @@ class UserRecommendations(ListAPIView):
     ordering_fields = ['title', 'start_time']
 
     def get_queryset(self):
+        time = self.request.query_params.get('time')
         guid = self.request.query_params.get('guid')
         user = get_user(guid)
 
@@ -148,12 +187,23 @@ class UserRecommendations(ListAPIView):
         )
 
         if user_seminar_history:
-            seminar_ids = [
+            recommendation_ids = [
                 seminar.id for seminar in recommendation_engine(user)
             ]
 
-            return Seminar.objects.filter(id__in=seminar_ids
-                                         ).order_by('start_time')
+            if time:
+                time_seminars = get_seminars_by_time(time)
+                time_seminar_ids = [seminar.id for seminar in time_seminars]
+
+                intersection_ids = list(
+                    set(recommendation_ids) & set(time_seminar_ids)
+                )  # takes intersection of both lists
+
+                return Seminar.objects.filter(id__in=intersection_ids
+                                             ).order_by('start_time')
+            else:
+                return Seminar.objects.filter(id__in=recommendation_ids
+                                             ).order_by('start_time')
         else:
             return []
 
@@ -256,11 +306,15 @@ class AllSeminars(ListAPIView):
     ordering_fields = ['title', 'start_time']
 
     def get_queryset(self):
+        time = self.request.query_params.get('time')
         now = timezone.now()
 
-        seminars = Seminar.objects.filter(
-            start_time__gte=now, end_time__gte=now
-        ).order_by('start_time')
+        if time:
+            seminars = get_seminars_by_time(time)
+        else:
+            seminars = Seminar.objects.filter(
+                start_time__gte=now, end_time__gte=now
+            ).order_by('start_time')
 
         return seminars
 

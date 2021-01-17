@@ -6,6 +6,7 @@ import SortOutlinedIcon from "@material-ui/icons/SortOutlined";
 const useStyles = makeStyles((theme) => ({
   sort: {
     marginRight: theme.spacing(1.5),
+    height: "5ch",
   },
 }));
 
