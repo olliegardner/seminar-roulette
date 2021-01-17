@@ -89,27 +89,27 @@ const TabSeminars = (props) => {
 
   return (
     <>
+      {label != "random" && (
+        <Grid container spacing={3} alignItems="center" justify="center">
+          <Filters
+            label={label}
+            setOrdering={setOrdering}
+            time={time}
+            setTime={setTime}
+            online={online}
+            setOnline={setOnline}
+            servesFood={servesFood}
+            setServesFood={setServesFood}
+            showRated={showRated}
+            setShowRated={setShowRated}
+            showDiscarded={showDiscarded}
+            setShowDiscarded={setShowDiscarded}
+          />
+        </Grid>
+      )}
+
       {loaded ? (
         <>
-          {label != "random" && (
-            <Grid container spacing={3} alignItems="center" justify="center">
-              <Filters
-                label={label}
-                setOrdering={setOrdering}
-                time={time}
-                setTime={setTime}
-                online={online}
-                setOnline={setOnline}
-                servesFood={servesFood}
-                setServesFood={setServesFood}
-                showRated={showRated}
-                setShowRated={setShowRated}
-                showDiscarded={showDiscarded}
-                setShowDiscarded={setShowDiscarded}
-              />
-            </Grid>
-          )}
-
           {seminars.length > 0 ? (
             <>
               <Typography variant="overline">

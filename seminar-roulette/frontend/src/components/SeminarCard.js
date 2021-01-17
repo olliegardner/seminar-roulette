@@ -211,7 +211,7 @@ const SeminarActions = (props) => {
             [classes.green]: similarity > 70 && similarity <= 100,
           })}
         >
-          {similarity}% match
+          {similarity}% match based on your interests
         </Typography>
       )}
 
