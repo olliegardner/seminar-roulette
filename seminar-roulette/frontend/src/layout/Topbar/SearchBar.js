@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { InputBase, fade, makeStyles } from "@material-ui/core";
+import { InputBase, fade, makeStyles, Button } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 
 const useStyles = makeStyles((theme) => ({
@@ -16,23 +16,15 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(3),
       width: "auto",
     },
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: fade(theme.palette.common.white, 0.15),
+    borderStyle: "solid",
   },
   inputRoot: {
     color: "inherit",
   },
   inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    padding: theme.spacing(1, 1, 1, 2),
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
@@ -61,9 +53,6 @@ const SearchBar = () => {
   return (
     <form noValidate autoComplete="off" onSubmit={handleSearchSubmit}>
       <div className={classes.search}>
-        <div className={classes.searchIcon}>
-          <SearchIcon />
-        </div>
         <InputBase
           placeholder="Search seminars…"
           classes={{
@@ -74,6 +63,13 @@ const SearchBar = () => {
           onChange={(e) => setSearch(e.target.value)}
           value={search}
         />
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleSearchSubmit}
+        >
+          <SearchIcon />
+        </Button>
       </div>
     </form>
   );
