@@ -338,3 +338,4 @@
 ### 18 Jan 2021
 
 - _1.5 hour_ Changed the styling of the search bar so that it stands out more. Also added a search button to the search bar so that the user can either click the button or press the enter key to search.
+- _1 hour_ Added unit tests for EventBrite.

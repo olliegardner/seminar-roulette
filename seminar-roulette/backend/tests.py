@@ -1,11 +1,14 @@
 from django.test import TestCase
 from django.utils import timezone
+from eventbrite import Eventbrite
 from rest_framework import status
 from rest_framework.test import APIClient
 from .models import *
 
 import requests
 import datetime
+import os
+import environ
 
 
 # test cases for university users
@@ -48,9 +51,11 @@ class SamoaTests(TestCase):
         response = requests.get(
             'https://samoa.dcs.gla.ac.uk/events/rest/Event/searchtext?search='
         )
+        events = response.json()
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.headers['Content-Type'], 'application/json')
+        self.assertGreater(len(events), 1)
 
     def test_17012_returns_systems_coffee(self):
         """
@@ -63,6 +68,56 @@ class SamoaTests(TestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(events['title'], 'SYSTEMS Coffee')
+
+
+# tests cases for connecting to the EventBrite API
+class EventBriteTests(TestCase):
+    def setUp(self):
+        env = environ.Env()
+        env_file = os.path.join(os.getcwd(), ".env")
+        environ.Env.read_env(env_file)
+
+        self.eventbrite = Eventbrite(env('EVENTBRITE_KEY'))
+
+    def test_connection_to_eventbrite(self):
+        """
+        Test whether connection to EventBrite is successful.
+        """
+        self.assertEqual(
+            self.eventbrite.headers['content-type'], 'application/json'
+        )
+
+    def test_eventbrite_user(self):
+        """
+        Test the correct user is returned when using the EventBrite api.
+        """
+        user = self.eventbrite.get_user()
+
+        self.assertEqual(user.headers['Content-Type'], 'application/json')
+        self.assertEqual(user['name'], 'Ollie Gardner')
+
+    def test_eventbrite_organiser(self):
+        """
+        Test getting SoCS EventBrite page from organiser ID.
+        """
+        organiser = self.eventbrite.get_organizers(6830828415)
+
+        self.assertEqual(organiser.headers['Content-Type'], 'application/json')
+        self.assertEqual(
+            organiser['name'],
+            'School of Computing Science, University of Glasgow'
+        )
+
+    def test_eventbrite_organiser_events(self):
+        """
+        Test getting SoCS EventBrite events from organiser ID.
+        """
+        organiser_events = self.eventbrite.get_organizer_events(6830828415)
+
+        self.assertEqual(
+            organiser_events.headers['Content-Type'], 'application/json'
+        )
+        self.assertGreater(len(organiser_events), 1)
 
 
 # test cases for seminar model
