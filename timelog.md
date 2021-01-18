@@ -332,3 +332,9 @@
 
 - _2.5 hour_ Added time frame dropdown filter which allows a user to find seminars within a specific time frame.
 - _0.5 hour_ Added some text which shows how many seminars are returned from the user's specified filters.
+
+## Week 14
+
+### 18 Jan 2021
+
+- _1.5 hour_ Changed the styling of the search bar so that it stands out more. Also added a search button to the search bar so that the user can either click the button or press the enter key to search.
