@@ -216,7 +216,7 @@ class SeminarTests(TestCase):
         """
         Test getting upcoming seminars stored in the database.
         """
-        response = self.client.get('/api/seminars.json')
+        response = self.client.get('/api/seminars/upcoming.json')
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['count'], 2)
@@ -259,7 +259,9 @@ class SeminarTests(TestCase):
         """
         Test serves food seminar filter.
         """
-        response = self.client.get('/api/seminars.json?serves_food=True')
+        response = self.client.get(
+            '/api/seminars/upcoming.json?serves_food=True'
+        )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['count'], 1)
@@ -271,7 +273,7 @@ class SeminarTests(TestCase):
         """
         Test online seminar filter.
         """
-        response = self.client.get('/api/seminars.json?online=True')
+        response = self.client.get('/api/seminars/upcoming.json?online=True')
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['count'], 1)
@@ -283,7 +285,9 @@ class SeminarTests(TestCase):
         """
         Test seminar sorting order by title.
         """
-        response = self.client.get('/api/seminars.json?ordering=-title')
+        response = self.client.get(
+            '/api/seminars/upcoming.json?ordering=-title'
+        )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['count'], 2)
