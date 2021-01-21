@@ -151,23 +151,143 @@ class SeminarTests(TestCase):
         )
 
         self.tomorrow = timezone.now() + timezone.timedelta(days=1)
+        self.yesterday = timezone.now() - timezone.timedelta(days=1)
 
-        self.seminar = Seminar.objects.create(
+        self.seminar_1 = Seminar.objects.create(
             title='Example Seminar',
             description='This is an example seminar about something.',
             start_time=self.tomorrow,
             end_time=self.tomorrow + timezone.timedelta(hours=2),
+            online=True,
+        )
+
+        self.seminar_2 = Seminar.objects.create(
+            title='Another Example Seminar',
+            description='This is another seminar.',
+            start_time=self.tomorrow,
+            end_time=self.tomorrow + timezone.timedelta(hours=4),
+            serves_food=True,
+        )
+
+        self.seminar_3 = Seminar.objects.create(
+            title='Past Seminar',
+            description='A seminar in the past.',
+            start_time=self.yesterday,
+            end_time=self.yesterday + timezone.timedelta(hours=1),
         )
 
         self.client = APIClient()
         self.client.force_authenticate(user=self.user)
 
+    def test_seminar_from_id(self):
+        """
+        Test getting a seminar from its ID.
+        """
+        response = self.client.get(
+            '/api/seminar.json?id=' + str(self.seminar_1.id)
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['title'], self.seminar_1.title)
+
     def test_random_seminar(self):
+        """
+        Test getting a random seminar.
+        """
         response = self.client.get(
             '/api/seminars/random.json?guid=' + self.user.guid
         )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(
-            response.data['results'][0]['title'], self.seminar.title
+        self.assertEqual(response.data['count'], 1)
+
+    def test_upcoming_seminars(self):
+        """
+        Test getting upcoming seminars stored in the database.
+        """
+        response = self.client.get('/api/seminars.json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['count'], 2)
+
+    def test_seminar_attendance(self):
+        """
+        Test setting a user's attendance for a specific seminar.
+        """
+        response = self.client.put(
+            '/api/seminar/attendance.json?guid=1234567A',
+            data={
+                'seminar': self.seminar_2.id,
+                'discarded': False,
+                'rating': 4
+            }
         )
+
+        seminar_history = SeminarHistory.objects.get(
+            seminar=self.seminar_2, user=self.user
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, 'success')
+        self.assertTrue(seminar_history)
+
+    def test_past_seminars(self):
+        """
+        Test getting seminars which have happened in the past.
+        """
+        response = self.client.get('/api/seminars/past.json?guid=1234567A')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['count'], 1)
+        self.assertEqual(
+            response.data['results'][0]['seminar']['title'],
+            self.seminar_3.title
+        )
+
+    def test_seminar_serves_food_filter(self):
+        """
+        Test serves food seminar filter.
+        """
+        response = self.client.get('/api/seminars.json?serves_food=True')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['count'], 1)
+        self.assertEqual(
+            response.data['results'][0]['title'], self.seminar_2.title
+        )
+
+    def test_seminar_online_filter(self):
+        """
+        Test online seminar filter.
+        """
+        response = self.client.get('/api/seminars.json?online=True')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['count'], 1)
+        self.assertEqual(
+            response.data['results'][0]['title'], self.seminar_1.title
+        )
+
+    def test_seminar_title_ordering(self):
+        """
+        Test seminar sorting order by title.
+        """
+        response = self.client.get('/api/seminars.json?ordering=-title')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['count'], 2)
+        self.assertEqual(
+            response.data['results'][0]['title'], self.seminar_1.title
+        )
+        self.assertEqual(
+            response.data['results'][1]['title'], self.seminar_2.title
+        )
+
+    def test_search_seminar(self):
+        """
+        Test search seminar functionality.
+        """
+        response = self.client.get('/api/search.json?q=example')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['count'], 2)
