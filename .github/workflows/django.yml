@@ -36,7 +36,7 @@ jobs:
       - name: Create .env file
         run: |
           cd seminar-roulette
-          echo $'SECRET_KEY=${{ secrets.SECRET_KEY }}\nDB_PASSWORD=${{ secrets.DB_PASSWORD }}\nPRODUCTION=false' > .env
+          echo $'SECRET_KEY=${{ secrets.SECRET_KEY }}\nDB_PASSWORD=${{ secrets.DB_PASSWORD }}\nPRODUCTION=false\nEVENTBRITE_KEY=${{ secrets.EVENTBRITE_KEY }}' > .env
       - name: Run migrations
         run: |
           cd seminar-roulette
