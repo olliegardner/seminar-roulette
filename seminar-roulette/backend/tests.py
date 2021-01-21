@@ -17,6 +17,8 @@ class UserTests(TestCase):
         self.user = UniversityUser.objects.create_user(
             guid='1234567A', password='password'
         )
+        self.user.interests = ['maths', 'compilers', 'code']
+        self.user.save()
 
         self.client = APIClient()
         self.client.force_authenticate(user=self.user)
@@ -30,25 +32,26 @@ class UserTests(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['guid'], self.user.guid)
 
-    def test_user_recommendations(self):
+    def test_get_user_interests(self):
         """
+        Test getting a user's interests.
         """
-        self.assertEqual(1, 2)
+        response = self.client.get('/api/user/interests.json')
 
-    def test_user_interests(self):
-        """
-        """
-        self.assertEqual(1, 2)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 3)
 
     def test_amend_user_interests(self):
         """
+        Test amending a user's personal interests.
         """
-        self.assertEqual(1, 2)
+        response = self.client.put(
+            '/api/user/interests/amend.json',
+            data={'interests': '{}'},
+        )
 
-    def test_user_similarities(self):
-        """
-        """
-        self.assertEqual(1, 2)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, '{}')
 
     def test_user_logout(self):
         """
