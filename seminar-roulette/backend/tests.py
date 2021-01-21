@@ -150,6 +150,14 @@ class SeminarTests(TestCase):
             guid='1234567A', password='password'
         )
 
+        self.location = Location.objects.create(location='Example Location')
+
+        self.seminar_group = SeminarGroup.objects.create(name='A Seminar Group')
+
+        self.speaker = Speaker.objects.create(
+            speaker='Speaker', affiliation='Some Affiliation'
+        )
+
         self.tomorrow = timezone.now() + timezone.timedelta(days=1)
         self.yesterday = timezone.now() - timezone.timedelta(days=1)
 
@@ -159,6 +167,9 @@ class SeminarTests(TestCase):
             start_time=self.tomorrow,
             end_time=self.tomorrow + timezone.timedelta(hours=2),
             online=True,
+            location=self.location,
+            seminar_group=self.seminar_group,
+            speaker=self.speaker,
         )
 
         self.seminar_2 = Seminar.objects.create(
@@ -281,6 +292,45 @@ class SeminarTests(TestCase):
         )
         self.assertEqual(
             response.data['results'][1]['title'], self.seminar_2.title
+        )
+
+    def test_seminar_location(self):
+        """
+        Test whether the seminar's location is set correctly.
+        """
+        response = self.client.get(
+            '/api/seminar.json?id=' + str(self.seminar_1.id)
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            response.data['location']['location'], self.location.location
+        )
+
+    def test_seminar_group(self):
+        """
+        Test whether the seminar's group is set correctly.
+        """
+        response = self.client.get(
+            '/api/seminar.json?id=' + str(self.seminar_1.id)
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            response.data['seminar_group']['name'], self.seminar_group.name
+        )
+
+    def test_seminar_speaker(self):
+        """
+        Test whether the seminar's speaker is set correctly.
+        """
+        response = self.client.get(
+            '/api/seminar.json?id=' + str(self.seminar_1.id)
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            response.data['speaker']['speaker'], self.speaker.speaker
         )
 
     def test_search_seminar(self):
