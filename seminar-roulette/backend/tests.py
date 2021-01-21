@@ -30,6 +30,26 @@ class UserTests(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['guid'], self.user.guid)
 
+    def test_user_recommendations(self):
+        """
+        """
+        self.assertEqual(1, 2)
+
+    def test_user_interests(self):
+        """
+        """
+        self.assertEqual(1, 2)
+
+    def test_amend_user_interests(self):
+        """
+        """
+        self.assertEqual(1, 2)
+
+    def test_user_similarities(self):
+        """
+        """
+        self.assertEqual(1, 2)
+
     def test_user_logout(self):
         """
         Test no user is returned once logged out.
