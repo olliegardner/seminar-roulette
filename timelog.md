@@ -338,3 +338,9 @@
 ### 18 Jan 2021
 
 - _1.5 hour_ Changed the styling of the search bar so that it stands out more. Also added a search button to the search bar so that the user can either click the button or press the enter key to search.
+- _1 hour_ Added unit tests for EventBrite.
+
+### 21 Jan 2021
+
+- _2.5 hour_ Implemented more unit tests to ensure no broken code is pushed to production.
+- _0.5 hour_ Wrote up status report for this week and sent to supervisor.

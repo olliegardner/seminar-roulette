@@ -293,7 +293,7 @@ class UserSimilarities(APIView):
         return Response(similarities)
 
 
-class AllSeminars(ListAPIView):
+class UpcomingSeminars(ListAPIView):
     """
     Get all the upcoming seminars in the database.
     """

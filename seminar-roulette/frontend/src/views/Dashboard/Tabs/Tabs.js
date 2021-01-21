@@ -100,8 +100,8 @@ const TabsContainer = () => {
       <TabPanel value={value} index={1} dir={theme.direction}>
         <TabSeminars
           label="upcoming"
-          request="api/seminars.json"
-          notFoundText="No seminars found."
+          request="api/seminars/upcoming.json"
+          notFoundText="No upcoming seminars found."
           showRatings={false}
         />
       </TabPanel>
