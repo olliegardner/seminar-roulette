@@ -113,7 +113,7 @@ const TabSeminars = (props) => {
           {seminars.length > 0 ? (
             <>
               <Typography variant="overline">
-                <b>{count}</b> seminars found...
+                <b>{count}</b> {count == 1 ? "seminar" : "seminars"} found...
               </Typography>
 
               <Grid container spacing={3} alignItems="center" justify="center">
