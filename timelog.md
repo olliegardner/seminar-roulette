@@ -344,3 +344,9 @@
 
 - _2.5 hour_ Implemented more unit tests to ensure no broken code is pushed to production.
 - _0.5 hour_ Wrote up status report for this week and sent to supervisor.
+
+### 22 Jan 2021
+
+- _1 hour_ Weekly meeting with supervisor and wrote up meeting minutes.
+
+## Week 15
