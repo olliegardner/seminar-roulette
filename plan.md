@@ -84,6 +84,9 @@ Week-by-week plan for the whole project.
   - Implement more unit tests.
   - Write chapter 1 of dissertation.
 - **Week 15**
+  - Create a draft evaluation questionnaire.
+  - Send 1st chapter of dissertation to Jeremy.
+  - Fix bugs in preparation for user evaluation.
 - **Week 16**
 - **Week 17**
 - **Week 19**
