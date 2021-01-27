@@ -360,3 +360,4 @@
 - _0.5 hour_ Added Shibboleth login route when in production environment.
 - _0.5 hour_ Fixed random seminar if user is not logged in.
 - _0.5 hour_ Fixed speaker names so that special characters e.g. &igrave; are rendered correctly.
+- _1 hour_ Made similarity algorithm much more efficient, reducing load times on the system.
