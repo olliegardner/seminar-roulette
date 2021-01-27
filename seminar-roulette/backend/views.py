@@ -113,26 +113,29 @@ class RandomSeminar(ListAPIView):
 
     def get_queryset(self):
         guid = self.request.query_params.get('guid')
-        user = get_user(guid)
-
         now = timezone.now()
-
-        # get seminars which user has attended OR discarded
-        seminar_history = user.seminarhistory_set.filter(
-            Q(attended=True) | Q(discarded=True)
-        )
-        seminars_attended_discarded = Seminar.objects.filter(
-            id__in=seminar_history
-        )
 
         upcoming_seminars = Seminar.objects.filter(
             start_time__gte=now, end_time__gte=now
         )
 
-        # get seminars in a time frame which a user hasn't been to or been recommended
-        available_seminars = upcoming_seminars.exclude(
-            id__in=seminars_attended_discarded
-        )
+        if not guid == 'None':  # if user is logged in
+            user = get_user(guid)
+
+            # get seminars which user has attended OR discarded
+            seminar_history = user.seminarhistory_set.filter(
+                Q(attended=True) | Q(discarded=True)
+            )
+            seminars_attended_discarded = Seminar.objects.filter(
+                id__in=seminar_history
+            )
+
+            # get seminars in a time frame which a user hasn't been to or been recommended
+            available_seminars = upcoming_seminars.exclude(
+                id__in=seminars_attended_discarded
+            )
+        else:
+            available_seminars = upcoming_seminars
 
         random_seminar = available_seminars.order_by('?').first()
 
@@ -170,7 +173,6 @@ class UserRecommendations(ListAPIView):
     """
     Get seminar recommendations for a user.
     """
-
     serializer_class = SeminarSerializer
     pagination_class = RecommenderPagination
     filter_backends = [DjangoFilterBackend, OrderingFilter]
