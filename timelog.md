@@ -354,3 +354,7 @@
 ### 26 Jan 2021
 
 - _2 hour_ Continued writing chapter 1 of the disseration.
+
+### 27 Jan 20201
+
+- _0.5 hour_ Added Shibboleth login route when in production environment.
