@@ -358,3 +358,4 @@
 ### 27 Jan 20201
 
 - _0.5 hour_ Added Shibboleth login route when in production environment.
+- _0.5 hour_ Fixed random seminar if user is not logged in.
