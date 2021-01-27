@@ -259,38 +259,44 @@ class UserSimilarities(APIView):
     def get(self, request, format=None):
         wordnet.ensure_loaded()
 
+        seminars = self.request.query_params.get('seminars')
         guid = self.request.query_params.get('guid')
         user = get_user(guid)
 
         similarities = {}
 
-        for seminar in Seminar.objects.all():
-            keywords = json.loads(seminar.keywords)
+        for seminar_id in seminars.split(','):
+            try:
+                seminar = Seminar.objects.get(id=seminar_id)
+                keywords = json.loads(seminar.keywords)
 
-            if not user.interests or not keywords:
+                if not user.interests or not keywords:
+                    similarities[seminar.id] = 0
+                    continue
+
+                interest_syns = set(
+                    synset for interest in user.interests
+                    for synset in wordnet.synsets(interest)
+                )
+
+                keyword_syns = set(
+                    synset for keyword in keywords[0:3]
+                    for synset in wordnet.synsets(keyword['text'])
+                )
+
+                if not interest_syns or not keyword_syns:
+                    similarities[seminar.id] = 0
+                    continue
+
+                best = max(
+                    wordnet.wup_similarity(i, j) or 0
+                    for i, j in product(interest_syns, keyword_syns)
+                )
+
+                similarities[seminar.id] = round(best * 100, 1)
+            except Seminar.DoesNotExist:
                 similarities[seminar.id] = 0
                 continue
-
-            interest_syns = set(
-                synset for interest in user.interests
-                for synset in wordnet.synsets(interest)
-            )
-
-            keyword_syns = set(
-                synset for keyword in keywords[0:3]
-                for synset in wordnet.synsets(keyword['text'])
-            )
-
-            if not interest_syns or not keyword_syns:
-                similarities[seminar.id] = 0
-                continue
-
-            best = max(
-                wordnet.wup_similarity(i, j) or 0
-                for i, j in product(interest_syns, keyword_syns)
-            )
-
-            similarities[seminar.id] = round(best * 100, 1)
 
         return Response(similarities)
 
