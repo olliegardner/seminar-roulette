@@ -45,11 +45,8 @@ const TabSeminars = (props) => {
 
     let pageRequest;
 
-    if (request.includes(".json?")) {
-      pageRequest = `${request}&page=${page}`;
-    } else {
-      pageRequest = `${request}?page=${page}`;
-    }
+    if (request.includes(".json?")) pageRequest = `${request}&page=${page}`;
+    else pageRequest = `${request}?page=${page}`;
 
     if (ordering != null) pageRequest += `&ordering=${ordering}`;
     if (time != "all") pageRequest += `&time=${time}`;
@@ -59,21 +56,14 @@ const TabSeminars = (props) => {
     if (showDiscarded) pageRequest += `&discarded=${showDiscarded.toString()}`;
 
     axios
-      .all([
-        axios.get(pageRequest),
+      .get(pageRequest)
+      .then((res) => {
+        setSeminars(res.data.results);
+        setCount(res.data.count);
+        setMaxPage(Math.ceil(res.data.count / 10));
 
-        !notAuthenticated &&
-          axios.get(`api/user/similarities/?guid=${user.guid}`),
-      ])
-      .then(
-        axios.spread((...res) => {
-          setSeminars(res[0].data.results);
-          setCount(res[0].data.count);
-          setMaxPage(Math.ceil(res[0].data.count / 10));
-          !notAuthenticated && setSimilarities(res[1].data);
-          setLoaded(true);
-        })
-      )
+        if (res.data.results == 0) setLoaded(true);
+      })
       .catch((err) => console.log(err));
   }, [
     request,
@@ -86,6 +76,23 @@ const TabSeminars = (props) => {
     showRated,
     showDiscarded,
   ]);
+
+  useEffect(() => {
+    if (seminars.length > 0) {
+      let seminarIDs = seminars.map((s) => (s.seminar ? s.seminar.id : s.id));
+
+      !notAuthenticated &&
+        axios
+          .get(
+            `api/user/similarities.json?guid=${user.guid}&seminars=${seminarIDs}`
+          )
+          .then((res) => {
+            setSimilarities(res.data);
+            setLoaded(true);
+          })
+          .catch((err) => console.log(err));
+    }
+  }, [seminars]);
 
   return (
     <>

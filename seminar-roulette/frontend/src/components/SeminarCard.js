@@ -248,7 +248,7 @@ const SeminarCard = (props) => {
 
   const [expanded, setExpanded] = useState(false);
 
-  const options = {
+  const wordcloudOptions = {
     colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b"],
     enableTooltip: false,
     deterministic: false,
@@ -259,6 +259,11 @@ const SeminarCard = (props) => {
     scale: "sqrt",
     spiral: "archimedean",
     transitionDuration: 500,
+  };
+
+  const decodeString = (text) => {
+    var doc = new DOMParser().parseFromString(text, "text/html");
+    return doc.documentElement.textContent;
   };
 
   return (
@@ -321,14 +326,14 @@ const SeminarCard = (props) => {
                   onMouseDown={(e) => e.stopPropagation()}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  {seminar.speaker.speaker}
+                  {decodeString(seminar.speaker.speaker)}
                 </Link>
               ) : (
-                <>{seminar.speaker.speaker}</>
+                <>{decodeString(seminar.speaker.speaker)}</>
               )}
 
               {seminar.speaker.affiliation && (
-                <>&nbsp;- {seminar.speaker.affiliation}</>
+                <>&nbsp;- {decodeString(seminar.speaker.affiliation)}</>
               )}
             </span>
           </Typography>
@@ -379,7 +384,7 @@ const SeminarCard = (props) => {
         </Typography>
 
         {keywords.length > 5 && (
-          <ReactWordcloud words={keywords} options={options} />
+          <ReactWordcloud words={keywords} options={wordcloudOptions} />
         )}
 
         {seminar.registration_url && (

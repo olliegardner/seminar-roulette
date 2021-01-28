@@ -113,26 +113,29 @@ class RandomSeminar(ListAPIView):
 
     def get_queryset(self):
         guid = self.request.query_params.get('guid')
-        user = get_user(guid)
-
         now = timezone.now()
-
-        # get seminars which user has attended OR discarded
-        seminar_history = user.seminarhistory_set.filter(
-            Q(attended=True) | Q(discarded=True)
-        )
-        seminars_attended_discarded = Seminar.objects.filter(
-            id__in=seminar_history
-        )
 
         upcoming_seminars = Seminar.objects.filter(
             start_time__gte=now, end_time__gte=now
         )
 
-        # get seminars in a time frame which a user hasn't been to or been recommended
-        available_seminars = upcoming_seminars.exclude(
-            id__in=seminars_attended_discarded
-        )
+        if not guid == 'None':  # if user is logged in
+            user = get_user(guid)
+
+            # get seminars which user has attended OR discarded
+            seminar_history = user.seminarhistory_set.filter(
+                Q(attended=True) | Q(discarded=True)
+            )
+            seminars_attended_discarded = Seminar.objects.filter(
+                id__in=seminar_history
+            )
+
+            # get seminars in a time frame which a user hasn't been to or been recommended
+            available_seminars = upcoming_seminars.exclude(
+                id__in=seminars_attended_discarded
+            )
+        else:
+            available_seminars = upcoming_seminars
 
         random_seminar = available_seminars.order_by('?').first()
 
@@ -170,7 +173,6 @@ class UserRecommendations(ListAPIView):
     """
     Get seminar recommendations for a user.
     """
-
     serializer_class = SeminarSerializer
     pagination_class = RecommenderPagination
     filter_backends = [DjangoFilterBackend, OrderingFilter]
@@ -257,38 +259,44 @@ class UserSimilarities(APIView):
     def get(self, request, format=None):
         wordnet.ensure_loaded()
 
+        seminars = self.request.query_params.get('seminars')
         guid = self.request.query_params.get('guid')
         user = get_user(guid)
 
         similarities = {}
 
-        for seminar in Seminar.objects.all():
-            keywords = json.loads(seminar.keywords)
+        for seminar_id in seminars.split(','):
+            try:
+                seminar = Seminar.objects.get(id=seminar_id)
+                keywords = json.loads(seminar.keywords)
 
-            if not user.interests or not keywords:
+                if not user.interests or not keywords:
+                    similarities[seminar.id] = 0
+                    continue
+
+                interest_syns = set(
+                    synset for interest in user.interests
+                    for synset in wordnet.synsets(interest)
+                )
+
+                keyword_syns = set(
+                    synset for keyword in keywords[0:3]
+                    for synset in wordnet.synsets(keyword['text'])
+                )
+
+                if not interest_syns or not keyword_syns:
+                    similarities[seminar.id] = 0
+                    continue
+
+                best = max(
+                    wordnet.wup_similarity(i, j) or 0
+                    for i, j in product(interest_syns, keyword_syns)
+                )
+
+                similarities[seminar.id] = round(best * 100, 1)
+            except Seminar.DoesNotExist:
                 similarities[seminar.id] = 0
                 continue
-
-            interest_syns = set(
-                synset for interest in user.interests
-                for synset in wordnet.synsets(interest)
-            )
-
-            keyword_syns = set(
-                synset for keyword in keywords[0:3]
-                for synset in wordnet.synsets(keyword['text'])
-            )
-
-            if not interest_syns or not keyword_syns:
-                similarities[seminar.id] = 0
-                continue
-
-            best = max(
-                wordnet.wup_similarity(i, j) or 0
-                for i, j in product(interest_syns, keyword_syns)
-            )
-
-            similarities[seminar.id] = round(best * 100, 1)
 
         return Response(similarities)
 
