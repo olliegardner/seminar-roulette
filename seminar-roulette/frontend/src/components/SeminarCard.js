@@ -314,25 +314,32 @@ const SeminarCard = (props) => {
           <Typography>
             <span className={classes.wrapIcon}>
               <PersonOutlineOutlinedIcon className={classes.icon} />
-              {seminar.speaker.url ? (
-                <Link
-                  target="_blank"
-                  rel="noopener"
-                  href={
-                    seminar.speaker.url.startsWith("http")
-                      ? seminar.speaker.url
-                      : "http://" + seminar.speaker.url
-                  }
-                  onMouseDown={(e) => e.stopPropagation()}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  {decodeString(seminar.speaker.speaker)}
-                </Link>
+
+              {seminar.speaker ? (
+                <>
+                  {seminar.speaker.url ? (
+                    <Link
+                      target="_blank"
+                      rel="noopener"
+                      href={
+                        seminar.speaker.url.startsWith("http")
+                          ? seminar.speaker.url
+                          : "http://" + seminar.speaker.url
+                      }
+                      onMouseDown={(e) => e.stopPropagation()}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      {decodeString(seminar.speaker.speaker)}
+                    </Link>
+                  ) : (
+                    <>{decodeString(seminar.speaker.speaker)}</>
+                  )}
+                </>
               ) : (
-                <>{decodeString(seminar.speaker.speaker)}</>
+                <>N/A</>
               )}
 
-              {seminar.speaker.affiliation && (
+              {seminar.speaker && seminar.speaker.affiliation && (
                 <>&nbsp;- {decodeString(seminar.speaker.affiliation)}</>
               )}
             </span>
@@ -341,18 +348,25 @@ const SeminarCard = (props) => {
           <Typography>
             <span className={classes.wrapIcon}>
               <SchoolOutlinedIcon className={classes.icon} />
-              {seminar.seminar_group.url ? (
-                <Link
-                  target="_blank"
-                  rel="noopener"
-                  href={seminar.seminar_group.url}
-                  onMouseDown={(e) => e.stopPropagation()}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  {seminar.seminar_group.name}
-                </Link>
+
+              {seminar.seminar_group ? (
+                <>
+                  {seminar.seminar_group.url ? (
+                    <Link
+                      target="_blank"
+                      rel="noopener"
+                      href={seminar.seminar_group.url}
+                      onMouseDown={(e) => e.stopPropagation()}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      {seminar.seminar_group.name}
+                    </Link>
+                  ) : (
+                    <>{seminar.seminar_group.name}</>
+                  )}
+                </>
               ) : (
-                <>{seminar.seminar_group.name}</>
+                <>N/A</>
               )}
             </span>
           </Typography>
@@ -360,7 +374,7 @@ const SeminarCard = (props) => {
           <Typography>
             <span className={classes.wrapIcon}>
               <LocationOnOutlinedIcon className={classes.icon} />
-              {seminar.location.location}
+              {seminar.location ? <>{seminar.location.location}</> : <>N/A</>}
             </span>
           </Typography>
 

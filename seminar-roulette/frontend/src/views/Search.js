@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { Box, Grid, makeStyles, Typography } from "@material-ui/core";
+import { Grid, makeStyles, Typography } from "@material-ui/core";
 import Pagination from "@material-ui/lab/Pagination";
 
 import SeminarCard from "./../components/SeminarCard";
 import LoadingSpinner from "./../components/LoadingSpinner";
 import UserContext from "../context/UserContext";
+import Filters from "../views/Dashboard/Tabs/Filters";
 
 const useStyles = makeStyles((theme) => ({
   pagination: {
@@ -61,57 +62,67 @@ const Search = () => {
 
   return (
     <>
+      <Typography variant="h5">Search Results</Typography>
+      <Typography color="textSecondary" gutterBottom>
+        You searched for: {search}
+      </Typography>
+
+      <Grid container spacing={3} alignItems="center" justify="center">
+        <Filters
+          label="search"
+          // setOrdering={setOrdering}
+          // time={time}
+          // setTime={setTime}
+          // online={online}
+          // setOnline={setOnline}
+          // servesFood={servesFood}
+          // setServesFood={setServesFood}
+          // showRated={showRated}
+          // setShowRated={setShowRated}
+          // showDiscarded={showDiscarded}
+          // setShowDiscarded={setShowDiscarded}
+        />
+      </Grid>
+
       {loaded ? (
         <>
-          <Typography variant="h5">Search Results</Typography>
-          <Typography color="textSecondary" gutterBottom>
-            You searched for: {search}
-          </Typography>
+          {seminars.length > 0 ? (
+            <>
+              <Typography variant="overline">
+                <b>{count}</b> {count == 1 ? "seminar" : "seminars"} found...
+              </Typography>
 
-          <Box mt={2}>
-            {seminars.length > 0 ? (
-              <>
-                <Typography variant="overline">
-                  <b>{count}</b> {count == 1 ? "seminar" : "seminars"} found...
-                </Typography>
+              <Grid container spacing={3} alignItems="center" justify="center">
+                {seminars.map((seminar) => (
+                  <Grid item key={seminar.id} xs={12}>
+                    <SeminarCard
+                      seminar={seminar}
+                      currentRating={null}
+                      currentlyDiscarded={false}
+                      // seminarsUpdated={seminarsUpdated}
+                      // setSeminarsUpdated={setSeminarsUpdated}
+                      similarity={
+                        notAuthenticated ? 0 : similarities[seminar.id]
+                      }
+                    />
+                  </Grid>
+                ))}
 
-                <Grid
-                  container
-                  spacing={3}
-                  alignItems="center"
-                  justify="center"
-                >
-                  {seminars.map((seminar) => (
-                    <Grid item key={seminar.id} xs={12}>
-                      <SeminarCard
-                        seminar={seminar}
-                        currentRating={null}
-                        currentlyDiscarded={false}
-                        // seminarsUpdated={seminarsUpdated}
-                        // setSeminarsUpdated={setSeminarsUpdated}
-                        similarity={
-                          notAuthenticated ? 0 : similarities[seminar.id]
-                        }
-                      />
-                    </Grid>
-                  ))}
-
-                  <Pagination
-                    count={maxPage}
-                    color="primary"
-                    shape="rounded"
-                    showFirstButton
-                    showLastButton
-                    className={classes.pagination}
-                    page={page}
-                    onChange={(e, newPage) => setPage(newPage)}
-                  />
-                </Grid>
-              </>
-            ) : (
-              <Typography>No seminars found.</Typography>
-            )}
-          </Box>
+                <Pagination
+                  count={maxPage}
+                  color="primary"
+                  shape="rounded"
+                  showFirstButton
+                  showLastButton
+                  className={classes.pagination}
+                  page={page}
+                  onChange={(e, newPage) => setPage(newPage)}
+                />
+              </Grid>
+            </>
+          ) : (
+            <Typography>No seminars found.</Typography>
+          )}
         </>
       ) : (
         <LoadingSpinner />
