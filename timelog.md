@@ -365,3 +365,4 @@
 ### 28 Jan 2021
 
 - _0.5 hour_ Wrote up status report for this week and sent to supervisor.
+- _1 hour_ Added similarity scores to search page.
