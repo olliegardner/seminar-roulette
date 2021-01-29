@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Box, Chip, Grid, makeStyles, Typography } from "@material-ui/core";
@@ -6,6 +6,7 @@ import Pagination from "@material-ui/lab/Pagination";
 
 import SeminarCard from "./../components/SeminarCard";
 import LoadingSpinner from "./../components/LoadingSpinner";
+import UserContext from "../context/UserContext";
 
 const useStyles = makeStyles((theme) => ({
   pagination: {
@@ -16,10 +17,13 @@ const useStyles = makeStyles((theme) => ({
 const Search = () => {
   const { search } = useParams();
   const classes = useStyles();
+  const user = useContext(UserContext);
+
+  const notAuthenticated = user.guid == "None";
 
   const [seminars, setSeminars] = useState([]);
+  const [similarities, setSimilarities] = useState({});
   const [loaded, setLoaded] = useState(false);
-
   const [page, setPage] = useState(1);
   const [maxPage, setMaxPage] = useState(1);
 
@@ -29,10 +33,28 @@ const Search = () => {
       .then((res) => {
         setSeminars(res.data.results);
         setMaxPage(Math.ceil(res.data.count / 10));
-        setLoaded(true);
+
+        if (res.data.count == 0) setLoaded(true);
       })
       .catch((err) => console.log(err));
   }, [search, page]);
+
+  useEffect(() => {
+    if (seminars.length > 0) {
+      let seminarIDs = seminars.map((s) => s.id);
+
+      !notAuthenticated &&
+        axios
+          .get(
+            `api/user/similarities.json?guid=${user.guid}&seminars=${seminarIDs}`
+          )
+          .then((res) => {
+            setSimilarities(res.data);
+            setLoaded(true);
+          })
+          .catch((err) => console.log(err));
+    }
+  }, [seminars]);
 
   return (
     <>
@@ -51,7 +73,16 @@ const Search = () => {
               <Grid container spacing={3} alignItems="center" justify="center">
                 {seminars.map((seminar) => (
                   <Grid item key={seminar.id} xs={12}>
-                    <SeminarCard seminar={seminar} />
+                    <SeminarCard
+                      seminar={seminar}
+                      currentRating={null}
+                      currentlyDiscarded={false}
+                      // seminarsUpdated={seminarsUpdated}
+                      // setSeminarsUpdated={setSeminarsUpdated}
+                      similarity={
+                        notAuthenticated ? 0 : similarities[seminar.id]
+                      }
+                    />
                   </Grid>
                 ))}
 

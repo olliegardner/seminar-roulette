@@ -62,7 +62,7 @@ const TabSeminars = (props) => {
         setCount(res.data.count);
         setMaxPage(Math.ceil(res.data.count / 10));
 
-        if (res.data.results == 0) setLoaded(true);
+        if (res.data.count == 0) setLoaded(true);
       })
       .catch((err) => console.log(err));
   }, [
