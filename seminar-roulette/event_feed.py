@@ -175,9 +175,11 @@ class EventFeeds():
                 begin=seminar.start_time,
                 end=seminar.end_time,
                 description=pattern.sub('', seminar.description),
-                location=seminar.location.location,
                 url=seminar.registration_url
             )
+
+            if seminar.location:
+                event.location = seminar.location.location
 
             calendar.events.add(event)
 

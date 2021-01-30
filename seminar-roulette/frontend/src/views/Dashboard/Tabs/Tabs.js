@@ -92,7 +92,7 @@ const TabsContainer = () => {
             label="recommendations"
             request={`api/user/recommendations.json?guid=${user.guid}`}
             notFoundText="No seminar recommendations found based on your ratings. Please rate some past seminars first!"
-            showRatings={false}
+            showRatingDiscardedOptions={false}
           />
         )}
       </TabPanel>
@@ -102,7 +102,7 @@ const TabsContainer = () => {
           label="upcoming"
           request="api/seminars/upcoming.json"
           notFoundText="No upcoming seminars found."
-          showRatings={false}
+          showRatingDiscardedOptions={false}
         />
       </TabPanel>
 
@@ -120,7 +120,7 @@ const TabsContainer = () => {
             label="past"
             request={`api/seminars/past.json?guid=${user.guid}`}
             notFoundText="No past seminars found."
-            showRatings={true}
+            showRatingDiscardedOptions={true}
           />
         )}
       </TabPanel>
@@ -130,7 +130,7 @@ const TabsContainer = () => {
           label="random"
           request={`api/seminars/random.json?guid=${user.guid}`}
           notFoundText="No seminars found."
-          showRatings={false}
+          showRatingDiscardedOptions={false}
         />
       </TabPanel>
     </div>
