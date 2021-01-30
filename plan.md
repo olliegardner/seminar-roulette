@@ -89,6 +89,7 @@ Week-by-week plan for the whole project.
   - Fix bugs in preparation for user evaluation.
 - **Week 16**
   - Ensure the application is responsive on mobile.
+  - Add permissions to backend views.
   - Start carrying out final evaluation with participants.
 - **Week 17**
 - **Week 19**
