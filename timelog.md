@@ -366,3 +366,9 @@
 
 - _0.5 hour_ Wrote up status report for this week and sent to supervisor.
 - _1.5 hour_ Added similarity scores and filters to search page.
+
+### 29 Jan 2021
+
+- _1.5 hour_ Conducted research into different types of questionnaires which could be utilised in the evaluation.
+- _1.5 hour_ Created project evaluation survey on Google Forms.
+- _1 hour_ Weekly meeting with supervisor and wrote up meeting minutes.
