@@ -372,3 +372,8 @@
 - _1.5 hour_ Conducted research into different types of questionnaires which could be utilised in the evaluation.
 - _1.5 hour_ Created project evaluation survey on Google Forms.
 - _1 hour_ Weekly meeting with supervisor and wrote up meeting minutes.
+
+### 30 Jan 2021
+
+- _0.5 hour_ Added ethics section to user evaluation survey.
+- _1.5 hour_ Added filters and sort by button to search page.

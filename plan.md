@@ -7,7 +7,7 @@
 
 Week-by-week plan for the whole project.
 
-## Winter semester
+## Winter Semester
 
 - **Week 1**
   - N/A - projects not released.
@@ -66,7 +66,7 @@ Week-by-week plan for the whole project.
   - Ensure the application is mobile friendly.
   - Add a guided walkthrough for first time users.
 
-## Winter break
+## Winter Break
 
 - Consolidate data gathered in think aloud evaluations and write up in a readable format.
 - Start acting on feedback gained from the think aloud evaluations.
@@ -88,6 +88,8 @@ Week-by-week plan for the whole project.
   - Send 1st chapter of dissertation to Jeremy.
   - Fix bugs in preparation for user evaluation.
 - **Week 16**
+  - Ensure the application is responsive on mobile.
+  - Start carrying out final evaluation with participants.
 - **Week 17**
 - **Week 19**
 - **Week 20**
