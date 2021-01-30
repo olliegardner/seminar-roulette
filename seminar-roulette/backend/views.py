@@ -6,6 +6,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
 from rest_framework.generics import ListAPIView
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from watson import search as watson
@@ -149,6 +150,8 @@ class SeminarAttendance(APIView):
     """
     Set a whether a user attended a seminar or not.
     """
+    permissions_classes = [IsAuthenticated]
+
     def put(self, request, format=None):
         guid = self.request.query_params.get('guid')
         user = get_user(guid)
@@ -173,6 +176,8 @@ class UserRecommendations(ListAPIView):
     """
     Get seminar recommendations for a user.
     """
+    permissions_classes = [IsAuthenticated]
+
     serializer_class = SeminarSerializer
     pagination_class = RecommenderPagination
     filter_backends = [DjangoFilterBackend, OrderingFilter]
@@ -214,6 +219,8 @@ class AllUserInterests(APIView):
     """
     Get all user interests from all users to act as suggestions.
     """
+    permissions_classes = [IsAuthenticated]
+
     def get(self, request, format=None):
         users = UniversityUser.objects.all()
         interests = []
@@ -230,6 +237,8 @@ class AmendUserInterests(APIView):
     """
     Amends a user's interests.
     """
+    permissions_classes = [IsAuthenticated]
+
     def put(self, request, format=None):
         new_interests = request.data['interests']
 
@@ -244,6 +253,8 @@ class SeminarFromID(APIView):
     """
     Get seminar from seminar ID.
     """
+    permissions_classes = [IsAdminUser]
+
     def get(self, request, format=None):
         seminar_id = self.request.query_params.get('id')
         seminar = get_seminar(seminar_id)
@@ -256,6 +267,8 @@ class UserSimilarities(APIView):
     """
     Get a user's seminar similarities.
     """
+    permissions_classes = [IsAuthenticated]
+
     def get(self, request, format=None):
         wordnet.ensure_loaded()
 
@@ -330,6 +343,8 @@ class PastSeminars(APIView):
     """
     Get seminars which are now in the past.
     """
+    permissions_classes = [IsAuthenticated]
+
     def get(self, request, format=None):
         guid = self.request.query_params.get('guid')
         rated = self.request.query_params.get('rated')
