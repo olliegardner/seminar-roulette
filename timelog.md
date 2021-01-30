@@ -377,3 +377,4 @@
 
 - _0.5 hour_ Added ethics section to user evaluation survey.
 - _1.5 hour_ Added filters and sort by button to search page.
+- _0.5 hour_ Fixed seminars not loading when logged out.
