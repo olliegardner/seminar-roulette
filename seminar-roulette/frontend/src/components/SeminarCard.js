@@ -113,6 +113,7 @@ const SeminarActions = (props) => {
     seminarsUpdated,
     setSeminarsUpdated,
     similarity,
+    showRatingDiscardedOptions,
   } = props;
 
   const classes = useStyles();
@@ -162,20 +163,22 @@ const SeminarActions = (props) => {
         </Button>
       )}
 
-      {!seminar.is_future && !currentlyDiscarded && (
-        <Rating
-          name={`rating-${seminar.id}`}
-          defaultValue={currentRating}
-          precision={1}
-          onMouseDown={(e) => e.stopPropagation()}
-          onClick={(e) => e.stopPropagation()}
-          onChange={(e) =>
-            setSeminarAttended(seminar.id, false, e.target.value)
-          }
-        />
-      )}
+      {!seminar.is_future &&
+        !currentlyDiscarded &&
+        showRatingDiscardedOptions && (
+          <Rating
+            name={`rating-${seminar.id}`}
+            defaultValue={currentRating}
+            precision={1}
+            onMouseDown={(e) => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()}
+            onChange={(e) =>
+              setSeminarAttended(seminar.id, false, e.target.value)
+            }
+          />
+        )}
 
-      {!seminar.is_future && (
+      {!seminar.is_future && !currentlyDiscarded && showRatingDiscardedOptions && (
         <IconButton
           aria-label="clear"
           color="secondary"
@@ -185,7 +188,6 @@ const SeminarActions = (props) => {
             e.preventDefault();
             setSeminarAttended(seminar.id, true);
           }}
-          disabled={currentlyDiscarded}
         >
           <Tooltip
             title={
@@ -206,7 +208,7 @@ const SeminarActions = (props) => {
         <Typography
           variant="subtitle2"
           className={clsx(classes.spaceRight, {
-            [classes.red]: similarity >= 1 && similarity <= 40,
+            [classes.red]: similarity > 0 && similarity <= 40,
             [classes.orange]: similarity > 40 && similarity <= 70,
             [classes.green]: similarity > 70 && similarity <= 100,
           })}
@@ -235,6 +237,7 @@ const SeminarCard = (props) => {
     seminarsUpdated,
     setSeminarsUpdated,
     similarity,
+    showRatingDiscardedOptions,
   } = props;
 
   const classes = useStyles();
@@ -387,6 +390,7 @@ const SeminarCard = (props) => {
               seminarsUpdated={seminarsUpdated}
               setSeminarsUpdated={setSeminarsUpdated}
               similarity={similarity}
+              showRatingDiscardedOptions={showRatingDiscardedOptions}
             />
           </div>
         </div>
@@ -427,6 +431,7 @@ SeminarCard.propTypes = {
   seminarsUpdated: PropTypes.number,
   setSeminarsUpdated: PropTypes.func,
   similarity: PropTypes.number,
+  showRatingDiscardedOptions: PropTypes.bool,
 };
 
 export default SeminarCard;

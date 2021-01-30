@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TabSeminars = (props) => {
-  const { label, request, notFoundText, showRatings } = props;
+  const { label, request, notFoundText, showRatingDiscardedOptions } = props;
 
   const classes = useStyles();
   const user = useContext(UserContext);
@@ -127,24 +127,23 @@ const TabSeminars = (props) => {
                 {seminars.map((seminar) => (
                   <Grid
                     item
-                    key={showRatings ? seminar.seminar.id : seminar.id}
+                    key={seminar.seminar ? seminar.seminar.id : seminar.id}
                     xs={12}
                   >
                     <SeminarCard
-                      seminar={showRatings ? seminar.seminar : seminar}
-                      currentRating={showRatings ? seminar.rating : null}
-                      currentlyDiscarded={
-                        showRatings ? seminar.discarded : false
-                      }
+                      seminar={seminar.seminar ? seminar.seminar : seminar}
+                      currentRating={seminar.seminar ? seminar.rating : null}
+                      currentlyDiscarded={seminar.discarded ? true : false}
                       seminarsUpdated={seminarsUpdated}
                       setSeminarsUpdated={setSeminarsUpdated}
                       similarity={
                         notAuthenticated
                           ? 0
                           : similarities[
-                              showRatings ? seminar.seminar.id : seminar.id
+                              seminar.seminar ? seminar.seminar.id : seminar.id
                             ]
                       }
+                      showRatingDiscardedOptions={showRatingDiscardedOptions}
                     />
                   </Grid>
                 ))}
@@ -176,7 +175,7 @@ TabSeminars.propTypes = {
   label: PropTypes.string,
   request: PropTypes.string,
   notFoundText: PropTypes.string,
-  showRatings: PropTypes.bool,
+  showRatingDiscardedOptions: PropTypes.bool,
 };
 
 export default TabSeminars;
