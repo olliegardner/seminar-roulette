@@ -47,11 +47,23 @@ class UserTests(TestCase):
         """
         response = self.client.put(
             '/api/user/interests/amend.json',
-            data={'interests': '{}'},
+            {'interests': '{}'},
         )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, '{}')
+
+    def test_user_toggle_theme(self):
+        """
+        Test user switching between light/dark theme.
+        """
+        response = self.client.put(
+            '/api/user/theme.json',
+            {'theme': 'dark'},
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue(response.data)
 
     def test_user_logout(self):
         """
