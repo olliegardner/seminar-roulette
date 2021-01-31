@@ -498,5 +498,10 @@ sketch
 
 # End of https://www.toptal.com/developers/gitignore/api/django,react,macos,visualstudiocode,latex
 
-static
+# Django static files
+seminar-roulette/static
+
+# Webpack compiled frontend
+seminar-roulette/frontend/static/main.js
+
 report.*

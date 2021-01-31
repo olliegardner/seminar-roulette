@@ -34,6 +34,11 @@ const useStyles = makeStyles((theme) => ({
   flexGrow: {
     flexGrow: 1,
   },
+  favicon: {
+    marginRight: theme.spacing(1),
+    width: theme.spacing(3),
+    height: theme.spacing(3),
+  },
 }));
 
 const HideOnScroll = (props) => {
@@ -65,6 +70,11 @@ const Topbar = (props) => {
         <Toolbar>
           <Hidden smDown>
             <RouterLink to="/" className={classes.titleLink}>
+              <img
+                src={"../../../static/favicon.ico"}
+                className={classes.favicon}
+              />
+
               <Typography variant="h5">
                 <b>Seminar Roulette</b>
               </Typography>

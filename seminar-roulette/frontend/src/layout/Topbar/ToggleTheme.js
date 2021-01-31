@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { IconButton, Tooltip } from "@material-ui/core";
-import Brightness7Icon from "@material-ui/icons/Brightness7";
-import Brightness4Icon from "@material-ui/icons/Brightness4";
+import Brightness7OutlinedIcon from "@material-ui/icons/Brightness7Outlined";
+import Brightness4OutlinedIcon from "@material-ui/icons/Brightness4Outlined";
 
 const ToggleTheme = (props) => {
   const { themeType, setThemeType } = props;
@@ -30,7 +30,11 @@ const ToggleTheme = (props) => {
         color="inherit"
         onClick={(e) => setThemeType(themeType == "light" ? "dark" : "light")}
       >
-        {themeType == "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
+        {themeType == "dark" ? (
+          <Brightness7OutlinedIcon />
+        ) : (
+          <Brightness4OutlinedIcon />
+        )}
       </IconButton>
     </Tooltip>
   );
