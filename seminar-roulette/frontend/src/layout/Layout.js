@@ -30,12 +30,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Layout = (props) => {
-  const { children } = props;
+  const { children, themeType, setThemeType } = props;
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <Topbar />
+      <Topbar themeType={themeType} setThemeType={setThemeType} />
 
       <main className={classes.content}>
         <Container disableGutters className={classes.container}>
@@ -48,6 +48,8 @@ const Layout = (props) => {
 
 Layout.propTypes = {
   children: PropTypes.node,
+  themeType: PropTypes.string,
+  setThemeType: PropTypes.func,
 };
 
 export default Layout;
