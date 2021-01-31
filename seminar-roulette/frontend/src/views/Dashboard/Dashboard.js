@@ -19,13 +19,13 @@ const Landing = () => {
 
   return (
     <div className={classes.root}>
-      <Typography variant="h5">
+      <Typography variant="h5" color="textPrimary">
         Seminars taking place at the University of Glasgow
       </Typography>
 
       {!notAuthenticated && (
         <>
-          <Typography>
+          <Typography color="textSecondary">
             Enter up to 5 of your personal interests below
           </Typography>
 

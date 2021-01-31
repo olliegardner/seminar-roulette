@@ -451,3 +451,19 @@ class Search(ListAPIView):
             return Seminar.objects.filter(id__in=seminar_ids)
 
         return []
+
+
+class ToggleTheme(APIView):
+    """
+    Toggle the user's theme between light and dark.
+    """
+    permissions_classes = [IsAuthenticated]
+
+    def put(self, request, format=None):
+        theme = request.data['theme']
+
+        user = request.user
+        user.dark_theme_enabled = theme == 'dark'
+        user.save()
+
+        return Response(user.dark_theme_enabled)

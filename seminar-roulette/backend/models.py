@@ -22,6 +22,7 @@ class UniversityUser(AbstractBaseUser, PermissionsMixin):
         null=True,
         blank=True
     )
+    dark_theme_enabled = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'guid'
     REQUIRED_FIELDS = []

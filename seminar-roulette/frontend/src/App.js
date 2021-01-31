@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
-import { MuiThemeProvider, createMuiTheme, colors } from "@material-ui/core";
+import { ThemeProvider, createMuiTheme, colors } from "@material-ui/core";
 import dotenv from "dotenv";
 
 import UserContext from "./context/UserContext";
@@ -13,44 +13,46 @@ axios.defaults.baseURL =
     ? "https://howard.dcs.gla.ac.uk/"
     : "http://127.0.0.1:8000/";
 
-const muiTheme = createMuiTheme({
-  palette: {
-    primary: {
-      main: colors.teal[600],
-    },
-    secondary: {
-      main: colors.teal[400],
-    },
-    text: {
-      primary: colors.blueGrey[900],
-      secondary: colors.blueGrey[600],
-    },
-    background: {
-      default: colors.common.white,
-      dark: "#f4f6f8",
-      paper: colors.common.white,
-    },
-  },
-  direction: "ltr",
-  overrides: {
-    MuiSelect: {
-      select: {
-        "&:focus": {
-          backgroundColor: colors.common.white,
-        },
-      },
-    },
-  },
-  props: {
-    MuiButton: {
-      disableElevation: true,
-    },
-  },
-});
-
 const App = () => {
   const [user, setUser] = useState(null);
   const [userLoaded, setUserLoaded] = useState(false);
+  const [themeType, setThemeType] = useState("light");
+
+  const theme = useMemo(
+    () =>
+      createMuiTheme({
+        palette: {
+          type: themeType,
+          primary: {
+            main: colors.teal[600],
+          },
+          secondary: {
+            main: colors.teal[400],
+          },
+          background: {
+            default: themeType == "light" ? colors.common.white : "#212121",
+            paper: themeType == "light" ? colors.common.white : "#333",
+          },
+        },
+        direction: "ltr",
+        overrides: {
+          MuiSelect: {
+            select: {
+              "&:focus": {
+                backgroundColor:
+                  themeType == "light" ? colors.common.white : "#212121",
+              },
+            },
+          },
+        },
+        props: {
+          MuiButton: {
+            disableElevation: true,
+          },
+        },
+      }),
+    [themeType]
+  );
 
   useEffect(() => {
     axios
@@ -64,15 +66,18 @@ const App = () => {
   useEffect(() => {
     if (user) {
       setUserLoaded(true);
+      setThemeType(user.dark_theme_enabled ? "dark" : "light");
     }
   }, [user]);
 
   return (
-    <MuiThemeProvider theme={muiTheme}>
+    <ThemeProvider theme={theme}>
       <UserContext.Provider value={user}>
-        {userLoaded && <Router />}
+        {userLoaded && (
+          <Router themeType={themeType} setThemeType={setThemeType} />
+        )}
       </UserContext.Provider>
-    </MuiThemeProvider>
+    </ThemeProvider>
   );
 };
 

@@ -34,6 +34,7 @@ const SortByButton = (props) => {
         disableElevation
         onClick={handleOpen}
         className={classes.sort}
+        color="default"
       >
         Sort by
       </Button>

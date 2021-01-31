@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { InputBase, fade, makeStyles, Button } from "@material-ui/core";
+import {
+  InputBase,
+  fade,
+  makeStyles,
+  Button,
+  useTheme,
+} from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 
 const useStyles = makeStyles((theme) => ({
@@ -39,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
 const SearchBar = () => {
   const classes = useStyles();
   const history = useHistory();
+  const theme = useTheme();
 
   const [search, setSearch] = useState("");
 
@@ -65,7 +72,7 @@ const SearchBar = () => {
         />
         <Button
           variant="contained"
-          color="secondary"
+          color={theme.palette.type == "light" ? "secondary" : "default"}
           onClick={handleSearchSubmit}
         >
           <SearchIcon />

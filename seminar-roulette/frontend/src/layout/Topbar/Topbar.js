@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import clsx from "clsx";
 import PropTypes from "prop-types";
@@ -14,11 +14,16 @@ import {
 
 import ProfileMenu from "./ProfileMenu";
 import SearchBar from "./SearchBar";
+import ToggleTheme from "./ToggleTheme";
+import UserContext from "../../context/UserContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     boxShadow: "none",
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor:
+      theme.palette.type == "light"
+        ? theme.palette.primary.main
+        : theme.palette.background.paper,
   },
   titleLink: {
     display: "flex",
@@ -47,9 +52,12 @@ HideOnScroll.propTypes = {
 };
 
 const Topbar = (props) => {
-  const { className, ...rest } = props;
+  const { className, themeType, setThemeType, ...rest } = props;
 
   const classes = useStyles();
+
+  const user = useContext(UserContext);
+  const notAuthenticated = user.guid == "None";
 
   return (
     <HideOnScroll {...props}>
@@ -64,19 +72,14 @@ const Topbar = (props) => {
           </Hidden>
 
           <div className={classes.flexGrow} />
+
           <SearchBar />
+
           <div className={classes.flexGrow} />
 
-          {/* <TopbarButton
-            text="Recommendations"
-            icon={<FavoriteBorderOutlinedIcon />}
-            href="recommendations"
-          />
-          <TopbarButton
-            text="History"
-            icon={<RateReviewOutlinedIcon />}
-            href="history"
-          /> */}
+          {!notAuthenticated && (
+            <ToggleTheme themeType={themeType} setThemeType={setThemeType} />
+          )}
           <ProfileMenu />
         </Toolbar>
       </AppBar>
@@ -86,6 +89,8 @@ const Topbar = (props) => {
 
 Topbar.propTypes = {
   className: PropTypes.string,
+  themeType: PropTypes.string,
+  setThemeType: PropTypes.func,
 };
 
 export default Topbar;
