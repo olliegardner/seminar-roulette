@@ -222,7 +222,7 @@ const SeminarActions = (props) => {
         <Chip
           label={keyword.text}
           color="secondary"
-          variant="contained"
+          variant="outlined"
           className={classes.spaceRight}
         />
       ))}

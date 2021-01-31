@@ -384,5 +384,6 @@
 
 - _2.5 hour_ Implemented a dark theme colour palette and the option to switch between light and dark theme.
 - _0.5 hour_ Added unit test for toggling between light and dark theme.
+- _0.5 hour_ Added a favicon.
 
 ## Week 16
