@@ -33,7 +33,7 @@ import UserContext from "../context/UserContext";
 const useStyles = makeStyles((theme) => ({
   accordion: {
     "&:hover": {
-      backgroundColor: grey[200],
+      backgroundColor: theme.palette.type == "light" ? grey[50] : "#303030",
     },
   },
   accordionColumn: {
@@ -60,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
   date: {
     textAlign: "center",
     fontSize: 12,
+    color: theme.palette.type == "dark" && theme.palette.text.primary,
   },
   flexGrow: {
     flexGrow: 1,
@@ -86,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     marginRight: theme.spacing(0.5),
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
   },
   addToCalendar: {
     "&:hover": {
@@ -94,13 +95,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   red: {
-    color: red[500],
+    color: red[400],
   },
   orange: {
-    color: orange[500],
+    color: orange[400],
   },
   green: {
-    color: green[500],
+    color: green[400],
   },
 }));
 
@@ -197,7 +198,7 @@ const SeminarActions = (props) => {
             }
             placement="top"
           >
-            <ClearIcon />
+            <ClearIcon color="secondary" />
           </Tooltip>
         </IconButton>
       )}
@@ -220,8 +221,8 @@ const SeminarActions = (props) => {
       {keywords.slice(0, 3).map((keyword) => (
         <Chip
           label={keyword.text}
-          variant="outlined"
-          color="primary"
+          color="secondary"
+          variant="contained"
           className={classes.spaceRight}
         />
       ))}
@@ -277,7 +278,7 @@ const SeminarCard = (props) => {
     >
       <AccordionSummary
         id={`seminar=${seminar.id}`}
-        expandIcon={<ExpandMoreIcon color="primary" />}
+        expandIcon={<ExpandMoreIcon color="secondary" />}
       >
         <div className={classes.accordionColumn}>
           <div className={classes.header}>
@@ -331,6 +332,7 @@ const SeminarCard = (props) => {
                       }
                       onMouseDown={(e) => e.stopPropagation()}
                       onClick={(e) => e.stopPropagation()}
+                      color="secondary"
                     >
                       {decodeString(seminar.speaker.speaker)}
                     </Link>
@@ -361,6 +363,7 @@ const SeminarCard = (props) => {
                       href={seminar.seminar_group.url}
                       onMouseDown={(e) => e.stopPropagation()}
                       onClick={(e) => e.stopPropagation()}
+                      color="secondary"
                     >
                       {seminar.seminar_group.name}
                     </Link>

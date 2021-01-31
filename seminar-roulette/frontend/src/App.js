@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { MuiThemeProvider, createMuiTheme, colors } from "@material-ui/core";
+import { ThemeProvider, createMuiTheme, colors } from "@material-ui/core";
 import dotenv from "dotenv";
 
 import UserContext from "./context/UserContext";
@@ -13,22 +13,20 @@ axios.defaults.baseURL =
     ? "https://howard.dcs.gla.ac.uk/"
     : "http://127.0.0.1:8000/";
 
-const muiTheme = createMuiTheme({
+const themeType = "light";
+
+const theme = createMuiTheme({
   palette: {
+    type: themeType,
     primary: {
       main: colors.teal[600],
     },
     secondary: {
       main: colors.teal[400],
     },
-    text: {
-      primary: colors.blueGrey[900],
-      secondary: colors.blueGrey[600],
-    },
     background: {
-      default: colors.common.white,
-      dark: "#f4f6f8",
-      paper: colors.common.white,
+      default: themeType == "light" ? colors.common.white : "#212121",
+      paper: themeType == "light" ? colors.common.white : "#333",
     },
   },
   direction: "ltr",
@@ -36,7 +34,8 @@ const muiTheme = createMuiTheme({
     MuiSelect: {
       select: {
         "&:focus": {
-          backgroundColor: colors.common.white,
+          backgroundColor:
+            themeType == "light" ? colors.common.white : "#212121",
         },
       },
     },
@@ -62,17 +61,15 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (user) {
-      setUserLoaded(true);
-    }
+    if (user) setUserLoaded(true);
   }, [user]);
 
   return (
-    <MuiThemeProvider theme={muiTheme}>
+    <ThemeProvider theme={theme}>
       <UserContext.Provider value={user}>
         {userLoaded && <Router />}
       </UserContext.Provider>
-    </MuiThemeProvider>
+    </ThemeProvider>
   );
 };
 

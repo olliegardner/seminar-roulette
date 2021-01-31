@@ -18,7 +18,10 @@ import SearchBar from "./SearchBar";
 const useStyles = makeStyles((theme) => ({
   root: {
     boxShadow: "none",
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor:
+      theme.palette.type == "light"
+        ? theme.palette.primary.main
+        : theme.palette.background.paper,
   },
   titleLink: {
     display: "flex",
@@ -64,19 +67,11 @@ const Topbar = (props) => {
           </Hidden>
 
           <div className={classes.flexGrow} />
+
           <SearchBar />
+
           <div className={classes.flexGrow} />
 
-          {/* <TopbarButton
-            text="Recommendations"
-            icon={<FavoriteBorderOutlinedIcon />}
-            href="recommendations"
-          />
-          <TopbarButton
-            text="History"
-            icon={<RateReviewOutlinedIcon />}
-            href="history"
-          /> */}
           <ProfileMenu />
         </Toolbar>
       </AppBar>

@@ -119,8 +119,11 @@ const TabSeminars = (props) => {
         <>
           {seminars.length > 0 ? (
             <>
-              <Typography variant="overline">
-                <b>{count}</b> {count == 1 ? "seminar" : "seminars"} found...
+              <Typography variant="overline" color="textPrimary">
+                <b>{count}</b>{" "}
+                <Typography variant="overline" color="textSecondary">
+                  {count == 1 ? "seminar" : "seminars"} found...
+                </Typography>
               </Typography>
 
               <Grid container spacing={3} alignItems="center" justify="center">
@@ -161,7 +164,7 @@ const TabSeminars = (props) => {
               </Grid>
             </>
           ) : (
-            <Typography>{notFoundText}</Typography>
+            <Typography color="textPrimary">{notFoundText}</Typography>
           )}
         </>
       ) : (

@@ -9,7 +9,9 @@ const Search = () => {
 
   return (
     <>
-      <Typography variant="h5">Search Results</Typography>
+      <Typography variant="h5" color="textPrimary">
+        Search Results
+      </Typography>
       <Typography color="textSecondary" gutterBottom>
         You searched for: {search}
       </Typography>

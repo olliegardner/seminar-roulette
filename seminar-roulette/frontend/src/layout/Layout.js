@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
     height: "100%",
     flex: "1 1 auto",
-    backgroundColor: theme.palette.common.white,
+    backgroundColor: theme.palette.background.default,
   },
   container: {
     paddingTop: theme.spacing(2),
