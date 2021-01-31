@@ -379,3 +379,10 @@
 - _1.5 hour_ Added filters and sort by button to search page.
 - _0.5 hour_ Fixed seminars not loading when logged out.
 - _0.5 hour_ Added permissions to backend views.
+
+### 31 Jan 2021
+
+- _2.5 hour_ Implemented a dark theme colour palette and the option to switch between light and dark theme.
+- _0.5 hour_ Added unit test for toggling between light and dark theme.
+
+## Week 16
