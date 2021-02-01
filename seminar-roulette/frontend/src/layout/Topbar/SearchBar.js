@@ -59,7 +59,7 @@ const SearchBar = () => {
 
   return (
     <form noValidate autoComplete="off" onSubmit={handleSearchSubmit}>
-      <div className={classes.search}>
+      <div className={classes.search} id="search">
         <InputBase
           placeholder="Search seminars…"
           classes={{

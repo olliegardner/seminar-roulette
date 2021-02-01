@@ -66,7 +66,12 @@ const TabsContainer = () => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" elevation={0} className={classes.tabBar}>
+      <AppBar
+        position="static"
+        elevation={0}
+        className={classes.tabBar}
+        id="tabs"
+      >
         <Tabs
           value={value}
           onChange={handleChange}
