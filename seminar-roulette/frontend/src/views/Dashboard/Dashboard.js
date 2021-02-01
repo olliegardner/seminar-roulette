@@ -9,6 +9,11 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+  text: {
+    [theme.breakpoints.only("xs")]: {
+      textAlign: "center",
+    },
+  },
 }));
 
 const Landing = () => {
@@ -19,13 +24,13 @@ const Landing = () => {
 
   return (
     <div className={classes.root}>
-      <Typography variant="h5" color="textPrimary">
-        Seminars taking place at the University of Glasgow
+      <Typography variant="h5" color="textPrimary" className={classes.text}>
+        Discover seminars hosted at the University of Glasgow
       </Typography>
 
       {!notAuthenticated && (
         <>
-          <Typography color="textSecondary">
+          <Typography color="textSecondary" className={classes.text}>
             Enter up to 5 of your personal interests below
           </Typography>
 

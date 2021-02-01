@@ -388,3 +388,7 @@
 - _1 hour_ Reinstated Shibboleth unit tests.
 
 ## Week 16
+
+### 1 Feb 2021
+
+- _2.5 hour_ Made the application is reponsive on various different screen sizes in preparation for carrying out user evaluations.

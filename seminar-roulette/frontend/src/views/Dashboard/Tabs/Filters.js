@@ -5,11 +5,14 @@ import {
   FormGroup,
   FormControl,
   FormControlLabel,
+  Hidden,
   InputLabel,
   makeStyles,
   MenuItem,
   Select,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@material-ui/core";
 
 import SortByButton from "../../../components/SortByButton";
@@ -48,10 +51,12 @@ const Filters = (props) => {
   } = props;
 
   const classes = useStyles();
+  const theme = useTheme();
+  const xsBreakpoint = useMediaQuery(theme.breakpoints.only("xs"));
 
   return (
     <>
-      <FormGroup row className={classes.filters}>
+      <FormGroup row={!xsBreakpoint} className={classes.filters}>
         {(label == "recommendations" || label == "upcoming") && (
           <FormControl variant="outlined">
             <InputLabel id="time-select-label">Time frame</InputLabel>
@@ -127,7 +132,9 @@ const Filters = (props) => {
           </>
         )}
 
-        <div className={classes.flexGrow} />
+        <Hidden xsDown>
+          <div className={classes.flexGrow} />
+        </Hidden>
 
         <SortByButton setOrdering={setOrdering} />
       </FormGroup>

@@ -75,6 +75,7 @@ const TabsContainer = () => {
           }
           textColor={theme.palette.type == "light" ? "primary" : "secondary"}
           variant="scrollable"
+          scrollButtons="auto"
         >
           <Tab label="Recommendations" />
           <Tab label="Upcoming" />

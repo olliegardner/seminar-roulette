@@ -68,22 +68,23 @@ const Topbar = (props) => {
     <HideOnScroll {...props}>
       <AppBar {...rest} className={clsx(classes.root, className)}>
         <Toolbar>
-          <Hidden smDown>
-            <RouterLink to="/" className={classes.titleLink}>
+          <RouterLink to="/" className={classes.titleLink}>
+            <Hidden smDown>
               <img
                 src={"../../../static/favicon.ico"}
                 className={classes.favicon}
               />
+            </Hidden>
 
-              <Typography variant="h5">
-                <b>Seminar Roulette</b>
-              </Typography>
-            </RouterLink>
+            <Typography variant="h5">
+              <b>Seminar Roulette</b>
+            </Typography>
+          </RouterLink>
+
+          <Hidden xsDown>
+            <div className={classes.flexGrow} />
+            <SearchBar />
           </Hidden>
-
-          <div className={classes.flexGrow} />
-
-          <SearchBar />
 
           <div className={classes.flexGrow} />
 
