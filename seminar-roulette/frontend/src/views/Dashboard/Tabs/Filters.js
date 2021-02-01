@@ -9,6 +9,7 @@ import {
   makeStyles,
   MenuItem,
   Select,
+  Typography,
 } from "@material-ui/core";
 
 import SortByButton from "../../../components/SortByButton";
@@ -80,7 +81,7 @@ const Filters = (props) => {
               name="food"
             />
           }
-          label="Serves food"
+          label={<Typography color="textPrimary">Serves food</Typography>}
         />
         <FormControlLabel
           control={
@@ -90,7 +91,7 @@ const Filters = (props) => {
               name="online"
             />
           }
-          label="Online only"
+          label={<Typography color="textPrimary">Online only</Typography>}
         />
 
         {label == "past" && (
@@ -103,7 +104,11 @@ const Filters = (props) => {
                   name="rated"
                 />
               }
-              label="Show previously rated seminars"
+              label={
+                <Typography color="textPrimary">
+                  Show previously rated seminars
+                </Typography>
+              }
             />
             <FormControlLabel
               control={
@@ -113,7 +118,11 @@ const Filters = (props) => {
                   name="discarded"
                 />
               }
-              label="Show discarded seminars"
+              label={
+                <Typography color="textPrimary">
+                  Show discarded seminars
+                </Typography>
+              }
             />
           </>
         )}

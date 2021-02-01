@@ -46,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
   tabChip: {
     verticalAlign: "middle",
   },
+  tabBar: {
+    backgroundColor: theme.palette.background.default,
+  },
 }));
 
 const TabsContainer = () => {
@@ -63,12 +66,14 @@ const TabsContainer = () => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="inherit" elevation={0}>
+      <AppBar position="static" elevation={0} className={classes.tabBar}>
         <Tabs
           value={value}
           onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
+          indicatorColor={
+            theme.palette.type == "light" ? "primary" : "secondary"
+          }
+          textColor={theme.palette.type == "light" ? "primary" : "secondary"}
           variant="scrollable"
         >
           <Tab label="Recommendations" />
@@ -80,7 +85,7 @@ const TabsContainer = () => {
 
       <TabPanel value={value} index={0} dir={theme.direction}>
         {notAuthenticated ? (
-          <Typography>
+          <Typography color="textPrimary">
             Please{" "}
             <Link component={RouterLink} to="/login">
               login
@@ -91,8 +96,8 @@ const TabsContainer = () => {
           <TabSeminars
             label="recommendations"
             request={`api/user/recommendations.json?guid=${user.guid}`}
-            notFoundText="No seminar recommendations found based on your ratings. Please rate some past seminars first!"
-            showRatings={false}
+            notFoundText="No seminar recommendations found based on your ratings. Try rating some more seminars!"
+            showRatingDiscardedOptions={false}
           />
         )}
       </TabPanel>
@@ -102,13 +107,13 @@ const TabsContainer = () => {
           label="upcoming"
           request="api/seminars/upcoming.json"
           notFoundText="No upcoming seminars found."
-          showRatings={false}
+          showRatingDiscardedOptions={false}
         />
       </TabPanel>
 
       <TabPanel value={value} index={2} dir={theme.direction}>
         {notAuthenticated ? (
-          <Typography>
+          <Typography color="textPrimary">
             Please{" "}
             <Link component={RouterLink} to="/login">
               login
@@ -120,7 +125,7 @@ const TabsContainer = () => {
             label="past"
             request={`api/seminars/past.json?guid=${user.guid}`}
             notFoundText="No past seminars found."
-            showRatings={true}
+            showRatingDiscardedOptions={true}
           />
         )}
       </TabPanel>
@@ -130,7 +135,7 @@ const TabsContainer = () => {
           label="random"
           request={`api/seminars/random.json?guid=${user.guid}`}
           notFoundText="No seminars found."
-          showRatings={false}
+          showRatingDiscardedOptions={false}
         />
       </TabPanel>
     </div>

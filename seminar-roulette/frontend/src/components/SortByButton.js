@@ -34,6 +34,7 @@ const SortByButton = (props) => {
         disableElevation
         onClick={handleOpen}
         className={classes.sort}
+        color="default"
       >
         Sort by
       </Button>
@@ -53,16 +54,16 @@ const SortByButton = (props) => {
         elevation={1}
       >
         <MenuItem color="inherit" onClick={() => handleSort("title")}>
-          Seminar title A-Z
+          Seminat title A to Z
         </MenuItem>
         <MenuItem color="inherit" onClick={() => handleSort("-title")}>
-          Seminar title Z-A
+          Seminar title Z to A
         </MenuItem>
         <MenuItem color="inherit" onClick={() => handleSort("start_time")}>
-          Date closest to now
+          Date ascending
         </MenuItem>
         <MenuItem color="inherit" onClick={() => handleSort("-start_time")}>
-          Date farthest from now
+          Date descending
         </MenuItem>
       </Popover>
     </>

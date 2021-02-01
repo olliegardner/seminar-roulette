@@ -33,7 +33,7 @@ import UserContext from "../context/UserContext";
 const useStyles = makeStyles((theme) => ({
   accordion: {
     "&:hover": {
-      backgroundColor: grey[200],
+      backgroundColor: theme.palette.type == "light" ? grey[50] : "#303030",
     },
   },
   accordionColumn: {
@@ -60,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
   date: {
     textAlign: "center",
     fontSize: 12,
+    color: theme.palette.type == "dark" && theme.palette.text.primary,
   },
   flexGrow: {
     flexGrow: 1,
@@ -86,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     marginRight: theme.spacing(0.5),
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
   },
   addToCalendar: {
     "&:hover": {
@@ -94,13 +95,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   red: {
-    color: red[500],
+    color: red[400],
   },
   orange: {
-    color: orange[500],
+    color: orange[400],
   },
   green: {
-    color: green[500],
+    color: green[400],
   },
 }));
 
@@ -113,6 +114,7 @@ const SeminarActions = (props) => {
     seminarsUpdated,
     setSeminarsUpdated,
     similarity,
+    showRatingDiscardedOptions,
   } = props;
 
   const classes = useStyles();
@@ -162,20 +164,22 @@ const SeminarActions = (props) => {
         </Button>
       )}
 
-      {!seminar.is_future && !currentlyDiscarded && (
-        <Rating
-          name={`rating-${seminar.id}`}
-          defaultValue={currentRating}
-          precision={1}
-          onMouseDown={(e) => e.stopPropagation()}
-          onClick={(e) => e.stopPropagation()}
-          onChange={(e) =>
-            setSeminarAttended(seminar.id, false, e.target.value)
-          }
-        />
-      )}
+      {!seminar.is_future &&
+        !currentlyDiscarded &&
+        showRatingDiscardedOptions && (
+          <Rating
+            name={`rating-${seminar.id}`}
+            defaultValue={currentRating}
+            precision={1}
+            onMouseDown={(e) => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()}
+            onChange={(e) =>
+              setSeminarAttended(seminar.id, false, e.target.value)
+            }
+          />
+        )}
 
-      {!seminar.is_future && (
+      {!seminar.is_future && !currentlyDiscarded && showRatingDiscardedOptions && (
         <IconButton
           aria-label="clear"
           color="secondary"
@@ -185,7 +189,6 @@ const SeminarActions = (props) => {
             e.preventDefault();
             setSeminarAttended(seminar.id, true);
           }}
-          disabled={currentlyDiscarded}
         >
           <Tooltip
             title={
@@ -195,7 +198,7 @@ const SeminarActions = (props) => {
             }
             placement="top"
           >
-            <ClearIcon />
+            <ClearIcon color="secondary" />
           </Tooltip>
         </IconButton>
       )}
@@ -206,7 +209,7 @@ const SeminarActions = (props) => {
         <Typography
           variant="subtitle2"
           className={clsx(classes.spaceRight, {
-            [classes.red]: similarity >= 1 && similarity <= 40,
+            [classes.red]: similarity > 0 && similarity <= 40,
             [classes.orange]: similarity > 40 && similarity <= 70,
             [classes.green]: similarity > 70 && similarity <= 100,
           })}
@@ -218,8 +221,8 @@ const SeminarActions = (props) => {
       {keywords.slice(0, 3).map((keyword) => (
         <Chip
           label={keyword.text}
+          color="secondary"
           variant="outlined"
-          color="primary"
           className={classes.spaceRight}
         />
       ))}
@@ -235,6 +238,7 @@ const SeminarCard = (props) => {
     seminarsUpdated,
     setSeminarsUpdated,
     similarity,
+    showRatingDiscardedOptions,
   } = props;
 
   const classes = useStyles();
@@ -274,7 +278,7 @@ const SeminarCard = (props) => {
     >
       <AccordionSummary
         id={`seminar=${seminar.id}`}
-        expandIcon={<ExpandMoreIcon color="primary" />}
+        expandIcon={<ExpandMoreIcon color="secondary" />}
       >
         <div className={classes.accordionColumn}>
           <div className={classes.header}>
@@ -314,25 +318,33 @@ const SeminarCard = (props) => {
           <Typography>
             <span className={classes.wrapIcon}>
               <PersonOutlineOutlinedIcon className={classes.icon} />
-              {seminar.speaker.url ? (
-                <Link
-                  target="_blank"
-                  rel="noopener"
-                  href={
-                    seminar.speaker.url.startsWith("http")
-                      ? seminar.speaker.url
-                      : "http://" + seminar.speaker.url
-                  }
-                  onMouseDown={(e) => e.stopPropagation()}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  {decodeString(seminar.speaker.speaker)}
-                </Link>
+
+              {seminar.speaker ? (
+                <>
+                  {seminar.speaker.url ? (
+                    <Link
+                      target="_blank"
+                      rel="noopener"
+                      href={
+                        seminar.speaker.url.startsWith("http")
+                          ? seminar.speaker.url
+                          : "http://" + seminar.speaker.url
+                      }
+                      onMouseDown={(e) => e.stopPropagation()}
+                      onClick={(e) => e.stopPropagation()}
+                      color="secondary"
+                    >
+                      {decodeString(seminar.speaker.speaker)}
+                    </Link>
+                  ) : (
+                    <>{decodeString(seminar.speaker.speaker)}</>
+                  )}
+                </>
               ) : (
-                <>{decodeString(seminar.speaker.speaker)}</>
+                <>N/A</>
               )}
 
-              {seminar.speaker.affiliation && (
+              {seminar.speaker && seminar.speaker.affiliation && (
                 <>&nbsp;- {decodeString(seminar.speaker.affiliation)}</>
               )}
             </span>
@@ -341,18 +353,26 @@ const SeminarCard = (props) => {
           <Typography>
             <span className={classes.wrapIcon}>
               <SchoolOutlinedIcon className={classes.icon} />
-              {seminar.seminar_group.url ? (
-                <Link
-                  target="_blank"
-                  rel="noopener"
-                  href={seminar.seminar_group.url}
-                  onMouseDown={(e) => e.stopPropagation()}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  {seminar.seminar_group.name}
-                </Link>
+
+              {seminar.seminar_group ? (
+                <>
+                  {seminar.seminar_group.url ? (
+                    <Link
+                      target="_blank"
+                      rel="noopener"
+                      href={seminar.seminar_group.url}
+                      onMouseDown={(e) => e.stopPropagation()}
+                      onClick={(e) => e.stopPropagation()}
+                      color="secondary"
+                    >
+                      {seminar.seminar_group.name}
+                    </Link>
+                  ) : (
+                    <>{seminar.seminar_group.name}</>
+                  )}
+                </>
               ) : (
-                <>{seminar.seminar_group.name}</>
+                <>N/A</>
               )}
             </span>
           </Typography>
@@ -360,7 +380,7 @@ const SeminarCard = (props) => {
           <Typography>
             <span className={classes.wrapIcon}>
               <LocationOnOutlinedIcon className={classes.icon} />
-              {seminar.location.location}
+              {seminar.location ? <>{seminar.location.location}</> : <>N/A</>}
             </span>
           </Typography>
 
@@ -373,6 +393,7 @@ const SeminarCard = (props) => {
               seminarsUpdated={seminarsUpdated}
               setSeminarsUpdated={setSeminarsUpdated}
               similarity={similarity}
+              showRatingDiscardedOptions={showRatingDiscardedOptions}
             />
           </div>
         </div>
@@ -413,6 +434,7 @@ SeminarCard.propTypes = {
   seminarsUpdated: PropTypes.number,
   setSeminarsUpdated: PropTypes.func,
   similarity: PropTypes.number,
+  showRatingDiscardedOptions: PropTypes.bool,
 };
 
 export default SeminarCard;

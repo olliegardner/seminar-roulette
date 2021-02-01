@@ -365,3 +365,26 @@
 ### 28 Jan 2021
 
 - _0.5 hour_ Wrote up status report for this week and sent to supervisor.
+- _1.5 hour_ Added similarity scores and filters to search page.
+
+### 29 Jan 2021
+
+- _1.5 hour_ Conducted research into different types of questionnaires which could be utilised in the evaluation.
+- _1.5 hour_ Created project evaluation survey on Google Forms.
+- _1 hour_ Weekly meeting with supervisor and wrote up meeting minutes.
+
+### 30 Jan 2021
+
+- _0.5 hour_ Added ethics section to user evaluation survey.
+- _1.5 hour_ Added filters and sort by button to search page.
+- _0.5 hour_ Fixed seminars not loading when logged out.
+- _0.5 hour_ Added permissions to backend views.
+
+### 31 Jan 2021
+
+- _2.5 hour_ Implemented a dark theme colour palette and the option to switch between light and dark theme.
+- _0.5 hour_ Added unit test for toggling between light and dark theme.
+- _0.5 hour_ Added a favicon.
+- _1 hour_ Reinstated Shibboleth unit tests.
+
+## Week 16
