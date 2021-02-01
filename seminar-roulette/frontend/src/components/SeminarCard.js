@@ -407,9 +407,7 @@ const SeminarCard = (props) => {
       </AccordionSummary>
 
       <AccordionDetails className={classes.accordionDetails}>
-        <Typography variant="body2" component="p">
-          {parse(seminar.description)}
-        </Typography>
+        <Typography variant="body2">{parse(seminar.description)}</Typography>
 
         {keywords.length > 5 && (
           <ReactWordcloud words={keywords} options={wordcloudOptions} />
