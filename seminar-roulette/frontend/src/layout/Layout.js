@@ -20,12 +20,13 @@ const useStyles = makeStyles((theme) => ({
       minHeight: "calc(100vh - 64px)",
     },
     height: "100%",
+    maxWidth: "100%",
     flex: "1 1 auto",
     backgroundColor: theme.palette.background.default,
   },
   container: {
     paddingTop: theme.spacing(2),
-    marginBottom: theme.spacing(1),
+    paddingBottom: theme.spacing(2),
   },
 }));
 
@@ -38,9 +39,7 @@ const Layout = (props) => {
       <Topbar themeType={themeType} setThemeType={setThemeType} />
 
       <main className={classes.content}>
-        <Container disableGutters className={classes.container}>
-          {children}
-        </Container>
+        <Container className={classes.container}>{children}</Container>
       </main>
     </div>
   );
