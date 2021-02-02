@@ -397,3 +397,4 @@
 ### 2 Feb 2021
 
 - _0.5 hour_ Updated the guided tour help text.
+- _2 hour_ Finalised codebase and evaluation survey in preparation for sending it out to participants.
