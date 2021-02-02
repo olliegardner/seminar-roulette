@@ -40,7 +40,7 @@ const steps = [
   {
     selector: "#user-interests",
     content:
-      "Enter up to 5 of your personal interests here. After entering your interests, Seminar Roulette will calculate the similarity between what you have entered and a seminar's keywords.",
+      "Enter up to 5 of your personal interests here. Following this, Seminar Roulette will calculate the similarity between your interests and a seminar's keywords.",
   },
   {
     selector: "#tabs",
@@ -49,7 +49,7 @@ const steps = [
   },
   {
     selector: "#filters",
-    content: "Filter or sort seminars by certain characteristics.",
+    content: "Filter or sort seminars by certain characteristics here.",
   },
   {
     selector: "#seminar",
@@ -58,7 +58,8 @@ const steps = [
   },
   {
     selector: "#search",
-    content: "Search for seminars using keywords.",
+    content:
+      "Use the search bar to find seminars using keywords which you have entered.",
   },
   {
     selector: "#theme",
@@ -91,6 +92,8 @@ const Layout = (props) => {
         isOpen={tourOpen}
         onRequestClose={() => setTourOpen(false)}
         accentColor={theme.palette.secondary.main}
+        badgeContent={(curr, tot) => <b>{curr}</b>}
+        disableInteraction={true}
       />
     </div>
   );

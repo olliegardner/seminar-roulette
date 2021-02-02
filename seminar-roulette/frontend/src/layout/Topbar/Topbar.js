@@ -95,6 +95,7 @@ const Topbar = (props) => {
               <ToggleTheme themeType={themeType} setThemeType={setThemeType} />
             </>
           )}
+
           <ProfileMenu />
         </Toolbar>
       </AppBar>
