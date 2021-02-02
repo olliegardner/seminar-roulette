@@ -50,9 +50,11 @@ const ProfileMenu = () => {
           </Button>
         ) : (
           <Button onClick={handleOpen} color="inherit">
-            <div className={classes.icon}>
-              <AccountCircleOutlinedIcon />
-            </div>
+            <Hidden mdUp>
+              <div className={classes.icon}>
+                <AccountCircleOutlinedIcon />
+              </div>
+            </Hidden>
 
             <Hidden smDown>{user.name}</Hidden>
             <ExpandMoreIcon />

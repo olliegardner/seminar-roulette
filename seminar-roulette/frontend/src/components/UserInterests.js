@@ -36,36 +36,37 @@ const UserInterests = () => {
   }, [newInterests]);
 
   return (
-    <Autocomplete
-      disabled={disableInput}
-      multiple
-      id="user-interests"
-      options={interestSuggestions}
-      defaultValue={interests}
-      freeSolo
-      renderTags={(value, getTagProps) =>
-        value.map((option, index) => (
-          <Chip
+    <div id="user-interests">
+      <Autocomplete
+        disabled={disableInput}
+        multiple
+        options={interestSuggestions}
+        defaultValue={interests}
+        freeSolo
+        renderTags={(value, getTagProps) =>
+          value.map((option, index) => (
+            <Chip
+              variant="outlined"
+              label={option}
+              {...getTagProps({ index })}
+              disabled={false}
+            />
+          ))
+        }
+        renderInput={(params) => (
+          <TextField
+            {...params}
             variant="outlined"
-            label={option}
-            {...getTagProps({ index })}
-            disabled={false}
+            label="Your interests"
+            placeholder="Your interests"
           />
-        ))
-      }
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          variant="outlined"
-          label="Your interests"
-          placeholder="Your interests"
-        />
-      )}
-      onChange={(e, newValue) => {
-        setNewInterests(newValue);
-        setDisableInput(newValue.length >= 5);
-      }}
-    />
+        )}
+        onChange={(e, newValue) => {
+          setNewInterests(newValue);
+          setDisableInput(newValue.length >= 5);
+        }}
+      />
+    </div>
   );
 };
 

@@ -16,6 +16,7 @@ import ProfileMenu from "./ProfileMenu";
 import SearchBar from "./SearchBar";
 import ToggleTheme from "./ToggleTheme";
 import UserContext from "../../context/UserContext";
+import GuidedTour from "./GuidedTour";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,7 +58,7 @@ HideOnScroll.propTypes = {
 };
 
 const Topbar = (props) => {
-  const { className, themeType, setThemeType, ...rest } = props;
+  const { className, themeType, setThemeType, setTourOpen, ...rest } = props;
 
   const classes = useStyles();
 
@@ -68,7 +69,7 @@ const Topbar = (props) => {
     <HideOnScroll {...props}>
       <AppBar {...rest} className={clsx(classes.root, className)}>
         <Toolbar>
-          <RouterLink to="/" className={classes.titleLink}>
+          <RouterLink to="/" className={classes.titleLink} id="heading">
             <Hidden smDown>
               <img
                 src={"../../../static/favicon.ico"}
@@ -89,8 +90,12 @@ const Topbar = (props) => {
           <div className={classes.flexGrow} />
 
           {!notAuthenticated && (
-            <ToggleTheme themeType={themeType} setThemeType={setThemeType} />
+            <>
+              <GuidedTour setTourOpen={setTourOpen} />
+              <ToggleTheme themeType={themeType} setThemeType={setThemeType} />
+            </>
           )}
+
           <ProfileMenu />
         </Toolbar>
       </AppBar>
@@ -102,6 +107,7 @@ Topbar.propTypes = {
   className: PropTypes.string,
   themeType: PropTypes.string,
   setThemeType: PropTypes.func,
+  setTourOpen: PropTypes.func,
 };
 
 export default Topbar;

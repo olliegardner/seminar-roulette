@@ -282,6 +282,7 @@ const SeminarCard = (props) => {
       variant="outlined"
       onChange={() => setExpanded(!expanded)}
       className={classes.accordion}
+      id="seminar"
     >
       <AccordionSummary
         id={`seminar=${seminar.id}`}

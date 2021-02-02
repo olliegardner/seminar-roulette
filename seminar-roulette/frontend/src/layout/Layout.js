@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Container, makeStyles } from "@material-ui/core";
+import Tour from "reactour";
+import { Container, makeStyles, useTheme } from "@material-ui/core";
 
 import Topbar from "./Topbar/Topbar";
 
@@ -30,17 +31,70 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const steps = [
+  {
+    selector: "#heading",
+    content:
+      "Welcome to Seminar Roulette, a platform which allows you to discover research seminars taking place at the University of Glasgow.",
+  },
+  {
+    selector: "#user-interests",
+    content:
+      "Enter up to 5 of your personal interests here. Following this, Seminar Roulette will calculate the similarity between your interests and a seminar's keywords.",
+  },
+  {
+    selector: "#tabs",
+    content:
+      "Use the tabs to find your seminar recommendations, upcoming seminars, past seminars and a random seminar. In the past tab, you are able to rate past seminars which will enable the system to make recommendations to you.",
+  },
+  {
+    selector: "#filters",
+    content: "Filter or sort seminars by certain characteristics here.",
+  },
+  {
+    selector: "#seminar",
+    content:
+      "Seminars are displayed in a list view where you are able to view their details. Click on the seminar to find out more!",
+  },
+  {
+    selector: "#search",
+    content:
+      "Use the search bar to find seminars using keywords which you have entered.",
+  },
+  {
+    selector: "#theme",
+    content: "Click this button to toggle between light and dark mode.",
+  },
+];
+
 const Layout = (props) => {
   const { children, themeType, setThemeType } = props;
+
   const classes = useStyles();
+  const theme = useTheme();
+
+  const [tourOpen, setTourOpen] = useState(false);
 
   return (
     <div className={classes.root}>
-      <Topbar themeType={themeType} setThemeType={setThemeType} />
+      <Topbar
+        themeType={themeType}
+        setThemeType={setThemeType}
+        setTourOpen={setTourOpen}
+      />
 
       <main className={classes.content}>
         <Container className={classes.container}>{children}</Container>
       </main>
+
+      <Tour
+        steps={steps}
+        isOpen={tourOpen}
+        onRequestClose={() => setTourOpen(false)}
+        accentColor={theme.palette.secondary.main}
+        badgeContent={(curr, tot) => <b>{curr}</b>}
+        disableInteraction={true}
+      />
     </div>
   );
 };

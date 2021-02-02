@@ -392,3 +392,8 @@
 ### 1 Feb 2021
 
 - _2.5 hour_ Made the application is reponsive on various different screen sizes in preparation for carrying out user evaluations.
+- _2 hour_ Added a guided walkthrough which is enabled through the use of a help button in the navigation bar.
+
+### 2 Feb 2021
+
+- _0.5 hour_ Updated the guided tour help text.

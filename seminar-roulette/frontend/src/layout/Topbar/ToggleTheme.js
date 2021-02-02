@@ -31,9 +31,9 @@ const ToggleTheme = (props) => {
         onClick={(e) => setThemeType(themeType == "light" ? "dark" : "light")}
       >
         {themeType == "dark" ? (
-          <Brightness7OutlinedIcon />
+          <Brightness7OutlinedIcon id="theme" />
         ) : (
-          <Brightness4OutlinedIcon />
+          <Brightness4OutlinedIcon id="theme" />
         )}
       </IconButton>
     </Tooltip>
