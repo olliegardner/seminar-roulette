@@ -66,7 +66,12 @@ const TabsContainer = () => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" elevation={0} className={classes.tabBar}>
+      <AppBar
+        position="static"
+        elevation={0}
+        className={classes.tabBar}
+        id="tabs"
+      >
         <Tabs
           value={value}
           onChange={handleChange}
@@ -75,6 +80,7 @@ const TabsContainer = () => {
           }
           textColor={theme.palette.type == "light" ? "primary" : "secondary"}
           variant="scrollable"
+          scrollButtons="auto"
         >
           <Tab label="Recommendations" />
           <Tab label="Upcoming" />

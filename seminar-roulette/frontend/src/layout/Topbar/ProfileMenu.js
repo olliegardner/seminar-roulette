@@ -1,6 +1,13 @@
 import React, { useState, useContext } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { Box, Button, MenuItem, Popover, makeStyles } from "@material-ui/core";
+import {
+  Box,
+  Button,
+  MenuItem,
+  Popover,
+  makeStyles,
+  Hidden,
+} from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
 
@@ -43,10 +50,13 @@ const ProfileMenu = () => {
           </Button>
         ) : (
           <Button onClick={handleOpen} color="inherit">
-            <div className={classes.icon}>
-              <AccountCircleOutlinedIcon />
-            </div>
-            {user.name}
+            <Hidden mdUp>
+              <div className={classes.icon}>
+                <AccountCircleOutlinedIcon />
+              </div>
+            </Hidden>
+
+            <Hidden smDown>{user.name}</Hidden>
             <ExpandMoreIcon />
           </Button>
         )}
@@ -68,6 +78,11 @@ const ProfileMenu = () => {
         elevation={1}
       >
         <Box py={1}>
+          <Hidden mdUp>
+            <MenuItem color="inherit" disabled>
+              {user.name}
+            </MenuItem>
+          </Hidden>
           <MenuItem color="inherit" disabled>
             {user.guid}
           </MenuItem>

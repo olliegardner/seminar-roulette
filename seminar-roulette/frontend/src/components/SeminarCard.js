@@ -12,6 +12,7 @@ import {
   AccordionDetails,
   Avatar,
   Chip,
+  Hidden,
   IconButton,
   Link,
   makeStyles,
@@ -103,6 +104,9 @@ const useStyles = makeStyles((theme) => ({
   green: {
     color: green[400],
   },
+  linkBreak: {
+    wordBreak: "break-all",
+  },
 }));
 
 const SeminarActions = (props) => {
@@ -160,7 +164,8 @@ const SeminarActions = (props) => {
           }}
           className={classes.addToCalendar}
         >
-          Add to Calendar
+          Add
+          <Hidden xsDown> to Calendar</Hidden>
         </Button>
       )}
 
@@ -214,18 +219,20 @@ const SeminarActions = (props) => {
             [classes.green]: similarity > 70 && similarity <= 100,
           })}
         >
-          {similarity}% match based on your interests
+          {similarity}% match <Hidden smDown>based on your interests</Hidden>
         </Typography>
       )}
 
-      {keywords.slice(0, 3).map((keyword) => (
-        <Chip
-          label={keyword.text}
-          color="secondary"
-          variant="outlined"
-          className={classes.spaceRight}
-        />
-      ))}
+      <Hidden xsDown>
+        {keywords.slice(0, 3).map((keyword) => (
+          <Chip
+            label={keyword.text}
+            color="secondary"
+            variant="outlined"
+            className={classes.spaceRight}
+          />
+        ))}
+      </Hidden>
     </>
   );
 };
@@ -275,6 +282,7 @@ const SeminarCard = (props) => {
       variant="outlined"
       onChange={() => setExpanded(!expanded)}
       className={classes.accordion}
+      id="seminar"
     >
       <AccordionSummary
         id={`seminar=${seminar.id}`}
@@ -315,7 +323,7 @@ const SeminarCard = (props) => {
             </div>
           </div>
 
-          <Typography>
+          <Typography className={classes.linkBreak}>
             <span className={classes.wrapIcon}>
               <PersonOutlineOutlinedIcon className={classes.icon} />
 
@@ -350,7 +358,7 @@ const SeminarCard = (props) => {
             </span>
           </Typography>
 
-          <Typography>
+          <Typography className={classes.linkBreak}>
             <span className={classes.wrapIcon}>
               <SchoolOutlinedIcon className={classes.icon} />
 
@@ -377,7 +385,7 @@ const SeminarCard = (props) => {
             </span>
           </Typography>
 
-          <Typography>
+          <Typography className={classes.linkBreak}>
             <span className={classes.wrapIcon}>
               <LocationOnOutlinedIcon className={classes.icon} />
               {seminar.location ? <>{seminar.location.location}</> : <>N/A</>}
@@ -400,9 +408,7 @@ const SeminarCard = (props) => {
       </AccordionSummary>
 
       <AccordionDetails className={classes.accordionDetails}>
-        <Typography variant="body2" component="p">
-          {parse(seminar.description)}
-        </Typography>
+        <Typography variant="body2">{parse(seminar.description)}</Typography>
 
         {keywords.length > 5 && (
           <ReactWordcloud words={keywords} options={wordcloudOptions} />

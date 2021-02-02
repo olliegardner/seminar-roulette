@@ -59,15 +59,13 @@ const App = () => {
       .get(`api/current-user.json`)
       .then((res) => {
         setUser(res.data);
+        setThemeType(res.data.dark_theme_enabled ? "dark" : "light");
       })
       .catch((err) => console.log(err));
   }, []);
 
   useEffect(() => {
-    if (user) {
-      setUserLoaded(true);
-      setThemeType(user.dark_theme_enabled ? "dark" : "light");
-    }
+    if (user) setUserLoaded(true);
   }, [user]);
 
   return (
