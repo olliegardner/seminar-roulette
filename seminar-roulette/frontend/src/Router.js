@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Switch, Route, BrowserRouter } from "react-router-dom";
 import RouteWithLayout from "./components/RouteWithLayout";
@@ -6,10 +6,13 @@ import Layout from "./layout/Layout";
 import Dashboard from "./views/Dashboard/Dashboard";
 import FourZeroFour from "./views/FourZeroFour";
 import Search from "./views/Search";
+import UserContext from "./context/UserContext";
 
 const Router = (props) => {
   const { themeType, setThemeType } = props;
+  const user = useContext(UserContext);
 
+  const notAuthenticated = user.guid == "None";
   const onProduction = process.env.PRODUCTION == "true";
 
   return (
@@ -19,7 +22,9 @@ const Router = (props) => {
           <Route
             exact
             path="/login"
-            render={() => (window.location = "/login/")}
+            render={() =>
+              (window.location = notAuthenticated ? "/login/" : "/")
+            }
           />
         ) : (
           <Route

@@ -212,7 +212,7 @@ class UserRecommendations(ListAPIView):
                 return Seminar.objects.filter(id__in=recommendation_ids
                                              ).order_by('start_time')
         else:
-            return []
+            return Seminar.objects.none()
 
 
 class AllUserInterests(APIView):
