@@ -398,3 +398,6 @@
 
 - _0.5 hour_ Updated the guided tour help text.
 - _2 hour_ Finalised codebase and evaluation survey in preparation for sending it out to participants.
+- _1 hour_ Created a graph using matplotlib which shows the number of seminars taking place each week in semester 2.
+
+### 3 Feb 2021

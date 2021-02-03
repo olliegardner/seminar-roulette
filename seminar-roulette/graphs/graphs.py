@@ -56,9 +56,7 @@ def introduction_graph():
     plt.legend()
     plt.show()
 
-    intro_graph.savefig('introduction.pdf', bbox_inches='tight')
-
-    # f.savefig("foo.pdf", bbox_inches='tight')
+    intro_graph.savefig('semester_2_seminars.pdf', bbox_inches='tight')
 
 
 if __name__ == '__main__':
