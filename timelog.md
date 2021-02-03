@@ -401,3 +401,5 @@
 - _1 hour_ Created a graph using matplotlib which shows the number of seminars taking place each week in semester 2.
 
 ### 3 Feb 2021
+
+- _2 hour_ Finished chapter 1 of dissertation and sent to supervisor for feedback
