@@ -403,3 +403,7 @@
 ### 3 Feb 2021
 
 - _2 hour_ Finished chapter 1 of dissertation and sent to supervisor for feedback
+
+### 4 Feb 2021
+
+- _0.5 hour_ Wrote up status report for this week and sent to supervisor.
