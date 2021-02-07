@@ -407,3 +407,11 @@
 ### 4 Feb 2021
 
 - _0.5 hour_ Wrote up status report for this week and sent to supervisor.
+
+### 5 Feb 2021
+
+- _1 hour_ Weekly meeting with supervisor and wrote up meeting minutes.
+
+### 7 Feb 2021
+
+- _1 hour_ Made changes to chapter 1 of the dissertation following feedback from my supervisor.
