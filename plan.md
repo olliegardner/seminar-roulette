@@ -92,6 +92,8 @@ Week-by-week plan for the whole project.
   - Add permissions to backend views.
   - Start carrying out final evaluation with participants.
 - **Week 17**
+  - Continue conducting final user evaluation.
+  - Write requirements chapter of dissertation.
 - **Week 19**
 - **Week 20**
 - **Week 21**

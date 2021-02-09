@@ -407,3 +407,23 @@
 ### 4 Feb 2021
 
 - _0.5 hour_ Wrote up status report for this week and sent to supervisor.
+
+### 5 Feb 2021
+
+- _1 hour_ Weekly meeting with supervisor and wrote up meeting minutes.
+
+### 7 Feb 2021
+
+- _1 hour_ Made changes to chapter 1 of the dissertation following feedback from my supervisor.
+- _2.5 hour_ Started writing the requirements chapter of the dissertation.
+
+## Week 17
+
+### 8 Feb 2021
+
+- _3 hour_ Continued writing requirements chapter of dissertation.
+
+### 9 Feb 2021
+
+- _0.5 hour_ Fixed spelling mistakes.
+- _0.5 hour_ Added some helper text below user interests to make it clearer that users can enter their own interests along with the suggestions.
