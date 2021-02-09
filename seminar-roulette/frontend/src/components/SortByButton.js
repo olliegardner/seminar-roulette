@@ -54,7 +54,7 @@ const SortByButton = (props) => {
         elevation={1}
       >
         <MenuItem color="inherit" onClick={() => handleSort("title")}>
-          Seminat title A to Z
+          Seminar title A to Z
         </MenuItem>
         <MenuItem color="inherit" onClick={() => handleSort("-title")}>
           Seminar title Z to A

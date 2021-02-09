@@ -102,7 +102,7 @@ const TabsContainer = () => {
           <TabSeminars
             label="recommendations"
             request={`api/user/recommendations.json?guid=${user.guid}`}
-            notFoundText="No seminar recommendations found based on your ratings. Try rating some more seminars!"
+            notFoundText="No recommendations found. Seminar recommendations are based off your past seminar ratings. Try rating some more seminars!"
             showRatingDiscardedOptions={false}
           />
         )}
