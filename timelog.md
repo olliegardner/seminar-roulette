@@ -422,3 +422,7 @@
 ### 8 Feb 2021
 
 - _3 hour_ Continued writing requirements chapter of dissertation.
+
+### 9 Feb 2021
+
+- _4 hour_ Continued writing requirements chapter of dissertation.
