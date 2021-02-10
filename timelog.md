@@ -426,3 +426,7 @@
 ### 9 Feb 2021
 
 - _4 hour_ Continued writing requirements chapter of dissertation.
+
+### 10 Feb 2021
+
+- _2.5 hour_ Finished chapter 3 of dissertation and sent to supervisor for review.
