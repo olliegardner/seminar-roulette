@@ -425,6 +425,8 @@
 
 ### 9 Feb 2021
 
+- _0.5 hour_ Fixed spelling mistakes.
+- _0.5 hour_ Added some helper text below user interests to make it clearer that users can enter their own interests along with the suggestions.
 - _4 hour_ Continued writing requirements chapter of dissertation.
 
 ### 10 Feb 2021

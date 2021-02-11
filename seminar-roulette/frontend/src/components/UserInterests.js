@@ -59,6 +59,7 @@ const UserInterests = () => {
             variant="outlined"
             label="Your interests"
             placeholder="Your interests"
+            helperText="Interests which other users have entered will appear as suggestions but you can also enter your own!"
           />
         )}
         onChange={(e, newValue) => {

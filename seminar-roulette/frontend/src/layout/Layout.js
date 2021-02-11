@@ -40,7 +40,7 @@ const steps = [
   {
     selector: "#user-interests",
     content:
-      "Enter up to 5 of your personal interests here. Following this, Seminar Roulette will calculate the similarity between your interests and a seminar's keywords.",
+      "Enter up to 5 of your personal interests here. Following this, Seminar Roulette will calculate the similarity between your interests and a seminar's keywords. Interests which other users have entered will appear as suggestions but you can also enter your own!",
   },
   {
     selector: "#tabs",
