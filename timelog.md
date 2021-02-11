@@ -430,3 +430,7 @@
 ### 10 Feb 2021
 
 - _2.5 hour_ Finished chapter 3 of dissertation and sent to supervisor for review.
+
+### 11 Feb 2021
+
+- _0.5 hour_ Wrote up status report for this week and sent to supervisor.
