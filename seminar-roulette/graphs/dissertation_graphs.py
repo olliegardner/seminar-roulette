@@ -46,6 +46,7 @@ def introduction_graph():
     plt.xlabel('Week')
     plt.ylabel('No. of Seminars')
     plt.xticks(weeks)
+    plt.yticks(range(0, 20, 2))
     plt.axhline(
         average_seminars,
         linewidth=1,
