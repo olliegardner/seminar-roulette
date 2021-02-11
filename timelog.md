@@ -427,3 +427,12 @@
 
 - _0.5 hour_ Fixed spelling mistakes.
 - _0.5 hour_ Added some helper text below user interests to make it clearer that users can enter their own interests along with the suggestions.
+- _4 hour_ Continued writing requirements chapter of dissertation.
+
+### 10 Feb 2021
+
+- _2.5 hour_ Finished chapter 3 of dissertation and sent to supervisor for review.
+
+### 11 Feb 2021
+
+- _0.5 hour_ Wrote up status report for this week and sent to supervisor.
