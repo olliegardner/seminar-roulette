@@ -2,7 +2,7 @@
 
 The meeting started with a discussion about the current stage of my evaluation. So far, 33 people have completed it and Jeremy thinks that we probably don't need to get 50 to complete it. We agreed that I should finish the evaluation by Wednesday 17 February. Following this, I can collate the data and start to analyse it. I should start thinking about the type of visualisations that I want to show in my dissertation. Since I have collected a lot of data, Jeremy said that calculating averages and standard deviations would be highly beneficial. Jeremy also suggested analysing the data and seeing if any correlations can be made between users. For example, people who thought the system was easy to use, spent the most time using the software. Trend analysis could then be used on these data points. For the open-ended questions, I could manually analyse these but putting each response into a "bucket". I could also carry out sentiment analysis on the open-ended questions to gauge if feedback was generally positive or negative.
 
-Next, we discussed the requirements chapter which I sent him earlier this week. He gave me some feedback which included:
+Next, we discussed the requirements chapter which I sent Jeremy earlier this week. He gave me some feedback which included:
 
 - Make the MoSCoW acronyms shorter (M, S, C, W)
 - Report percentages to the nearest whole number

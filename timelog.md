@@ -440,3 +440,7 @@
 ### 12 Feb 2021
 
 - _1 hour_ Weekly meeting with supervisor and wrote up meeting minutes.
+
+### 13 Feb 2021
+
+- _1.5 hour_ Started conducting research for background chapter of dissertation.
