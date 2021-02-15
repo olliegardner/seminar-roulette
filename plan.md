@@ -94,6 +94,10 @@ Week-by-week plan for the whole project.
 - **Week 17**
   - Continue conducting final user evaluation.
   - Write requirements chapter of dissertation.
+- **Week 18 [READING WEEK]**
+  - Finish conducting final evaluation.
+  - Write background chapter of dissertation.
+  - Collate evaluation data and start analysing it.
 - **Week 19**
 - **Week 20**
 - **Week 21**
