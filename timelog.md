@@ -444,3 +444,9 @@
 ### 13 Feb 2021
 
 - _1.5 hour_ Started conducting research for background chapter of dissertation.
+
+## Week 18
+
+### 16 Feb 2021
+
+- _0.5 hour_ Fixed duplicated Seminar Groups being created in the event feed script.
