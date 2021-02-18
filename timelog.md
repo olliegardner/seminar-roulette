@@ -450,3 +450,13 @@
 ### 16 Feb 2021
 
 - _0.5 hour_ Fixed duplicated Seminar Groups being created in the event feed script.
+- _3 hour_ Started writing the background chapter of dissertation.
+
+### 17 Feb 2021
+
+- _2 hour_ Continued writing background chapter of dissertation.
+
+### 18 Feb 2021
+
+- _1.5 hour_ Conducted more research into more research papers which I could cite in the background chapter of dissertation.
+- _2 hour_ Continued writing background chapter of dissertation.
