@@ -460,3 +460,7 @@
 
 - _1.5 hour_ Conducted more research into more research papers which I could cite in the background chapter of dissertation.
 - _2 hour_ Continued writing background chapter of dissertation.
+
+### 19 Feb 2021
+
+- _1.5 hour_ Continued writing background chapter of dissertation.
