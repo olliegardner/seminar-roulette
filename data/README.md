@@ -18,4 +18,10 @@ Before the project commenced, an initial user survey was conducted with potentia
 
 A think aloud evaluation was conducted on 16th and 17th December 2020 over Zoom with 6 participants. Its aim was to gather feedback from potential users of the application in its current state. Using this feedback, changes will be made on the application which reflect the end user's wants and needs. The feedback will also steer the project in the right direction for the start of semester 2. All data was collected anonymously and in a way which complies with the university's ethics checklist.
 
+### Final User Evaluation
+
+A final user evaluation was carried out with 34 human participants. Its aim was to investigate the suitability and usability of the Seminar Roulette web application. Feedback was gathered to further improve the prototype in the future. All data was collected anonymously and in a way which complies with the university's ethics checklist.
+
 ---
+
+Ollie Gardner
