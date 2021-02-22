@@ -99,6 +99,9 @@ Week-by-week plan for the whole project.
   - Write background chapter of dissertation.
   - Collate evaluation data and start analysing it.
 - **Week 19**
+  - Continue analysing evaluation data and start preparing visualisations.
+  - Write design chapter of dissertation.
+  - Code clean-up.
 - **Week 20**
 - **Week 21**
 - **Week 22**

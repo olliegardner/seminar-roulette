@@ -444,3 +444,30 @@
 ### 13 Feb 2021
 
 - _1.5 hour_ Started conducting research for background chapter of dissertation.
+
+## Week 18
+
+### 16 Feb 2021
+
+- _0.5 hour_ Fixed duplicated Seminar Groups being created in the event feed script.
+- _3 hour_ Started writing the background chapter of dissertation.
+
+### 17 Feb 2021
+
+- _2 hour_ Continued writing background chapter of dissertation.
+
+### 18 Feb 2021
+
+- _1.5 hour_ Conducted more research into more research papers which I could cite in the background chapter of dissertation.
+- _2 hour_ Continued writing background chapter of dissertation.
+
+### 19 Feb 2021
+
+- _1.5 hour_ Continued writing background chapter of dissertation.
+
+### 21 Feb 2021
+
+- _1 hour_ Consolidated final user evaluation data and added it to the data folder in the repository.
+- _0.5 hour_ Continued writing background chapter of dissertation.
+
+## Week 19

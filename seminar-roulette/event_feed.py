@@ -65,9 +65,9 @@ class EventFeeds():
 
             seminar_group, seminar_group_created = SeminarGroup.objects.get_or_create(
                 name=group['name'],
-                short_name=group['shortname'],
             )
             # in case location/description/url changes
+            seminar_group.short_name = group['shortname']
             seminar_group.location.add(location)
             seminar_group.description = group['description']
             seminar_group.url = group['url']
@@ -121,9 +121,12 @@ class EventFeeds():
             seminar_group, seminar_group_created = SeminarGroup.objects.get_or_create(
                 name=organiser['name']
             )
-            seminar_group.description = organiser['long_description']['text']
-            seminar_group.url = organiser['url']
-            seminar_group.save()
+
+            if seminar_group_created:
+                seminar_group.description = organiser['long_description']['text'
+                                                                         ]
+                seminar_group.url = organiser['url']
+                seminar_group.save()
 
             for event in organiser_events['events']:
                 now = datetime.datetime.now()
