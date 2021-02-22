@@ -464,3 +464,10 @@
 ### 19 Feb 2021
 
 - _1.5 hour_ Continued writing background chapter of dissertation.
+
+### 21 Feb 2021
+
+- _1 hour_ Consolidated final user evaluation data and added it to the data folder in the repository.
+- _0.5 hour_ Continued writing background chapter of dissertation.
+
+## Week 19
