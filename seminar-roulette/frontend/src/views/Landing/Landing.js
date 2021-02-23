@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Box, makeStyles, Typography } from "@material-ui/core";
-import Tabs from "./Tabs/Tabs";
+import Tabs from "./Tabs";
 
 import UserInterests from "../../components/UserInterests";
 import UserContext from "../../context/UserContext";

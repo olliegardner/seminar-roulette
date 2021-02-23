@@ -8,7 +8,7 @@ from django.utils import timezone
 from .managers import UniversityUserManager
 
 
-# user model, taking attributes from the university Shibboleth login system
+# User model, taking attributes from the single sign-on (Shibboleth login system
 class UniversityUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=255, unique=True)
     guid = models.CharField(max_length=12, unique=True, primary_key=True)
@@ -33,7 +33,7 @@ class UniversityUser(AbstractBaseUser, PermissionsMixin):
         return self.guid
 
 
-# location of the seminar
+# Location of the seminar
 class Location(models.Model):
     location = models.CharField(max_length=255, null=False, blank=False)
     directions = models.TextField(null=True, blank=True)
@@ -52,7 +52,7 @@ class Location(models.Model):
         return self.location
 
 
-# seminar hosting group
+# Group hosting/responsible for the seminar
 class SeminarGroup(models.Model):
     name = models.CharField(max_length=255, null=False, blank=False)
     short_name = models.CharField(max_length=50, null=True, blank=True)
@@ -68,7 +68,7 @@ class SeminarGroup(models.Model):
         return self.name
 
 
-# speaker of a seminar
+# Person hosting the seminar
 class Speaker(models.Model):
     speaker = models.CharField(max_length=255, null=False, blank=False)
     affiliation = models.CharField(max_length=255, null=True, blank=True)
@@ -81,7 +81,7 @@ class Speaker(models.Model):
         return self.speaker + ' from ' + self.affiliation
 
 
-# seminar event
+# Model storing details about the seminar event
 class Seminar(models.Model):
     title = models.CharField(max_length=255, null=False, blank=False)
     description = models.TextField(null=True, blank=True)
@@ -111,7 +111,7 @@ class Seminar(models.Model):
         return self.title
 
 
-# seminars have been recommended to a user
+# Seminar which user has previously attended, rated or discarded
 class SeminarHistory(models.Model):
     seminar = models.ForeignKey(Seminar, on_delete=models.CASCADE)
     user = models.ForeignKey(UniversityUser, on_delete=models.CASCADE)
@@ -136,7 +136,7 @@ class SeminarHistory(models.Model):
         return str(self.seminar) + ' - ' + str(self.user)
 
 
-# cronjob keeps track of the success of nightly job which pulls in data
+# Keeps track of the status of nightly cron job which pulls in data
 class CronJob(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     success = models.BooleanField(default=False)

@@ -4,9 +4,9 @@ import PropTypes from "prop-types";
 import { Grid, makeStyles, Typography } from "@material-ui/core";
 import Pagination from "@material-ui/lab/Pagination";
 
-import SeminarCard from "../../../components/SeminarCard";
-import LoadingSpinner from "../../../components/LoadingSpinner";
-import UserContext from "../../../context/UserContext";
+import SeminarCard from "../../components/SeminarCard";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import UserContext from "../../context/UserContext";
 import Filters from "./Filters";
 
 const useStyles = makeStyles((theme) => ({

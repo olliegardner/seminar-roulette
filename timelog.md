@@ -475,3 +475,8 @@
 ### 22 Feb 2021
 
 - _2 hour_ Continued writing background chapter of dissertation.
+
+### 23 Feb 2021
+
+- _1.5 hour_ Finished writing background chapter of dissertation and sent to supervisor.
+- _1.5 hour_ Refactored and documented backend and frontend code.

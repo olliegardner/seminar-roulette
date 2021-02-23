@@ -8,7 +8,7 @@ class UniversityUserManager(BaseUserManager):
     """
     def create_user(self, guid, password, **extra_fields):
         """
-        Create a user instance and save to db
+        Create a user instance and save to database
         """
         if not guid:
             raise ValueError(_('GUID must be set'))

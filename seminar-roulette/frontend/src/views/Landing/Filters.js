@@ -15,7 +15,7 @@ import {
   useTheme,
 } from "@material-ui/core";
 
-import SortByButton from "../../../components/SortByButton";
+import SortByButton from "../../components/SortByButton";
 
 const useStyles = makeStyles((theme) => ({
   filters: {

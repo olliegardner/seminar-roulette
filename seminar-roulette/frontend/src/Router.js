@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Switch, Route, BrowserRouter } from "react-router-dom";
 import RouteWithLayout from "./components/RouteWithLayout";
 import Layout from "./layout/Layout";
-import Dashboard from "./views/Dashboard/Dashboard";
+import Landing from "./views/Landing/Landing";
 import FourZeroFour from "./views/FourZeroFour";
 import Search from "./views/Search";
 import UserContext from "./context/UserContext";
@@ -49,13 +49,14 @@ const Router = (props) => {
         )}
 
         <RouteWithLayout
-          component={Dashboard}
+          component={Landing}
           layout={Layout}
           themeType={themeType}
           setThemeType={setThemeType}
           exact
           path="/"
         />
+
         <RouteWithLayout
           component={Search}
           layout={Layout}
