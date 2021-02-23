@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 
-import TabSeminars from "../views/Dashboard/Tabs/TabSeminars";
+import TabSeminars from "../views/Landing/TabSeminars";
 
 const Search = () => {
   const { search } = useParams();

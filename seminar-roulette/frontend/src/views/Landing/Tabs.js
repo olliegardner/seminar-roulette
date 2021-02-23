@@ -12,7 +12,7 @@ import {
   Link,
 } from "@material-ui/core";
 
-import UserContext from "../../../context/UserContext";
+import UserContext from "../../context/UserContext";
 import TabSeminars from "./TabSeminars";
 
 const TabPanel = (props) => {
