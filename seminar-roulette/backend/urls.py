@@ -1,9 +1,12 @@
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
-from .views import *
+
+from backend.views.views_user import *
+from backend.views.views_seminar import *
+from backend.views.views_misc import *
 
 urlpatterns = [
-    # user api calls
+    # User API calls
     path('current-user/', CurrentUser.as_view()),
     path('user/recommendations/', UserRecommendations.as_view()),
     path('user/interests/', AllUserInterests.as_view()),
@@ -11,14 +14,14 @@ urlpatterns = [
     path('user/similarities/', UserSimilarities.as_view()),
     path('user/theme/', ToggleTheme.as_view()),
 
-    # seminar api calls
+    # Seminar API calls
     path('seminar/', SeminarFromID.as_view()),
     path('seminar/attendance/', SeminarAttendance.as_view()),
     path('seminars/upcoming/', UpcomingSeminars.as_view()),
     path('seminars/random/', RandomSeminar.as_view()),
     path('seminars/past/', PastSeminars.as_view()),
 
-    # misc api calls
+    # Misc API calls
     path('search/', Search.as_view()),
 ]
 

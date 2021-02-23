@@ -11,7 +11,7 @@ import os
 import environ
 
 
-# test cases for university users
+# Test cases for university users
 class UserTests(TestCase):
     def setUp(self):
         self.user = UniversityUser.objects.create_user(
@@ -77,7 +77,7 @@ class UserTests(TestCase):
         self.assertEqual(response.data['guid'], 'None')
 
 
-# test cases for samoa feed
+# Test cases for samoa data feed
 class SamoaTests(TestCase):
     def test_connection_to_samoa_api(self):
         """
@@ -105,7 +105,7 @@ class SamoaTests(TestCase):
         self.assertEqual(events['title'], 'SYSTEMS Coffee')
 
 
-# tests cases for connecting to the EventBrite API
+# Tests cases for connecting to the EventBrite API
 class EventBriteTests(TestCase):
     def setUp(self):
         env = environ.Env()
@@ -155,7 +155,7 @@ class EventBriteTests(TestCase):
         self.assertGreater(len(organiser_events), 1)
 
 
-# test cases for seminar model
+# Test cases for seminar model
 class SeminarTests(TestCase):
     def setUp(self):
         self.user = UniversityUser.objects.create_user(

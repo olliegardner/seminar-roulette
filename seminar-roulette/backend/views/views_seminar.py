@@ -1,6 +1,5 @@
 from django.db.models import Q
 from django.http import Http404
-from django.shortcuts import render
 from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
@@ -9,24 +8,12 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from watson import search as watson
 
-from .models import *
-from .serializers import *
-from recommender import recommendation_engine
-from itertools import product
+from backend.models import *
+from backend.serializers import *
 
 import datetime
 import calendar
-import json
-import re
-
-import nltk
-from nltk.corpus import wordnet
-
-nltk.download('stopwords')
-nltk.download('punkt')
-nltk.download('wordnet')
 
 
 def get_user(guid):
@@ -87,22 +74,18 @@ class SeminarPagination(PageNumberPagination):
     max_page_size = 100
 
 
-class RecommenderPagination(PageNumberPagination):
-    page_size = 5
-    page_size_query_param = 'page_size'
-    max_page_size = 5
-
-
-class CurrentUser(APIView):
+class SeminarFromID(APIView):
     """
-    Retrieve the currently logged in user.
+    Get seminar from seminar ID.
     """
+    permissions_classes = [IsAdminUser]
+
     def get(self, request, format=None):
-        try:
-            serializer = UserSerializer(request.user)
-            return Response(serializer.data)
-        except:
-            return Response({'guid': 'None'})
+        seminar_id = self.request.query_params.get('id')
+        seminar = get_seminar(seminar_id)
+
+        serializer = SeminarSerializer(seminar)
+        return Response(serializer.data)
 
 
 class RandomSeminar(ListAPIView):
@@ -170,148 +153,6 @@ class SeminarAttendance(APIView):
         seminar_history.save()
 
         return Response('success')
-
-
-class UserRecommendations(ListAPIView):
-    """
-    Get seminar recommendations for a user.
-    """
-    permissions_classes = [IsAuthenticated]
-
-    serializer_class = SeminarSerializer
-    pagination_class = RecommenderPagination
-    filter_backends = [DjangoFilterBackend, OrderingFilter]
-    filterset_fields = ['online', 'serves_food']
-    ordering_fields = ['title', 'start_time']
-
-    def get_queryset(self):
-        time = self.request.query_params.get('time')
-        guid = self.request.query_params.get('guid')
-        user = get_user(guid)
-
-        user_seminar_history = SeminarHistory.objects.filter(
-            user=user, attended=True
-        )
-
-        if user_seminar_history:
-            recommendation_ids = [
-                seminar.id for seminar in recommendation_engine(user)
-            ]
-
-            if time:
-                time_seminars = get_seminars_by_time(time)
-                time_seminar_ids = [seminar.id for seminar in time_seminars]
-
-                intersection_ids = list(
-                    set(recommendation_ids) & set(time_seminar_ids)
-                )  # takes intersection of both lists
-
-                return Seminar.objects.filter(id__in=intersection_ids
-                                             ).order_by('start_time')
-            else:
-                return Seminar.objects.filter(id__in=recommendation_ids
-                                             ).order_by('start_time')
-        else:
-            return Seminar.objects.none()
-
-
-class AllUserInterests(APIView):
-    """
-    Get all user interests from all users to act as suggestions.
-    """
-    permissions_classes = [IsAuthenticated]
-
-    def get(self, request, format=None):
-        users = UniversityUser.objects.all()
-        interests = []
-
-        for user in users:
-            for interest in user.interests:
-                if not interest in interests:
-                    interests.append(interest)
-
-        return Response(interests)
-
-
-class AmendUserInterests(APIView):
-    """
-    Amends a user's interests.
-    """
-    permissions_classes = [IsAuthenticated]
-
-    def put(self, request, format=None):
-        new_interests = request.data['interests']
-
-        user = request.user
-        user.interests = new_interests
-        user.save()
-
-        return Response(user.interests)
-
-
-class SeminarFromID(APIView):
-    """
-    Get seminar from seminar ID.
-    """
-    permissions_classes = [IsAdminUser]
-
-    def get(self, request, format=None):
-        seminar_id = self.request.query_params.get('id')
-        seminar = get_seminar(seminar_id)
-
-        serializer = SeminarSerializer(seminar)
-        return Response(serializer.data)
-
-
-class UserSimilarities(APIView):
-    """
-    Get a user's seminar similarities.
-    """
-    permissions_classes = [IsAuthenticated]
-
-    def get(self, request, format=None):
-        wordnet.ensure_loaded()
-
-        seminars = self.request.query_params.get('seminars')
-        guid = self.request.query_params.get('guid')
-        user = get_user(guid)
-
-        similarities = {}
-
-        for seminar_id in seminars.split(','):
-            try:
-                seminar = Seminar.objects.get(id=seminar_id)
-                keywords = json.loads(seminar.keywords)
-
-                if not user.interests or not keywords:
-                    similarities[seminar.id] = 0
-                    continue
-
-                interest_syns = set(
-                    synset for interest in user.interests
-                    for synset in wordnet.synsets(interest)
-                )
-
-                keyword_syns = set(
-                    synset for keyword in keywords[0:3]
-                    for synset in wordnet.synsets(keyword['text'])
-                )
-
-                if not interest_syns or not keyword_syns:
-                    similarities[seminar.id] = 0
-                    continue
-
-                best = max(
-                    wordnet.wup_similarity(i, j) or 0
-                    for i, j in product(interest_syns, keyword_syns)
-                )
-
-                similarities[seminar.id] = round(best * 100, 1)
-            except Seminar.DoesNotExist:
-                similarities[seminar.id] = 0
-                continue
-
-        return Response(similarities)
 
 
 class UpcomingSeminars(ListAPIView):
@@ -418,52 +259,3 @@ class PastSeminars(APIView):
         response = paginator.get_paginated_response(page_results)
 
         return response
-
-
-class Search(ListAPIView):
-    """
-    Retrieve search results from models.
-    """
-    serializer_class = SeminarSerializer
-    pagination_class = SeminarPagination
-    filter_backends = [OrderingFilter]
-    filter_backends = [DjangoFilterBackend, OrderingFilter]
-    filterset_fields = ['online', 'serves_food']
-    ordering_fields = ['title', 'start_time']
-
-    def handle_search(self, query, model):
-        search_results = watson.search(query, models=(model, ))
-        search_results = map(lambda x: x.object, search_results)
-
-        # remove invalid results
-        search_results = filter(lambda x: x is not None, search_results)
-        search_results = [x for x in search_results if x != None]
-
-        search_results_ids = [seminar.id for seminar in search_results]
-
-        return search_results_ids
-
-    def get_queryset(self):
-        query = self.request.query_params.get('q')
-
-        if query:  # if a search has taken place
-            seminar_ids = self.handle_search(query, Seminar)
-            return Seminar.objects.filter(id__in=seminar_ids)
-
-        return []
-
-
-class ToggleTheme(APIView):
-    """
-    Toggle the user's theme between light and dark.
-    """
-    permissions_classes = [IsAuthenticated]
-
-    def put(self, request, format=None):
-        theme = request.data['theme']
-
-        user = request.user
-        user.dark_theme_enabled = theme == 'dark'
-        user.save()
-
-        return Response(user.dark_theme_enabled)
