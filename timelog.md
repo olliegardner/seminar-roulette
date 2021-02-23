@@ -471,3 +471,7 @@
 - _0.5 hour_ Continued writing background chapter of dissertation.
 
 ## Week 19
+
+### 22 Feb 2021
+
+- _2 hour_ Continued writing background chapter of dissertation.
