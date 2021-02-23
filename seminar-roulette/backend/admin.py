@@ -5,7 +5,7 @@ admin.site.site_header = "Seminar Roulette Administration"
 
 
 class UniversityUserAdmin(admin.ModelAdmin):
-    list_display = ['guid', 'name', 'is_superuser']
+    list_display = ['guid', 'name', 'last_login', 'is_superuser']
 
 
 class SeminarGroupAdmin(admin.ModelAdmin):
@@ -36,10 +36,7 @@ class SeminarHistoryAdmin(admin.ModelAdmin):
 
 class CronJobAdmin(admin.ModelAdmin):
     list_display = ['timestamp', 'success', 'error_message']
-    readonly_fields = (
-        'timestamp',
-        'error_message',
-    )
+    readonly_fields = ('timestamp', 'error_message')
 
 
 admin.site.register(UniversityUser, UniversityUserAdmin)

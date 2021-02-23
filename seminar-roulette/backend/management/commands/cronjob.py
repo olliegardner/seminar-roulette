@@ -9,8 +9,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         try:
-            event_feed.EventFeeds()
+            event_feed.EventFeeds()  # Pulls data in from various event feeds
         except Exception as e:
+            # If an error occurs, create a log of it
             CronJob.objects.create(error_message=str(e))
             self.stdout.write(e)
         else:

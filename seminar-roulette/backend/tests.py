@@ -11,7 +11,7 @@ import os
 import environ
 
 
-# test cases for university users
+# Test cases for university users
 class UserTests(TestCase):
     def setUp(self):
         self.user = UniversityUser.objects.create_user(
@@ -77,35 +77,35 @@ class UserTests(TestCase):
         self.assertEqual(response.data['guid'], 'None')
 
 
-# test cases for samoa feed
-# class SamoaTests(TestCase):
-#     def test_connection_to_samoa_api(self):
-#         """
-#         Tests whether a connection to samoa is successful.
-#         """
-#         response = requests.get(
-#             'https://samoa.dcs.gla.ac.uk/events/rest/Event/searchtext?search='
-#         )
-#         events = response.json()
+# Test cases for samoa data feed
+class SamoaTests(TestCase):
+    def test_connection_to_samoa_api(self):
+        """
+        Tests whether a connection to samoa is successful.
+        """
+        response = requests.get(
+            'https://samoa.dcs.gla.ac.uk/events/rest/Event/searchtext?search='
+        )
+        events = response.json()
 
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#         self.assertEqual(response.headers['Content-Type'], 'application/json')
-#         self.assertGreater(len(events), 1)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.headers['Content-Type'], 'application/json')
+        self.assertGreater(len(events), 1)
 
-#     def test_17012_returns_systems_coffee(self):
-#         """
-#         Tests whether the event with id 17012 returns the correct seminar.
-#         """
-#         response = requests.get(
-#             'https://samoa.dcs.gla.ac.uk/events/rest/Event/17012'
-#         )
-#         events = response.json()
+    def test_17012_returns_systems_coffee(self):
+        """
+        Tests whether the event with id 17012 returns the correct seminar.
+        """
+        response = requests.get(
+            'https://samoa.dcs.gla.ac.uk/events/rest/Event/17012'
+        )
+        events = response.json()
 
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#         self.assertEqual(events['title'], 'SYSTEMS Coffee')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(events['title'], 'SYSTEMS Coffee')
 
 
-# tests cases for connecting to the EventBrite API
+# Tests cases for connecting to the EventBrite API
 class EventBriteTests(TestCase):
     def setUp(self):
         env = environ.Env()
@@ -155,7 +155,7 @@ class EventBriteTests(TestCase):
         self.assertGreater(len(organiser_events), 1)
 
 
-# test cases for seminar model
+# Test cases for seminar model
 class SeminarTests(TestCase):
     def setUp(self):
         self.user = UniversityUser.objects.create_user(
