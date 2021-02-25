@@ -480,3 +480,7 @@
 
 - _1.5 hour_ Finished writing background chapter of dissertation and sent to supervisor.
 - _1.5 hour_ Refactored and documented backend and frontend code.
+
+### 25 Feb 2021
+
+- _0.5 hour_ Wrote up status report for this week and sent to supervisor.

@@ -51,23 +51,25 @@ class EventFeeds():
         # Loops through each event in response
         for event in events:
             group = event['owningOu']
-            location = event['location']
+            seminar_location = event['location']
             online_locations = ['online', 'zoom', 'gather.town']
             online = False
 
             if any(
-                loc in location['location'].lower() for loc in online_locations
+                loc in seminar_location['location'].lower()
+                for loc in online_locations
             ):
                 online = True
 
             # Creates location model
             location, location_created = Location.objects.get_or_create(
-                location=location['location'],
-                directions=location['directions'],
-                latitude=location['latitude'],
-                longitude=location['longitude'],
+                location=seminar_location['location'],
+                latitude=seminar_location['latitude'],
+                longitude=seminar_location['longitude'],
                 online=online,
             )
+            location.directions = seminar_location['directions']
+            location.save()
 
             # Creates seminar group model
             seminar_group, seminar_group_created = SeminarGroup.objects.get_or_create(
