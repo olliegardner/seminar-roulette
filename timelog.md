@@ -484,3 +484,7 @@
 ### 25 Feb 2021
 
 - _0.5 hour_ Wrote up status report for this week and sent to supervisor.
+
+### 26 Feb 2021
+
+- _1 hour_ Weekly meeting with supervisor and wrote up meeting minutes.
