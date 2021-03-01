@@ -488,3 +488,10 @@
 ### 26 Feb 2021
 
 - _1 hour_ Weekly meeting with supervisor and wrote up meeting minutes.
+
+### 28 Feb 2021
+
+- _1.5 hour_ Mades changes to requirements chapter of dissertation as per supervisor's suggestions.
+- _2.5 hour_ Mades changes to background chapter of dissertation as per supervisor's suggestions.
+
+## Week 20
