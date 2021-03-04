@@ -103,6 +103,9 @@ Week-by-week plan for the whole project.
   - Write design chapter of dissertation.
   - Code clean-up.
 - **Week 20**
+  - Continue writing design chapter of dissertation.
+  - Begin planning implementation chapter of dissertation.
+  - Write project README and MANUAL.
 - **Week 21**
 - **Week 22**
 - **Week 23 [TERM ENDS]**

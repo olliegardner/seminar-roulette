@@ -13,8 +13,11 @@ from backend.models import *
 from django.db.models.functions import ExtractDay, ExtractWeek
 from django.db.models import Count
 
-import matplotlib.pyplot as plt
 import datetime
+import matplotlib.pyplot as plt
+import statistics
+
+import numpy as np
 
 
 def introduction_graph():
@@ -36,8 +39,15 @@ def introduction_graph():
         seminar['number_seminars'] for seminar in seminars_by_week
     ]
 
-    average_seminars = sum(number_seminars) / len(number_seminars)
-    print('Average: ' + str(average_seminars))
+    average_seminars = np.mean(number_seminars)
+    standard_deviation = np.std(number_seminars)
+    total_seminars = np.sum(number_seminars)
+
+    print()
+    print('Total number of seminars: ' + str(total_seminars))
+    print('Average per week: ' + str(average_seminars))
+    print('Standard deviation: ' + str(standard_deviation))
+    print()
 
     intro_graph = plt.figure()
 
