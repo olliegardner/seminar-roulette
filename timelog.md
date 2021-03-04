@@ -494,6 +494,8 @@
 - _1.5 hour_ Mades changes to requirements chapter of dissertation as per supervisor's suggestions.
 - _2.5 hour_ Mades changes to background chapter of dissertation as per supervisor's suggestions.
 
+## Week 20
+
 ### 1 Mar 2021
 
 - _1 hour_ Added section in background chapter of dissertation that discusses how the University of Cambridge handle seminar management.
@@ -503,4 +505,11 @@
 
 - _3.5 hour_ Continued writing design chapter of dissertation.
 
-## Week 20
+### 3 Mar 2021
+
+- _3 hour_ Continued writing design chapter of dissertation.
+
+### 4 Mar 2021
+
+- _1.5 hour_ Finished writing design chapter of dissertation and sent to supervisor for feedback.
+- _0.5 hour_ Wrote up status report for this week and sent to supervisor.
