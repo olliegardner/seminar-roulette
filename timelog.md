@@ -512,4 +512,5 @@
 ### 4 Mar 2021
 
 - _1.5 hour_ Finished writing design chapter of dissertation and sent to supervisor for feedback.
+- _0.5 hour_ Began writing the project's README.
 - _0.5 hour_ Wrote up status report for this week and sent to supervisor.
