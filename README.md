@@ -21,6 +21,7 @@ This repository contains all of the submitted project files and also the applica
     ├── dissertation            # LaTeX source for dissertation.
     ├── meetings                # Records of supervisor meetings.
     ├── presentation            # Video presentation given at the end.
+    ├── screenshots             # Images of the application.
     ├── seminar-roulette        # Source code for the project.
     ├── status-reports          # Weekly reports sent to supervisor.
     ├── LICENSE                 # License for the project.
@@ -29,7 +30,7 @@ This repository contains all of the submitted project files and also the applica
     ├── README.md               # README file.
     └── timelog.md              # Time log for the whole project.
 
-## Technologies
+<!-- ## Technologies
 
 Seminar Roulette was developed using the following technologies:
 
@@ -40,17 +41,21 @@ Seminar Roulette was developed using the following technologies:
 - [Samoa Events API](https://samoa.dcs.gla.ac.uk/swagger-ui/)
 - [Eventbrite API](https://www.eventbrite.com/platform/api)
 
-Python requirements can be found in [requirements.txt](seminar-roulette/requirements.txt).
+Python requirements can be found in [requirements.txt](seminar-roulette/requirements.txt) and npm dependencies can be found in [package.json](seminar-roulette/frontend/package.json). The [manual.md](manual.md) file details specific requirements. -->
 
-npm dependencies can be found in [package.json](seminar-roulette/frontend/package.json).
-
-## Screenshots
+## Requirements
 
 _TODO_
 
+## Screenshots
+
+| ![Homepage](screenshots/homepage.png) | ![Expanded Seminar](screenshots/seminar.png) | ![Search Page](screenshots/search.png) | ![Dark Theme](screenshots/dark-theme.png) |
+| ------------------------------------- | -------------------------------------------- | -------------------------------------- | ----------------------------------------- |
+| Homepage                              | Expanded Seminar Tile                        | Search Page                            | Dark Theme                                |
+
 ## User Manual
 
-A manual has been created to explain how to run and setup Seminar Roulette. See [manual.md](manual.md) file for more details.
+A manual has been created to explain how to run and setup Seminar Roulette. See [manual.md](manual.md) for more details.
 
 ## Acknowledgements
 
