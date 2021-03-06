@@ -49,9 +49,13 @@ _TODO_
 
 ## Screenshots
 
-| ![Homepage](screenshots/homepage.png) | ![Expanded Seminar](screenshots/seminar.png) | ![Search Page](screenshots/search.png) | ![Dark Theme](screenshots/dark-theme.png) |
-| ------------------------------------- | -------------------------------------------- | -------------------------------------- | ----------------------------------------- |
-| Homepage                              | Expanded Seminar Tile                        | Search Page                            | Dark Theme                                |
+| ![Homepage](screenshots/homepage.png) | ![Expanded Seminar](screenshots/seminar.png) |
+| :-----------------------------------: | :------------------------------------------: |
+|               Homepage                |            Expanded Seminar Tile             |
+
+| ![Search Page](screenshots/search.png) | ![Dark Theme](screenshots/dark-theme.png) |
+| :------------------------------------: | :---------------------------------------: |
+|              Search Page               |                Dark Theme                 |
 
 ## User Manual
 
