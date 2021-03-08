@@ -519,3 +519,9 @@
 
 - _1 hour_ Weekly meeting with supervisor and wrote up meeting minutes.
 - _1 hour_ Continued writing project README file.
+
+## Week 21
+
+### 8 Mar 2021
+
+- _1.5 hour_ Made changes to design chapter of dissertation that supervisor suggested.
