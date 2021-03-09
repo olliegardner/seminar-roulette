@@ -525,3 +525,8 @@
 ### 8 Mar 2021
 
 - _1.5 hour_ Made changes to design chapter of dissertation that supervisor suggested.
+
+### 9 Mar 2021
+
+- _2 hour_ Continued making changes to design chapter of dissertation and added a new section about the database population script.
+- _4 hour_ Started writing implementation chapter of dissertation.
