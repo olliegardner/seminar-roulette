@@ -530,3 +530,7 @@
 
 - _2 hour_ Continued making changes to design chapter of dissertation and added a new section about the database population script.
 - _4 hour_ Started writing implementation chapter of dissertation.
+
+### 10 Mar 2021
+
+- _4 hour_ Continued writing implementation chapter of dissertation.
