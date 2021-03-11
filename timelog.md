@@ -534,3 +534,7 @@
 ### 10 Mar 2021
 
 - _4 hour_ Continued writing implementation chapter of dissertation.
+
+### 11 Mar 2021
+
+- _3.5 hour_ Finished writing implementation chapter of dissertation and sent to supervisor for feedback.

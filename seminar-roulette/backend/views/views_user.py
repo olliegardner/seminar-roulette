@@ -141,13 +141,16 @@ class UserSimilarities(APIView):
 
         for seminar_id in seminars.split(','):
             try:
+                # Load seminar and its keywords
                 seminar = Seminar.objects.get(id=seminar_id)
                 keywords = json.loads(seminar.keywords)
 
+                # User has not set any interests or seminar has no keywords so set similarity to 0
                 if not user.interests or not keywords:
                     similarities[seminar.id] = 0
                     continue
 
+                # Get synsets of words for user interests and keywords
                 interest_syns = set(
                     synset for interest in user.interests
                     for synset in wordnet.synsets(interest)
@@ -158,15 +161,18 @@ class UserSimilarities(APIView):
                     for synset in wordnet.synsets(keyword['text'])
                 )
 
+                # If no synsets of words, set similiarity to 0
                 if not interest_syns or not keyword_syns:
                     similarities[seminar.id] = 0
                     continue
 
+                # Calculate best similarity between the sets of words
                 best = max(
                     wordnet.wup_similarity(i, j) or 0
                     for i, j in product(interest_syns, keyword_syns)
                 )
 
+                # Convert to percentage and round to 1 decimal place
                 similarities[seminar.id] = round(best * 100, 1)
             except Seminar.DoesNotExist:
                 similarities[seminar.id] = 0
