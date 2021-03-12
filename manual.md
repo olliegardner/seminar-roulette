@@ -44,7 +44,7 @@ pip install -r requirements.txt
 
 Node, npm, reqirements in package.json
 
-## 4. Database
+## 4. Database
 
 Install postgres and fill in database details
 

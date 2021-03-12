@@ -538,3 +538,8 @@
 ### 11 Mar 2021
 
 - _3.5 hour_ Finished writing implementation chapter of dissertation and sent to supervisor for feedback.
+
+### 12 Mar 2021
+
+- _1.5 hour_ Started writing user manual.
+- _1 hour_ Weekly meeting with supervisor and wrote up meeting minutes.
