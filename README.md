@@ -45,7 +45,13 @@ Python requirements can be found in [requirements.txt](seminar-roulette/requirem
 
 ## Requirements
 
-_TODO_
+- Python 3.7 or later
+- Python packages: listed in [requirements.txt](seminar-roulette/requirements.txt)
+- Node 12.16.1 or later
+- npm packages: listed in [package.json](seminar-roulette/frontend/package.json)
+- PostgreSQL 10.7 or later
+
+See [manual.md](manual.md) for build instructions.
 
 ## Screenshots
 
@@ -63,7 +69,7 @@ A manual has been created to explain how to run and setup Seminar Roulette. See 
 
 ## Acknowledgements
 
-The code found in the [shibboleth folder](seminar-roulette/shibboleth/) is reponsiuble for connecting the University's single sign-on to Seminar Roulette. Full credit for the code contained in this folder goes to the authors of [django-shibboleth-remoteuser](https://github.com/Brown-University-Library/django-shibboleth-remoteuser). This project has been licensed under the MIT License.
+The code found in the [shibboleth folder](seminar-roulette/shibboleth/) is reponsiuble for integrating the University's single sign-on to Seminar Roulette. Full credit for the code contained in this folder goes to the authors of [django-shibboleth-remoteuser](https://github.com/Brown-University-Library/django-shibboleth-remoteuser). This project has been licensed under the MIT License.
 
 The recommender system code found within [recommender.py](seminar-roulette/recommender.py) was partially implemented using a tutorial. Partial credit for this code goes to Nick Becker for his [Matrix Factorisation for Movie Recommendations in Python](https://beckernick.github.io/matrix-factorization-recommender/) tutorial.
 
