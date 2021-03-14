@@ -29,9 +29,9 @@ This repository contains all of the submitted project files and also the applica
     .
     ├── data                    # Data acquired during the project.
     ├── dissertation            # LaTeX source for dissertation.
+    ├── images                  # Images of the application.
     ├── meetings                # Records of supervisor meetings.
-    ├── presentation            # Video presentation given at the end.
-    ├── screenshots             # Images of the application.
+    ├── presentation            # Prerecorded video presentation.
     ├── seminar-roulette        # Source code for the project.
     ├── status-reports          # Weekly reports sent to supervisor.
     ├── LICENSE                 # License for the project.
@@ -42,13 +42,13 @@ This repository contains all of the submitted project files and also the applica
 
 ## Screenshots
 
-| ![Homepage](screenshots/homepage.png) | ![Expanded Seminar](screenshots/seminar.png) |
-| :-----------------------------------: | :------------------------------------------: |
-|               Homepage                |            Expanded Seminar Tile             |
+| ![Homepage](images/homepage.png) | ![Expanded Seminar](images/seminar.png) |
+| :------------------------------: | :-------------------------------------: |
+|             Homepage             |          Expanded Seminar Tile          |
 
-| ![Search Page](screenshots/search.png) | ![Dark Theme](screenshots/dark-theme.png) |
-| :------------------------------------: | :---------------------------------------: |
-|              Search Page               |                Dark Theme                 |
+| ![Search Page](images/search.png) | ![Dark Theme](images/dark-theme.png) |
+| :-------------------------------: | :----------------------------------: |
+|            Search Page            |              Dark Theme              |
 
 ## User Manual
 
