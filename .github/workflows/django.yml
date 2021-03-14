@@ -27,6 +27,7 @@ jobs:
           python-version: 3.7
       - name: Install prerequisites
         run: |
+          sudo apt-get update
           sudo apt-get install python-dev libpq-dev
       - name: Install dependencies
         run: |

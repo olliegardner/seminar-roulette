@@ -512,4 +512,43 @@
 ### 4 Mar 2021
 
 - _1.5 hour_ Finished writing design chapter of dissertation and sent to supervisor for feedback.
+- _0.5 hour_ Began writing the project's README.
 - _0.5 hour_ Wrote up status report for this week and sent to supervisor.
+
+### 5 Mar 2021
+
+- _1 hour_ Weekly meeting with supervisor and wrote up meeting minutes.
+- _1 hour_ Continued writing project README file.
+
+## Week 21
+
+### 8 Mar 2021
+
+- _1.5 hour_ Made changes to design chapter of dissertation that supervisor suggested.
+
+### 9 Mar 2021
+
+- _2 hour_ Continued making changes to design chapter of dissertation and added a new section about the database population script.
+- _4 hour_ Started writing implementation chapter of dissertation.
+
+### 10 Mar 2021
+
+- _4 hour_ Continued writing implementation chapter of dissertation.
+
+### 11 Mar 2021
+
+- _3.5 hour_ Finished writing implementation chapter of dissertation and sent to supervisor for feedback.
+
+### 12 Mar 2021
+
+- _1.5 hour_ Started writing user manual.
+- _1 hour_ Weekly meeting with supervisor and wrote up meeting minutes.
+
+### 13 Mar 2021
+
+- _0.5 hour_ Continued writing user manual.
+
+### 14 Mar 2021
+
+- _1 hour_ Finished writing user manual.
+- _0.5 hour_ Restructured some items in repository.
