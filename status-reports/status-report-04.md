@@ -1,4 +1,4 @@
-# Status Report 4
+# Status Report 4 - 29 Oct 2020
 
 This week, I have been concentrating on the frontend of the project. I thought about a few different designs and animations which I could have. I decided to implement a roulette wheel on the main page which spins when you press a button. I think this is extremely slick and makes the system fun to use. I have implemented "fly in" animations for when the seminar is displayed to the user. I am not 100% sure on my colour scheme but I can work on it throughout the project.
 

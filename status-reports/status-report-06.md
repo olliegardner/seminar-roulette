@@ -1,4 +1,4 @@
-# Status Report 6
+# Status Report 6 - 12 Nov 2020
 
 This week, I revisited my recommender system and implemented it using live data from the database. I have created a Django management command which will be able to be executed within a cronjob to generate the matrix needed for the recommender system. Last week, Jeremy and I discussed changing the system so that it recommends the seminar group instead of the title. After conducting some more research, I had originally misunderstood how matrix factorisation via singular value decomposition works. It turns out, that the matrix will predict future ratings which is ideal for Seminar Roulette.
 

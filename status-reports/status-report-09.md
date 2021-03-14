@@ -1,4 +1,4 @@
-# Status Report 9
+# Status Report 9 - 10 Dec 2020
 
 Last week, I didn’t make much progress on my project due to coursework deadlines and upcoming exams. The main changes I made were on the frontend. This involved making the application just a single page. I have implemented a search bar on the application which allows users to search for seminars which they might be interested in.
 

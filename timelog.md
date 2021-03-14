@@ -551,3 +551,4 @@
 ### 14 Mar 2021
 
 - _1 hour_ Finished writing user manual.
+- _0.5 hour_ Restructured some items in repository.

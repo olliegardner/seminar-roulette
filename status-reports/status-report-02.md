@@ -1,4 +1,4 @@
-# Status Report 2
+# Status Report 2 - 15 Oct 2020
 
 This week, I have built upon my research which I conducted last week. I developed a user survey and sent this round to some staff members which I know well. This survey was extremely beneficial as it has allowed me to create a set of functional and non-functional requirements. This has allowed me to build upon my understanding of the final product. Using the survey results, I am now aware of more data sources which I can use to track seminars which are happening around the university.
 

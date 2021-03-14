@@ -1,4 +1,4 @@
-# Status Report 1
+# Status Report 1 - 8 Oct 2020
 
 This week I started researching into different seminar data sources. So far, I have looked at Samoa (https://samoa.dcs.gla.ac.uk/events/) and EventBrite. I could not find any other data sources which the University seem to use for seminars. I would like to dicsuss this in the next meeting. I have contacted the developer of Samoa in order to ask how to connect to the API - he answered my query swiftly.
 

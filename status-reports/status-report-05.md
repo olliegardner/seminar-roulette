@@ -1,4 +1,4 @@
-# Status Report 5
+# Status Report 5 - 5 Nov 2020
 
 I began this week by significantly improving upon the frontend of the system. Jeremy suggested last week that the user interface should be minimal and I should use Google as inspiration. In order to improve the frontend, I implemented a navigation bar at the top which will allow the user to navigate through the different pages. On the seminar history page, I have changed the ratings to stars from 1 to 5. Users are also able to select 0.5 values too. This is much more user friendly than having a dropdown for rating.
 
