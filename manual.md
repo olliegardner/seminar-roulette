@@ -1,6 +1,6 @@
 # User Manual
 
-This guide serves as a manual, explaining how to install, run and test the Seminar Roulette web application. If you encouter any issues during the installation and configuration process, please contact the [developer](https://github.com/olliegardner).
+This guide serves as a manual, explaining how to install, run and test the Seminar Roulette web application. If you encouter any issues during the installation and configuration process, please contact the developer [Ollie Gardner](https://github.com/olliegardner).
 
 ## Contents
 
@@ -60,7 +60,7 @@ pip install -r requirements.txt
 
 ### 3.1 Node.js
 
-Seminar Roulette requires Node.js 12.16.1 or later to be installed on your machine to run. [Download Node.js](https://nodejs.org/en/download/) and follow the installation instructions for your operating system. Check yo have the correct version of Node.js installed by running `node -v` in your command line.
+Seminar Roulette requires Node.js 12.16.1 or later to be installed on your machine to run. [Download Node.js](https://nodejs.org/en/download/) and follow the installation instructions for your operating system. Check you have the correct version of Node.js installed by running `node -v` in your command line.
 
 ### 3.2 npm Packages
 
@@ -86,17 +86,19 @@ GRANT ALL PRIVILEGES ON DATABASE seminarroulette to seminarroulette_user;
 
 ## 5. Deployment & Single Sign-On
 
-If you are using Seminar Roulette locally then you can skip this step. If you are deploying Seminar Roulette to a VM then you must first ensure that the VM conforms to Shibboleth's requirements. Shibboleth is the single sign-on architecture used by the University. The VM's that Shibboleth supports are listed [here](https://wiki.shibboleth.net/confluence/display/IDP4/SystemRequirements). Once you have created your VM according to Shibboleth's requirements, you must [install Shibboleth](https://wiki.shibboleth.net/confluence/display/SP3/RPMInstall).
+If you are using Seminar Roulette locally then you can skip this step.
+
+If you are deploying Seminar Roulette to a VM then you must first ensure that the VM conforms to Shibboleth's requirements. Shibboleth is the single sign-on architecture used by the University. The VM's that Shibboleth supports are listed [here](https://wiki.shibboleth.net/confluence/display/IDP4/SystemRequirements). Once you have created your VM according to Shibboleth's requirements, you must [install Shibboleth](https://wiki.shibboleth.net/confluence/display/SP3/RPMInstall).
 
 Next, you must configure Shibboleth to pass its attributes back to the web application. These attributes can be configured in the file `/etc/shibboleth/attribute-map.xml` on your VM.
 
 Next, setup a web server using Apache or similar. Follow [this tutorial](https://devops.ionos.com/tutorials/how-to-install-django-with-apache-on-centos-7/) to setup the Django app with Apache on CentOS 7.
 
-Finally, Shibboleth requires an SSL certificate to be configured on the VM in order to function correctly. To create an SSL certificaste on Apache for CentOS 7, follow [this tutorial](https://www.digitalocean.com/community/tutorials/how-to-create-an-ssl-certificate-on-apache-for-centos-7).
+Finally, Shibboleth requires an SSL certificate to be configured on the VM in order to function correctly. To create an SSL certificate on Apache for CentOS 7, follow [this tutorial](https://www.digitalocean.com/community/tutorials/how-to-create-an-ssl-certificate-on-apache-for-centos-7).
 
 ## 6. Configuration Files
 
-Before seminar roulette can be ran, there are two files that have to be configured.
+Before Seminar Roulette can be run, there are two files that have to be configured.
 
 ### 6.1 .env
 
@@ -161,7 +163,7 @@ Once setup, you will notice that there is no data on the system. The [event_feed
 python event_feed.py
 ```
 
-If using Seminar Roulette within a deployed environment, it is highly likely that you setup a Cron tasks to run the script nightly to ensure that the most up to date information displays on Seminar Roulette. To setup a automatic cron task on CentOS, follow [this tutorial](https://www.digitalocean.com/community/tutorials/how-to-use-cron-to-automate-tasks-centos-8).
+If using Seminar Roulette within a deployed environment, it is highly recommended that you setup a cron task to run the script nightly to ensure that the most up to date information always displays on Seminar Roulette. To setup a automatic cron task on CentOS, follow [this tutorial](https://www.digitalocean.com/community/tutorials/how-to-use-cron-to-automate-tasks-centos-8).
 
 ---
 
