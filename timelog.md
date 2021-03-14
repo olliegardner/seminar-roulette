@@ -543,3 +543,11 @@
 
 - _1.5 hour_ Started writing user manual.
 - _1 hour_ Weekly meeting with supervisor and wrote up meeting minutes.
+
+### 13 Mar 2021
+
+- _0.5 hour_ Continued writing user manual.
+
+### 14 Mar 2021
+
+- _1 hour_ Finished writing user manual.

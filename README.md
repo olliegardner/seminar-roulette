@@ -12,6 +12,16 @@ Seminar Roulette is an event recommendation platform for the University of Glasg
 
 The system was developed by Ollie Gardner as his 4th year individual project for a BSc Software Engineering degree. The project was supvervised by [Dr Jeremy Singer](http://www.dcs.gla.ac.uk/~jsinger/).
 
+## Requirements
+
+- Python 3.7 or later
+- Python packages: listed in [requirements.txt](seminar-roulette/requirements.txt)
+- Node.js 12.16.1 or later
+- npm packages: listed in [package.json](seminar-roulette/frontend/package.json)
+- PostgreSQL 10.7 or later
+
+See [manual.md](manual.md) for build instructions.
+
 ## File Structure
 
 This repository contains all of the submitted project files and also the application's source code. The project has been structured as follows.
@@ -30,29 +40,6 @@ This repository contains all of the submitted project files and also the applica
     ├── README.md               # README file.
     └── timelog.md              # Time log for the whole project.
 
-<!-- ## Technologies
-
-Seminar Roulette was developed using the following technologies:
-
-- [Django](https://www.djangoproject.com/)
-- [Django Rest Framework](https://www.django-rest-framework.org/)
-- [React.js](https://reactjs.org/)
-- [Material-UI](https://material-ui.com/)
-- [Samoa Events API](https://samoa.dcs.gla.ac.uk/swagger-ui/)
-- [Eventbrite API](https://www.eventbrite.com/platform/api)
-
-Python requirements can be found in [requirements.txt](seminar-roulette/requirements.txt) and npm dependencies can be found in [package.json](seminar-roulette/frontend/package.json). The [manual.md](manual.md) file details specific requirements. -->
-
-## Requirements
-
-- Python 3.7 or later
-- Python packages: listed in [requirements.txt](seminar-roulette/requirements.txt)
-- Node 12.16.1 or later
-- npm packages: listed in [package.json](seminar-roulette/frontend/package.json)
-- PostgreSQL 10.7 or later
-
-See [manual.md](manual.md) for build instructions.
-
 ## Screenshots
 
 | ![Homepage](screenshots/homepage.png) | ![Expanded Seminar](screenshots/seminar.png) |
@@ -69,7 +56,7 @@ A manual has been created to explain how to run and setup Seminar Roulette. See 
 
 ## Acknowledgements
 
-The code found in the [shibboleth folder](seminar-roulette/shibboleth/) is reponsiuble for integrating the University's single sign-on to Seminar Roulette. Full credit for the code contained in this folder goes to the authors of [django-shibboleth-remoteuser](https://github.com/Brown-University-Library/django-shibboleth-remoteuser). This project has been licensed under the MIT License.
+The code found in the [shibboleth folder](seminar-roulette/shibboleth/) is reponsible for integrating the University's single sign-on to Seminar Roulette. Full credit for the code contained in this folder goes to the authors of [django-shibboleth-remoteuser](https://github.com/Brown-University-Library/django-shibboleth-remoteuser). This project has been licensed under the MIT License.
 
 The recommender system code found within [recommender.py](seminar-roulette/recommender.py) was partially implemented using a tutorial. Partial credit for this code goes to Nick Becker for his [Matrix Factorisation for Movie Recommendations in Python](https://beckernick.github.io/matrix-factorization-recommender/) tutorial.
 
