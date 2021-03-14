@@ -1,4 +1,4 @@
-# Status Report 3
+# Status Report 3 - 22 Oct 2020
 
 This week, I first started by setting up the howard.dcs VM. This caused me a lot of hassle as it is something that I have little experience in doing. I managed to successfully set up Django, React and an Apache web server. I still need to set up the PostgreSQL database on VM. However, this is all set up correctly on my local machine. After this, I contacted John Watt who explained to me how to install Shibboleth onto my VM. This was fairly easy to do and didn't take long. John has been unable to configure Shibboleth on the VM yet as I need to SSL enable the VM. I have contacted support to ask if port 80 can be opened up to the internet so that my Let's Encrypt certificate can be validated.
 

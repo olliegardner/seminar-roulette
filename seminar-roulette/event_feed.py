@@ -32,6 +32,13 @@ class EventFeeds():
         env_file = os.path.join(os.getcwd(), ".env")
         environ.Env.read_env(env_file)
 
+        if UniversityUser.objects.count() < 10:
+            for i in range(1, 11):
+                guid = 'user' + str(i)
+                user, user_created = UniversityUser.objects.get_or_create(
+                    username=guid, guid=guid, name='User ' + str(i)
+                )
+
         self.samoa_feed()
         self.eventbrite_feed(env('EVENTBRITE_KEY'))
         self.generate_ical_events()

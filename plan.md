@@ -105,8 +105,11 @@ Week-by-week plan for the whole project.
 - **Week 20**
   - Continue writing design chapter of dissertation.
   - Begin planning implementation chapter of dissertation.
-  - Write project README and MANUAL.
+  - Write project README.
 - **Week 21**
+  - Continue writing implementation chapter of dissertation.
+  - Write user manual.
+  - Start looking into project evaluation.
 - **Week 22**
 - **Week 23 [TERM ENDS]**
 - **Week 24** Dissertation submission deadline and presentations.
