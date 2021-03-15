@@ -552,3 +552,10 @@
 
 - _1 hour_ Finished writing user manual.
 - _0.5 hour_ Restructured some items in repository.
+
+## Week 22
+
+### 15 Mar 2021
+
+- _2 hour_ Made changes to implementation chapter of dissertation that supervisor suggested.
+- _1 hour_ Started writing evaluation chapter of dissertation.
