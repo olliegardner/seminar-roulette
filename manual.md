@@ -153,7 +153,13 @@ Seminar Roulette contains a suite of backend unit tests. These can be ran by nav
 python manage.py test
 ```
 
-If you have successfully setup and configured Seminar Roulette then all these unit tests will pass.
+If you have successfully setup and configured Seminar Roulette then all these unit tests will pass. To calculate the unit tests' code coverage, enter the following commands in your command line:
+
+```
+coverage run --source='backend' --omit='backend/migrations/*' manage.py test backend
+
+coverage report
+```
 
 ## 9. Database Population Script
 
