@@ -559,3 +559,8 @@
 
 - _2 hour_ Made changes to implementation chapter of dissertation that supervisor suggested.
 - _1 hour_ Started writing evaluation chapter of dissertation.
+
+### 16 Mar 2021
+
+- _4 hour_ Continued writing evaluation chapter of dissertation.
+- _1.5 hour_ Created graphs for evaluation chapter of dissertation.
