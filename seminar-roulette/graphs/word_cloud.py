@@ -6,17 +6,15 @@ import re
 
 
 def generate_wordcloud():
-    evaluation_file = pd.read_csv(
-        '../../data/raw/final-evaluation/final-evaluation.csv'
-    )
+    data = pd.read_csv('../../data/raw/final-evaluation/final-evaluation.csv')
 
-    data = evaluation_file[
+    responses = data[
         'In five words, how would you describe the overall design and functionality of Seminar Roulette?'
     ]
 
     all_words = []
 
-    for words in data:
+    for words in responses:
         for word in words.split(' '):
             word = re.sub(r'[^\w\s]', '', word.lower())
 
