@@ -564,3 +564,7 @@
 
 - _4 hour_ Continued writing evaluation chapter of dissertation.
 - _1.5 hour_ Created graphs for evaluation chapter of dissertation.
+
+### 17 Mar 2021
+
+- _6 hour_ Continued writing evaluation chapter of dissertation.
