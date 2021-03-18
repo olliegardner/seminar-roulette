@@ -111,5 +111,8 @@ Week-by-week plan for the whole project.
   - Write user manual.
   - Start looking into project evaluation.
 - **Week 22**
+  - Write evaluation chapter of dissertation.
+  - Create graphs for dissertation evaluation.
+  - Start brainstorming ideas for presentation
 - **Week 23 [TERM ENDS]**
 - **Week 24** Dissertation submission deadline and presentations.
