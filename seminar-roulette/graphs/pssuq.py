@@ -38,33 +38,8 @@ def pssuq_scores():
     print()
 
 
-def simple_system_graph():
-    responses = data['It was simple to use this system.'].values
-
-    values = Counter(responses)
-
-    for i in range(1, 8):
-        if not i in values:
-            values[i] = 0
-
-    ordered_values = dict(sorted(values.items()))
-
-    graph = plt.figure()
-
-    plt.bar(range(1, 8), ordered_values.values())
-    plt.title('Participant responses for how simple it was to use the system')
-    plt.xlabel('Seven point Likert scale')
-    plt.ylabel('No. of Participants')
-    plt.yticks(range(0, 25, 5))
-    plt.show()
-
-    graph.savefig('simple_system_responses.pdf', bbox_inches='tight')
-
-
-def system_error_messages_graph():
-    responses = data[
-        'The system gave error messages that clearly told me how to fix problems. '
-    ].values
+def pssuq_question_graph(question, graph_title, y_ticks, file_name):
+    responses = data[question].values
 
     responses = list(filter(lambda x: not pd.isnull(x), responses))
 
@@ -79,18 +54,24 @@ def system_error_messages_graph():
     graph = plt.figure()
 
     plt.bar(range(1, 8), ordered_values.values())
-    plt.title(
-        'Participant responses for system gave error messages to fix problems'
-    )
+    plt.title(graph_title)
     plt.xlabel('Seven point Likert scale')
     plt.ylabel('No. of Participants')
-    plt.yticks(range(0, 6, 1))
+    plt.yticks(y_ticks)
     plt.show()
 
-    graph.savefig('system_error_messages.pdf', bbox_inches='tight')
+    graph.savefig(file_name, bbox_inches='tight')
 
 
 if __name__ == '__main__':
-    # pssuq_scores()
-    # simple_system_graph()
-    system_error_messages_graph()
+    pssuq_scores()
+    pssuq_question_graph(
+        'It was simple to use this system.',
+        'Participant responses for how simple it was to use the system',
+        range(0, 25, 5), 'simple_system_responses.pdf'
+    )
+    pssuq_question_graph(
+        'The system gave error messages that clearly told me how to fix problems. ',
+        'Participant responses for system gave error messages to fix problems',
+        range(0, 6, 1), 'system_error_messages.pdf'
+    )
