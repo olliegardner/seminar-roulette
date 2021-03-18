@@ -568,3 +568,7 @@
 ### 17 Mar 2021
 
 - _6 hour_ Continued writing evaluation chapter of dissertation.
+
+### 18 Mar 2021
+
+- _2 hour_ Finished writing evaluation chapter of dissertation and sent to supervisor for feedback.
