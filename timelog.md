@@ -572,3 +572,9 @@
 ### 18 Mar 2021
 
 - _2 hour_ Finished writing evaluation chapter of dissertation and sent to supervisor for feedback.
+
+### 19 Mar 2021
+
+- _1 hour_ Weekly meeting with supervisor and wrote up meeting minutes.
+
+## Week 23
