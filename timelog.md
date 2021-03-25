@@ -538,6 +538,7 @@
 ### 11 Mar 2021
 
 - _3.5 hour_ Finished writing implementation chapter of dissertation and sent to supervisor for feedback.
+- _0.5 hour_ Wrote up status report for this week and sent to supervisor.
 
 ### 12 Mar 2021
 
@@ -572,9 +573,19 @@
 ### 18 Mar 2021
 
 - _2 hour_ Finished writing evaluation chapter of dissertation and sent to supervisor for feedback.
+- _0.5 hour_ Wrote up status report for this week and sent to supervisor.
 
 ### 19 Mar 2021
 
 - _1 hour_ Weekly meeting with supervisor and wrote up meeting minutes.
 
 ## Week 23
+
+### 24 Mar 2021
+
+- _2.5 hour_ Started writing conclusion chapter of dissertation.
+
+### 25 Mar 2021
+
+- _2 hour_ Finished writing conclusion chapter of dissertation and sent to supervisor for feedback..
+- _0.5 hour_ Wrote up status report for this week and sent to supervisor.
