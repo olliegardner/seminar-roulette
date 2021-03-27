@@ -589,3 +589,7 @@
 
 - _2 hour_ Finished writing conclusion chapter of dissertation and sent to supervisor for feedback..
 - _0.5 hour_ Wrote up status report for this week and sent to supervisor.
+
+### 26 Mar 2021
+
+- _1 hour_ Weekly meeting with supervisor and wrote up meeting minutes.
