@@ -15,7 +15,7 @@ import environ
 class UserTests(TestCase):
     def setUp(self):
         self.user = UniversityUser.objects.create_user(
-            guid='1234567A', password='password'
+            guid='1234567A', username='1234567A', password='password'
         )
         self.user.interests = ['maths', 'compilers', 'code']
         self.user.save()
@@ -75,6 +75,45 @@ class UserTests(TestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['guid'], 'None')
+
+    def test_create_user(self):
+        """
+        Test that a user is created correctly using the UniversityUserManager class.
+        """
+        self.test_user = UniversityUser.objects.create_user(
+            guid='7654321A', username='7654321A', password='password'
+        )
+
+        self.assertEqual(self.test_user.guid, '7654321A')
+        self.assertTrue(self.test_user.is_active)
+        self.assertFalse(self.test_user.is_staff)
+        self.assertFalse(self.test_user.is_superuser)
+
+    def test_create_staff(self):
+        """
+        Test that a staff user is created correctly using the UniversityUserManager class.
+        """
+        self.test_staff_user = UniversityUser.objects.create_staff(
+            guid='7654123Z', username='7654123Z', password='password'
+        )
+
+        self.assertEqual(self.test_staff_user.guid, '7654123Z')
+        self.assertTrue(self.test_staff_user.is_active)
+        self.assertTrue(self.test_staff_user.is_staff)
+        self.assertFalse(self.test_staff_user.is_superuser)
+
+    def test_create_superuser(self):
+        """
+        Test that a superuser is created correctly using the UniversityUserManager class.
+        """
+        self.test_superuser = UniversityUser.objects.create_superuser(
+            guid='3214567B', username='3214567B', password='password'
+        )
+
+        self.assertEqual(self.test_superuser.guid, '3214567B')
+        self.assertTrue(self.test_superuser.is_active)
+        self.assertTrue(self.test_superuser.is_staff)
+        self.assertTrue(self.test_superuser.is_superuser)
 
 
 # Test cases for samoa data feed

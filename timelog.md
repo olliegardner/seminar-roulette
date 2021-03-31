@@ -593,3 +593,10 @@
 ### 26 Mar 2021
 
 - _1 hour_ Weekly meeting with supervisor and wrote up meeting minutes.
+
+## Week 24
+
+### 31 Mar 2021
+
+- _1.5 hour_ Made changes to conclusion chapter of dissertation that supervisor suggested.
+- _0.5 hour_ Added three new unit tests to cover the managers.py file.
