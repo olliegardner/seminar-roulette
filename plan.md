@@ -116,6 +116,10 @@ Week-by-week plan for the whole project.
   - Start brainstorming ideas for presentation
 - **Week 23**
   - Write conclusion chapter of dissertation,
-  - Start polishing off dissertation and proof reading it.s
+  - Start polishing off dissertation and proof reading it.
 - **Week 24 [TERM ENDS]**
+  - Record final presentation.
+  - Continue perfecting dissertation.
 - **Week 25** Dissertation submission deadline and presentations.
+  - Finish perfecting dissertation.
+  - Submit dissertation and supporting documents.

@@ -19,7 +19,6 @@ def generate_wordcloud():
             word = re.sub(r'[^\w\s]', '', word.lower())
 
             if not word == '' and not word == 'use':
-
                 all_words.append(word)
 
     word_cloud = WordCloud(
@@ -30,7 +29,6 @@ def generate_wordcloud():
         min_font_size=10
     ).generate(' '.join(all_words))
 
-    # plt.figure(figsize=(8, 8), facecolor=None)
     word_cloud_figure = plt.figure(figsize=(8, 8), facecolor=None)
 
     plt.imshow(word_cloud)
