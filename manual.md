@@ -147,18 +147,24 @@ python manage.py runserver
 
 ## 8. Testing Seminar Roulette
 
-Seminar Roulette contains a suite of backend unit tests. These can be ran by navigating to `seminar-roulette/seminar-roulette/backend/` and activating the Python virtual environment. Run the unit tests using the following command:
+Seminar Roulette contains a suite of backend and frontend unit tests. The backend tests can be run by navigating to `seminar-roulette/seminar-roulette/backend/` and activating the Python virtual environment. Run the backend unit tests using the following command:
 
 ```
 python manage.py test
 ```
 
-If you have successfully setup and configured Seminar Roulette then all these unit tests will pass. To calculate the unit tests' code coverage, enter the following commands in your command line:
+If you have successfully setup and configured Seminar Roulette then all these unit tests will pass. To calculate the unit tests' code coverage, enter the following commands into your terminal:
 
 ```
 coverage run --source='backend' --omit='backend/migrations/*' manage.py test backend
 
 coverage report
+```
+
+To run the frontend unit tests, navigate to `seminar-roulette/seminar-roulette/frontend/` and run the following command:
+
+```
+npm run test
 ```
 
 ## 9. Database Population Script
