@@ -614,3 +614,4 @@
 ### 5 Apr 2021
 
 - _1.5 hour_ Finished writing new section in design that discusses an example of Matrix Factorisation via Singular Value Decomposition.
+- _2 hour_ Implemented frontend unit tests.
