@@ -615,3 +615,24 @@
 
 - _1.5 hour_ Finished writing new section in design that discusses an example of Matrix Factorisation via Singular Value Decomposition.
 - _2 hour_ Implemented frontend unit tests.
+- _1.5 hour_ Added section to dissertation discussing frontend unit tests.
+
+### 6 Apr 2021
+
+- _4 hour_ Proof read chapter 1 and 2 of dissertation.
+- _0.5 hour_ Started created presentation slides.
+
+### 7 Apr 2021
+
+- _6 hour_ Continued proof reading dissertation.
+- _2 hour_ Continued creating presentation slides and started writing script.
+
+### 8 Apr 2021
+
+### 9 Apr 2021
+
+---
+
+**Total hours:**
+
+Ollie Gardner

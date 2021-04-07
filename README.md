@@ -1,6 +1,7 @@
 # Seminar Roulette
 
 ![Django Pipeline](https://github.com/olliegardner/seminar-roulette/actions/workflows/django.yml/badge.svg)
+![Node.js Pipeline](https://github.com/olliegardner/seminar-roulette/actions/workflows/node.yml/badge.svg)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 [![GitHub contributors](https://img.shields.io/github/contributors/olliegardner/seminar-roulette.svg)](https://github.com/olliegardner/seminar-roulette/graphs/contributors/)
 
