@@ -7,17 +7,19 @@
 
 ## Week 1
 
-- N/A - projects not released.
+### 23 Sep 2020
+
+- _4 hours_ Read the project guidance notes.
 
 ## Week 2
 
 ### 30 Sep 2020
 
-- _0.5 hour_ Created GitHub repository and added the given master template with some minor adjustments.
+- _1 hour_ Created GitHub repository and added the given master template with some minor adjustments.
 
 ### 1 Oct 2020
 
-- _1.5 hour_ Researched different reference managers. Downloaded Zotero and watched a tutorial on how to use it.
+- _2.5 hour_ Researched different reference managers. Downloaded Zotero and watched a tutorial on how to use it.
 
 ### 2 Oct 2020
 
@@ -26,7 +28,7 @@
 
 ### 4 Oct 2020
 
-- _1.5 hour_ Did some research into potential data sources. Mainly focused on https://samoa.dcs.gla.ac.uk/events/ and EventBrite.
+- _3 hour_ Did some research into potential data sources. Mainly focused on https://samoa.dcs.gla.ac.uk/events/ and EventBrite.
 
 ## Week 3
 
@@ -42,7 +44,7 @@
 
 ### 8 Oct 2020
 
-- _0.5 hour_ Wrote up user stories and added them to the wiki.
+- _1 hour_ Wrote up user stories and added them to the wiki.
 - _1.5 hour_ Created some basic wireframes for the project - still need to be refined further.
 
 ### 9 Oct 2020
@@ -55,15 +57,15 @@
 
 ### 11 Oct 2020
 
-- _2 hour_ Setup chosen technologies - Django and React. Started building basic RESTful API to check that client and server can interact with eachother.
+- _3 hour_ Setup chosen technologies - Django and React. Started building basic RESTful API to check that client and server can interact with eachother.
 - _0.5 hour_ Created Trello board for ticket/issue management.
 
 ## Week 4
 
 ### 13 Oct 2020
 
-- _1 hour_ Wrote up functional and non-functional requirements.
-- _1.5 hour_ Developed user survey for staff members to build upon my requirements.
+- _2 hour_ Wrote up functional and non-functional requirements.
+- _2.5 hour_ Developed user survey for staff members to build upon my requirements.
 
 ### 14 Oct 2020
 
@@ -632,11 +634,12 @@
 - _1.5 hour_ Finished creating presentation slides.
 - _3 hour_ Continued writing presentation script.
 - _4 hour_ Recorded and edited final presentation.
+- _1 hour_ Added more comments to codebase.
 
 ### 9 Apr 2021
 
 ---
 
-**Total hours:** 345.5
+**Total hours:** 357
 
 Ollie Gardner

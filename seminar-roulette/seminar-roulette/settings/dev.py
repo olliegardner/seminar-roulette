@@ -1,3 +1,4 @@
+# Settings for dev environment
 DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
