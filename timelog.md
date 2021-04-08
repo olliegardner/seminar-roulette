@@ -572,7 +572,7 @@
 
 ### 18 Mar 2021
 
-- _2 hour_ Finished writing evaluation chapter of dissertation and sent to supervisor for feedback.
+- _4 hour_ Finished writing evaluation chapter of dissertation and sent to supervisor for feedback.
 - _0.5 hour_ Wrote up status report for this week and sent to supervisor.
 
 ### 19 Mar 2021
@@ -583,11 +583,11 @@
 
 ### 24 Mar 2021
 
-- _2.5 hour_ Started writing conclusion chapter of dissertation.
+- _3.5 hour_ Started writing conclusion chapter of dissertation.
 
 ### 25 Mar 2021
 
-- _2 hour_ Finished writing conclusion chapter of dissertation and sent to supervisor for feedback..
+- _3 hour_ Finished writing conclusion chapter of dissertation and sent to supervisor for feedback.
 - _0.5 hour_ Wrote up status report for this week and sent to supervisor.
 
 ### 26 Mar 2021
@@ -598,29 +598,29 @@
 
 ### 31 Mar 2021
 
-- _1.5 hour_ Made changes to conclusion chapter of dissertation that supervisor suggested.
-- _0.5 hour_ Added three new unit tests to cover the managers.py file.
+- _3.5 hour_ Made changes to conclusion chapter of dissertation that supervisor suggested.
+- _1.5 hour_ Added three new unit tests to cover the managers.py file.
 
 ### 1 Apr 2021
 
-- _2 hour_ Made changes to evaluation chapter of dissertation that supervisor suggested.
+- _3 hour_ Made changes to evaluation chapter of dissertation that supervisor suggested.
 
 ### 2 Apr 2021
 
-- _2 hour_ Started adding new section in design that discusses an example of Matrix Factorisation via Singular Value Decomposition.
+- _3 hour_ Started adding new section in design that discusses an example of Matrix Factorisation via Singular Value Decomposition.
 
 ## Week 25
 
 ### 5 Apr 2021
 
-- _1.5 hour_ Finished writing new section in design that discusses an example of Matrix Factorisation via Singular Value Decomposition.
-- _2 hour_ Implemented frontend unit tests.
-- _1.5 hour_ Added section to dissertation discussing frontend unit tests.
+- _2.5 hour_ Finished writing new section in design that discusses an example of Matrix Factorisation via Singular Value Decomposition.
+- _2.5 hour_ Implemented frontend unit tests.
+- _2 hour_ Added section to dissertation discussing frontend unit tests.
 
 ### 6 Apr 2021
 
-- _4 hour_ Proof read chapter 1 and 2 of dissertation.
-- _0.5 hour_ Started created presentation slides.
+- _5 hour_ Proof read chapter 1 and 2 of dissertation.
+- _0.5 hour_ Started creating presentation slides.
 
 ### 7 Apr 2021
 
@@ -629,10 +629,14 @@
 
 ### 8 Apr 2021
 
+- _1.5 hour_ Finished creating presentation slides.
+- _3 hour_ Continued writing presentation script.
+- _3 hour_ Recorded and edited final presentation.
+
 ### 9 Apr 2021
 
 ---
 
-**Total hours:**
+**Total hours:** 344.5
 
 Ollie Gardner
