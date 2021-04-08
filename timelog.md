@@ -631,12 +631,12 @@
 
 - _1.5 hour_ Finished creating presentation slides.
 - _3 hour_ Continued writing presentation script.
-- _3 hour_ Recorded and edited final presentation.
+- _4 hour_ Recorded and edited final presentation.
 
 ### 9 Apr 2021
 
 ---
 
-**Total hours:** 344.5
+**Total hours:** 345.5
 
 Ollie Gardner
