@@ -55,7 +55,7 @@ def pssuq_question_graph(question, graph_title, y_ticks, file_name):
 
     plt.bar(range(1, 8), ordered_values.values())
     plt.title(graph_title)
-    plt.xlabel('Seven point Likert scale')
+    plt.xlabel('Seven-point Likert scale')
     plt.ylabel('No. of Participants')
     plt.yticks(y_ticks)
     plt.show()
@@ -72,6 +72,6 @@ if __name__ == '__main__':
     )
     pssuq_question_graph(
         'The system gave error messages that clearly told me how to fix problems. ',
-        'Participant responses for system gave error messages to fix problems',
+        'Participant responses for the system gave error messages to fix problems',
         range(0, 6, 1), 'system_error_messages.pdf'
     )

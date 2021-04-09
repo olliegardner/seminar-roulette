@@ -7,17 +7,19 @@
 
 ## Week 1
 
-- N/A - projects not released.
+### 23 Sep 2020
+
+- _4 hours_ Read the project guidance notes.
 
 ## Week 2
 
 ### 30 Sep 2020
 
-- _0.5 hour_ Created GitHub repository and added the given master template with some minor adjustments.
+- _1 hour_ Created GitHub repository and added the given master template with some minor adjustments.
 
 ### 1 Oct 2020
 
-- _1.5 hour_ Researched different reference managers. Downloaded Zotero and watched a tutorial on how to use it.
+- _2.5 hour_ Researched different reference managers. Downloaded Zotero and watched a tutorial on how to use it.
 
 ### 2 Oct 2020
 
@@ -26,7 +28,7 @@
 
 ### 4 Oct 2020
 
-- _1.5 hour_ Did some research into potential data sources. Mainly focused on https://samoa.dcs.gla.ac.uk/events/ and EventBrite.
+- _3 hour_ Did some research into potential data sources. Mainly focused on https://samoa.dcs.gla.ac.uk/events/ and EventBrite.
 
 ## Week 3
 
@@ -42,7 +44,7 @@
 
 ### 8 Oct 2020
 
-- _0.5 hour_ Wrote up user stories and added them to the wiki.
+- _1 hour_ Wrote up user stories and added them to the wiki.
 - _1.5 hour_ Created some basic wireframes for the project - still need to be refined further.
 
 ### 9 Oct 2020
@@ -55,15 +57,15 @@
 
 ### 11 Oct 2020
 
-- _2 hour_ Setup chosen technologies - Django and React. Started building basic RESTful API to check that client and server can interact with eachother.
+- _3 hour_ Setup chosen technologies - Django and React. Started building basic RESTful API to check that client and server can interact with eachother.
 - _0.5 hour_ Created Trello board for ticket/issue management.
 
 ## Week 4
 
 ### 13 Oct 2020
 
-- _1 hour_ Wrote up functional and non-functional requirements.
-- _1.5 hour_ Developed user survey for staff members to build upon my requirements.
+- _2 hour_ Wrote up functional and non-functional requirements.
+- _2.5 hour_ Developed user survey for staff members to build upon my requirements.
 
 ### 14 Oct 2020
 
@@ -572,7 +574,7 @@
 
 ### 18 Mar 2021
 
-- _2 hour_ Finished writing evaluation chapter of dissertation and sent to supervisor for feedback.
+- _4 hour_ Finished writing evaluation chapter of dissertation and sent to supervisor for feedback.
 - _0.5 hour_ Wrote up status report for this week and sent to supervisor.
 
 ### 19 Mar 2021
@@ -583,11 +585,11 @@
 
 ### 24 Mar 2021
 
-- _2.5 hour_ Started writing conclusion chapter of dissertation.
+- _3.5 hour_ Started writing conclusion chapter of dissertation.
 
 ### 25 Mar 2021
 
-- _2 hour_ Finished writing conclusion chapter of dissertation and sent to supervisor for feedback..
+- _3 hour_ Finished writing conclusion chapter of dissertation and sent to supervisor for feedback.
 - _0.5 hour_ Wrote up status report for this week and sent to supervisor.
 
 ### 26 Mar 2021
@@ -598,20 +600,50 @@
 
 ### 31 Mar 2021
 
-- _1.5 hour_ Made changes to conclusion chapter of dissertation that supervisor suggested.
-- _0.5 hour_ Added three new unit tests to cover the managers.py file.
+- _3.5 hour_ Made changes to conclusion chapter of dissertation that supervisor suggested.
+- _1.5 hour_ Added three new unit tests to cover the managers.py file.
 
 ### 1 Apr 2021
 
-- _2 hour_ Made changes to evaluation chapter of dissertation that supervisor suggested.
+- _3 hour_ Made changes to evaluation chapter of dissertation that supervisor suggested.
 
 ### 2 Apr 2021
 
-- _2 hour_ Started adding new section in design that discusses an example of Matrix Factorisation via Singular Value Decomposition.
+- _3 hour_ Started adding new section in design that discusses an example of Matrix Factorisation via Singular Value Decomposition.
 
 ## Week 25
 
 ### 5 Apr 2021
 
-- _1.5 hour_ Finished writing new section in design that discusses an example of Matrix Factorisation via Singular Value Decomposition.
-- _2 hour_ Implemented frontend unit tests.
+- _2.5 hour_ Finished writing new section in design that discusses an example of Matrix Factorisation via Singular Value Decomposition.
+- _2.5 hour_ Implemented frontend unit tests.
+- _2 hour_ Added section to dissertation discussing frontend unit tests.
+
+### 6 Apr 2021
+
+- _5 hour_ Proof read chapter 1 and 2 of dissertation.
+- _0.5 hour_ Started creating presentation slides.
+
+### 7 Apr 2021
+
+- _6 hour_ Continued proof reading dissertation.
+- _2 hour_ Continued creating presentation slides and started writing script.
+
+### 8 Apr 2021
+
+- _1.5 hour_ Finished creating presentation slides.
+- _3 hour_ Continued writing presentation script.
+- _4 hour_ Recorded and edited final presentation.
+- _1 hour_ Added more comments to codebase.
+- _1.5 hour_ Improved some citations in dissertation.
+
+### 9 Apr 2021
+
+- _8 hour_ Completed final read through dissertation and double checked all project files were in order.
+- _0.5 hour_ Submitted dissertation and project files :)
+
+---
+
+**Total hours:** 367
+
+Ollie Gardner

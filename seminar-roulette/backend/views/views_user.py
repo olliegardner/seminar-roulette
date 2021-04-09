@@ -17,12 +17,14 @@ import json
 import nltk
 from nltk.corpus import wordnet
 
+# Download nltk data
 nltk.download('stopwords')
 nltk.download('punkt')
 nltk.download('wordnet')
 
 
 def get_user(guid):
+    # Get UniversityUser from their guid
     try:
         return UniversityUser.objects.get(guid=guid)
     except UniversityUser.DoesNotExist:
@@ -30,6 +32,9 @@ def get_user(guid):
 
 
 class RecommenderPagination(PageNumberPagination):
+    """
+    Pagination options for seminar recommendations.
+    """
     page_size = 5
     page_size_query_param = 'page_size'
     max_page_size = 5
@@ -60,6 +65,7 @@ class UserRecommendations(ListAPIView):
     ordering_fields = ['title', 'start_time']
 
     def get_queryset(self):
+        # Get time and guid parameters from url
         time = self.request.query_params.get('time')
         guid = self.request.query_params.get('guid')
         user = get_user(guid)

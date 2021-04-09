@@ -15,4 +15,5 @@ class Command(BaseCommand):
             CronJob.objects.create(error_message=str(e))
             self.stdout.write(e)
         else:
+            # Log cronjob as a success
             CronJob.objects.create(success=True)

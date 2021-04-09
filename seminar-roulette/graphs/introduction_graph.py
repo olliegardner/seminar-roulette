@@ -52,7 +52,7 @@ def introduction_graph():
     intro_graph = plt.figure()
 
     plt.bar(weeks, number_seminars)
-    plt.title('Seminars taking place each week in semester 2 of session 20/21')
+    plt.title('Seminars in semester two of session 2020/2021')
     plt.xlabel('Week')
     plt.ylabel('No. of Seminars')
     plt.xticks(weeks)

@@ -25,7 +25,7 @@ from nltk.tokenize import word_tokenize
 
 class EventFeeds():
     """
-    Class which handles pulling in data from various event feeds.
+    Class that handles pulling in data from various event feeds.
     """
     def __init__(self):
         env = environ.Env()
