@@ -6,6 +6,7 @@ class BackendConfig(AppConfig):
     name = 'backend'
 
     def ready(self):
+        # Register models to use within Django watson search
         seminar_model = self.get_model('Seminar')
         watson.register(seminar_model)
 

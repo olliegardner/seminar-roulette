@@ -1,3 +1,4 @@
+# Settings for production environment
 DEBUG = False
 ALLOWED_HOSTS = ['howard.dcs.gla.ac.uk']
 

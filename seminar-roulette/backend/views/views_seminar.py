@@ -17,6 +17,7 @@ import calendar
 
 
 def get_user(guid):
+    # Get a UniversityUser by their guid
     try:
         return UniversityUser.objects.get(guid=guid)
     except UniversityUser.DoesNotExist:
@@ -24,6 +25,7 @@ def get_user(guid):
 
 
 def get_seminar(seminar_id):
+    # Get a seminar by its id
     try:
         return Seminar.objects.get(id=seminar_id)
     except Seminar.DoesNotExist:
@@ -31,6 +33,7 @@ def get_seminar(seminar_id):
 
 
 def get_seminars_by_time(time):
+    # Get seminars according to specific time filter
     now = timezone.now()
 
     if time == "hour":
@@ -69,6 +72,9 @@ def get_seminars_by_time(time):
 
 
 class SeminarPagination(PageNumberPagination):
+    """
+    Pagination options for seminar results
+    """
     page_size = 10
     page_size_query_param = 'page_size'
     max_page_size = 100

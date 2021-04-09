@@ -9,6 +9,9 @@ from backend.serializers import *
 
 
 class SearchPagination(PageNumberPagination):
+    """
+    Pagination for seminar search results
+    """
     page_size = 10
     page_size_query_param = 'page_size'
     max_page_size = 100

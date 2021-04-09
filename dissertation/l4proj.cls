@@ -53,6 +53,7 @@
 \bibpunct{(}{)}{;}{a}{}{;}
 
 
+
 \usepackage{etoolbox}
 \usepackage[compact]{titlesec} % section heading formatting
 \usepackage{color} % colors
@@ -60,9 +61,16 @@
 \usepackage{parskip} % adjustable line spacing
 \usepackage{listings} % nice code listings
 
+\usepackage{makecell}
+
 % remove dots from ToC
 \usepackage[titles]{tocloft} 
 \renewcommand{\cftdot}{}
+% increase spacing in ToC to avoid ascenders and descenders colliding
+\renewcommand\cftsecafterpnum{\vskip 3pt}
+\renewcommand\cftbeforechapskip{5pt}
+\renewcommand\cftsubsecafterpnum{\vskip 1.5pt}
+\renewcommand\cftchapafterpnum{\vskip 4pt}
 \usepackage[nottoc]{tocbibind}
 
 % from: https://gist.github.com/FelipeCortez/10729134
@@ -218,6 +226,16 @@ textfont=it,tableposition=above]{caption}
   \titlespacing*{\chapter}      
   {0pt}{0pt}{15pt}  
 
+% let us define a definition for unnumbered chapters.
+% so we don't get a numbered bibliography or table of contents
+\titleformat{name=\chapter,numberless}
+            [display]
+            {\normalfont\huge\bfseries\secfont}
+            {}
+            {0pt}
+            {}
+
+
 % Educational consent form
 \newcommand{\educationalconsent}{
     \ifdefined\consentname
@@ -258,11 +276,8 @@ textfont=it,tableposition=above]{caption}
 \end{tcolorbox}
 }
 
-
-
 % adjust margins
 \setlength{\parindent}{0pt}
-
 
 % use (a) in figures
 \captionsetup{subrefformat=parens}
@@ -293,3 +308,70 @@ textfont=it,tableposition=above]{caption}
       \parsep=1pt plus 1pt
       \itemsep=\parsep}
 
+% allow highlighting of text for todo notes
+\usepackage{soul}
+\newcommand{\todo}[1]{\large \hl{TODO: #1}\PackageWarning{TODO:}{#1!} \normalsize}
+
+% make urls less bulky and ugly
+\renewcommand{\UrlFont}{\ttfamily\small}
+
+% units for nice formatting of numbers
+\usepackage{siunitx}
+
+
+% JSON listing format
+\definecolor{delim}{RGB}{20,105,176}
+\definecolor{numb}{RGB}{106, 109, 32}
+\definecolor{string}{rgb}{0.64,0.08,0.08}
+
+\lstdefinelanguage{json}{
+    numbers=left,
+    numberstyle=\small,
+    frame=single,
+    rulecolor=\color{black},
+    showspaces=false,
+    showtabs=false,
+    breaklines=true,
+    postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{gray}\hookrightarrow\space}},
+    breakatwhitespace=true,
+    basicstyle=\ttfamily\small,
+    upquote=true,
+    morestring=[b]",
+    stringstyle=\color{string},
+    literate=
+     *{0}{{{\color{numb}0}}}{1}
+      {1}{{{\color{numb}1}}}{1}
+      {2}{{{\color{numb}2}}}{1}
+      {3}{{{\color{numb}3}}}{1}
+      {4}{{{\color{numb}4}}}{1}
+      {5}{{{\color{numb}5}}}{1}
+      {6}{{{\color{numb}6}}}{1}
+      {7}{{{\color{numb}7}}}{1}
+      {8}{{{\color{numb}8}}}{1}
+      {9}{{{\color{numb}9}}}{1}
+      {\{}{{{\color{delim}{\{}}}}{1}
+      {\}}{{{\color{delim}{\}}}}}{1}
+      {[}{{{\color{delim}{[}}}}{1}
+      {]}{{{\color{delim}{]}}}}{1},
+}
+
+% JavaScript listing format
+\lstdefinelanguage{JavaScript}{%
+  keywords={const, let, typeof, instanceof, new, true, false, catch, function, return, null, undefined, catch, switch, var, if, in, while, for, do, else, case, break},
+  keywordstyle=\bfseries,
+  ndkeywords={class, export, throw, import, this},
+  ndkeywordstyle=\bfseries,
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\ttfamily,
+  stringstyle=\color{blue}\ttfamily,
+  morestring=[b]',
+  morestring=[b]`,
+  morestring=[b]"
+}
+
+\usepackage{url}
+\def\UrlBreaks{\do\/\do-}
+\usepackage{breakurl}
+\usepackage[breaklinks]{hyperref}

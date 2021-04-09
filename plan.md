@@ -123,3 +123,7 @@ Week-by-week plan for the whole project.
 - **Week 25** Dissertation submission deadline and presentations.
   - Finish perfecting dissertation.
   - Submit dissertation and supporting documents.
+
+---
+
+Ollie Gardner
