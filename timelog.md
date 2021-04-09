@@ -635,11 +635,15 @@
 - _3 hour_ Continued writing presentation script.
 - _4 hour_ Recorded and edited final presentation.
 - _1 hour_ Added more comments to codebase.
+- _1.5 hour_ Improved some citations in dissertation.
 
 ### 9 Apr 2021
 
+- _8 hour_ Completed final read through dissertation and double checked all project files were in order.
+- _0.5 hour_ Submitted dissertation and project files :)
+
 ---
 
-**Total hours:** 357
+**Total hours:** 367
 
 Ollie Gardner
